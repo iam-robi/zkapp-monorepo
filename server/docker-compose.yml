@@ -42,7 +42,7 @@ services:
       #use this to easily share db volume with other users
       - minaserver:/var/lib/postgresql/data
     ports:
-      - ${PG_PORT}:${PG_PORT}
+      - ${PG_PORT}:5432
 
 networks:
   minaservernet:

@@ -6,7 +6,9 @@ COPY package*.json ./
 
 RUN yarn
 
-ENV NODE_ENV=production
+# setting env to prod removes cli for mikroorm
+#TODO CIBUILD SHOULD do w/ env production
+#ENV NODE_ENV=production
 COPY . .
 
 EXPOSE 3000

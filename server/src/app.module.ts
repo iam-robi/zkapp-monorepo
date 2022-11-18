@@ -5,7 +5,6 @@ import {MikroOrmModule} from "@mikro-orm/nestjs";
 import {GraphQLModule} from "@nestjs/graphql";
 import {ApolloDriver} from "@nestjs/apollo";
 import { RegistrationModule } from './registration/registration.module';
-import {Registration} from "./registration/entities/registration.entity";
 @Module({
   imports: [
     MikroOrmModule.forRoot({
