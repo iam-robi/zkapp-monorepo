@@ -1,0 +1,35 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Registration {
+  uuid: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Query {
+  registration(id: Int!): Registration!
+}
+
+type Mutation {
+  createRegistration(createRegistrationInput: CreateRegistrationInput!): Registration!
+  updateRegistration(updateRegistrationInput: UpdateRegistrationInput!): Registration!
+  removeRegistration(id: Int!): Registration!
+}
+
+input CreateRegistrationInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateRegistrationInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}

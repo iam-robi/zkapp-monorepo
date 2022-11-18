@@ -1,0 +1,15 @@
+FROM node:18.6.0-alpine3.15
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+RUN yarn
+
+ENV NODE_ENV=production
+COPY . .
+
+EXPOSE 3000
+
+#ENTRYPOINT npm run start:dev
+CMD yarn migration:run && yarn build && yarn start:prod
