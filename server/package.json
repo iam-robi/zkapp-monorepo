@@ -1,6 +1,7 @@
 {
   "name": "server",
   "version": "0.0.1",
+
   "description": "",
   "author": "",
   "private": true,
@@ -22,6 +23,9 @@
     "migration:create": "docker exec minaserver npx mikro-orm migration:create",
     "migration:up": "docker exec minaserver npx mikro-orm migration:up",
     "migration:fresh": "docker exec minaserver npx mikro-orm migration:fresh",
+    "seeder:create": "docker exec minaserver npx mikro-orm seeder:create",
+    "minaserver": "docker exec minaserver",
+    "mikroorm": "docker exec minaserver npx mikro-orm",
     "keygen": "node scripts/keygen.js"
   },
   "dependencies": {

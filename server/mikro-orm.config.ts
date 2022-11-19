@@ -20,6 +20,12 @@ const config: Options = {
         path: 'dist/src/migrations',
         pathTs: 'src/migrations',
     },
+    seeder: {
+        path: 'src/seeders',
+        defaultSeeder: 'DatabaseSeeder',
+        pathTs: 'dist/src/seeders',
+    },
+
 };
 
 export default config;
