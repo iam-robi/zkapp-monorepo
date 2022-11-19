@@ -20,6 +20,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "migration:create": "docker exec minaserver npx mikro-orm migration:create",
+    "migration:up": "docker exec minaserver npx mikro-orm migration:up",
+    "migration:fresh": "docker exec minaserver npx mikro-orm migration:fresh",
     "keygen": "node scripts/keygen.js"
   },
   "dependencies": {

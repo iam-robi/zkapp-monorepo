@@ -11,13 +11,13 @@ const config: Options = {
     user: process.env.MIKROORM_USERNAME,
     password: process.env.MIKROORM_PASSWORD,
     host: process.env.MIKROORM_HOST,
-    dbName: 'minaserver',
+    dbName: process.env.MIKROORM_DATABASE,
     // port: Number(process.env.PG_PORT),
     type: 'postgresql',
     debug: true,
     loadStrategy: LoadStrategy.JOINED,
     migrations: {
-        path: 'dist/migrations',
+        path: 'dist/src/migrations',
         pathTs: 'src/migrations',
     },
 };

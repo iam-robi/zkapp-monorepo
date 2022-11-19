@@ -13,7 +13,6 @@
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "default": "uuid_generate_v4()",
           "mappedType": "uuid"
         },
         "name": {
