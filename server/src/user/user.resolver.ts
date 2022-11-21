@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import {Resolver, Query, Mutation, Args, Int, ObjectType} from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { User } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
@@ -6,10 +6,13 @@ import { UpdateUserInput } from './dto/update-user.input';
 import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from '../auth/gql-auth.guard';
 import {CurrentUser} from "./helpers/CurrentUser";
+import {SignService} from "../sign/sign.service";
+import {SignedUser} from "../sign/types";
+
 
 @Resolver(() => User)
 export class UserResolver {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService, private signService: SignService) {}
 
   @Mutation(() => User)
   createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
@@ -26,10 +29,13 @@ export class UserResolver {
     return this.userService.findOne(id);
   }
 
-  @Query(() => User, { name: 'userProfile' })
+  @Query(() => SignedUser, { name: 'userProfile' })
   @UseGuards(GqlAuthGuard)
-  getUserProfile(@CurrentUser() user: User) {
-    return this.userService.findOne(user.id);
+  async getUserProfile(@CurrentUser() user: User) {
+    const userData = await this.userService.findOne(user.id);
+    const signedData = this.signService.minaSign(userData);
+    return signedData;
+    // return this.userService.findOne(user.id);
   }
 
   @Mutation(() => User)

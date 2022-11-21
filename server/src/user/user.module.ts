@@ -3,10 +3,11 @@ import { UserService } from './user.service';
 import { UserResolver } from './user.resolver';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { User } from './entities/user.entity';
+import { SignModule } from '../sign/sign.module';
 
 @Module({
   providers: [UserResolver, UserService],
   exports: [UserService],
-  imports: [MikroOrmModule.forFeature({ entities: [User] })],
+  imports: [MikroOrmModule.forFeature({ entities: [User] }), SignModule],
 })
 export class UserModule {}

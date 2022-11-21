@@ -11,6 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import {AuthService} from "./auth/auth.service";
 import {JwtService} from "@nestjs/jwt";
 import { SignModule } from './sign/sign.module';
+import GraphQLJSON from "graphql-type-json";
 @Module({
   imports: [
     MikroOrmModule.forRoot(),
@@ -20,7 +21,8 @@ import { SignModule } from './sign/sign.module';
       debug: false,
       playground: true,
       introspection: true,
-      persistedQueries: false
+      persistedQueries: false,
+      resolvers: { JSON: GraphQLJSON },
     }),
     RegistrationModule,
     UserModule,

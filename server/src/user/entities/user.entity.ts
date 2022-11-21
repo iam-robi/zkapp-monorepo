@@ -11,7 +11,6 @@ export class User {
   @PrimaryKey({ type: 'uuid'})
   id: string = crypto.randomUUID();
 
-  @Field()
   @Property()
   password!: string;
 
