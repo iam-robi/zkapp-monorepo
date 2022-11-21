@@ -1,17 +1,39 @@
 import {ObjectType, Field, Int, ID} from '@nestjs/graphql';
 import {Entity, PrimaryKey, Property} from "@mikro-orm/core";
+import {Gender} from "../enums";
 import * as crypto from "crypto";
 
 @Entity()
 @ObjectType()
-export class Registration {
+export class User {
 
   @Field(() => ID)
   @PrimaryKey({ type: 'uuid'})
-  uuid: string = crypto.randomUUID();
+  id: string = crypto.randomUUID();
 
+  @Field()
   @Property()
-  name!: string;
+  password!: string;
+
+  @Field()
+  @Property()
+  firstName!: string;
+
+  @Field()
+  @Property()
+  lastName!: string;
+
+  @Field({ nullable: true })
+  @Property()
+  email!: string;
+
+  @Field()
+  @Property({nullable: true})
+  age: Number;
+
+  @Field()
+  @Property({nullable: true})
+  gender: Gender;
 
   @Field(() => Date)
   @Property()

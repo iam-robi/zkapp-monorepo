@@ -21,9 +21,11 @@ const config: Options = {
         pathTs: 'src/migrations',
     },
     seeder: {
-        path: 'src/seeders',
         defaultSeeder: 'DatabaseSeeder',
-        pathTs: 'dist/src/seeders',
+        //generated seeder must be moved from dist to src folder (error)
+        path: 'dist/src/seeders',
+        // pathTs is not changing output
+        // pathTs: './src/seeders'
     },
 
 };

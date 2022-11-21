@@ -10,7 +10,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/server" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="KubernetesApiPersistence">
     <option name="context" value="gke_oip-cluster_europe-west1_saas-prod-cluster" />
@@ -35,7 +35,8 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "prettierjs.PrettierConfiguration.Package": "/Users/robin.sarfati/oip/astronot-api/node_modules/prettier",
-    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external",
+    "settings.editor.selected.configurable": "configurable.group.editor",
+    "ts.external.directory.path": "/Users/robin.sarfati/mina/mina-server/01-hello-world/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -67,7 +68,9 @@
       <workItem from="1668094013861" duration="1197000" />
       <workItem from="1668431371324" duration="3373000" />
       <workItem from="1668704109145" duration="2303000" />
-      <workItem from="1668721565412" duration="23217000" />
+      <workItem from="1668721565412" duration="39984000" />
+      <workItem from="1669025294461" duration="1868000" />
+      <workItem from="1669027442629" duration="15684000" />
     </task>
     <servers />
   </component>

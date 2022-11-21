@@ -6,6 +6,11 @@ import {GraphQLModule} from "@nestjs/graphql";
 import {ApolloDriver} from "@nestjs/apollo";
 import { RegistrationModule } from './registration/registration.module';
 import {LoadStrategy} from "@mikro-orm/core";
+import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
+import {AuthService} from "./auth/auth.service";
+import {JwtService} from "@nestjs/jwt";
+import { SignModule } from './sign/sign.module';
 @Module({
   imports: [
     MikroOrmModule.forRoot(),
@@ -17,7 +22,10 @@ import {LoadStrategy} from "@mikro-orm/core";
       introspection: true,
       persistedQueries: false
     }),
-    RegistrationModule
+    RegistrationModule,
+    UserModule,
+    AuthModule,
+    SignModule
   ],
   controllers: [AppController],
   providers: [AppService],

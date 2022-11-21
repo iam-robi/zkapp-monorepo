@@ -2,8 +2,14 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Registration {
-  uuid: ID!
+type User {
+  id: ID!
+  password: String!
+  firstName: String!
+  lastName: String!
+  email: String
+  age: Float!
+  gender: Float!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -13,14 +19,25 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Registration {
+  uuid: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
 type Query {
   registration(id: Int!): Registration!
+  user(id: String!): User!
+  userProfile: User!
 }
 
 type Mutation {
   createRegistration(createRegistrationInput: CreateRegistrationInput!): Registration!
   updateRegistration(updateRegistrationInput: UpdateRegistrationInput!): Registration!
   removeRegistration(id: Int!): Registration!
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Int!): User!
 }
 
 input CreateRegistrationInput {
@@ -29,6 +46,17 @@ input CreateRegistrationInput {
 }
 
 input UpdateRegistrationInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateUserInput {
   """Example field (placeholder)"""
   exampleField: Int
   id: Int!
