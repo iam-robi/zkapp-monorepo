@@ -18,6 +18,7 @@ const config: Options = {
   migrations: {
     path: 'dist/src/migrations',
     pathTs: 'src/migrations',
+    disableForeignKeys: false
   },
   seeder: {
     defaultSeeder: 'DatabaseSeeder',
