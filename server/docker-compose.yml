@@ -8,7 +8,7 @@ services:
       dockerfile: ./Dockerfile
     volumes:
       - .:/usr/src/app
-      - /usr/src/app/node_modules
+      - node_mod:/usr/src/app/node_modules
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
 
@@ -34,9 +34,9 @@ services:
       - minaservernet
     image: postgres:11.13
     environment:
-      POSTGRES_PASSWORD: ${MIKROORM_PASSWORD}
-      POSTGRES_USER: ${MIKROORM_USERNAME}
-      POSTGRES_DB: ${MIKROORM_DATABASE}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_DB: ${DB_DATABASE}
     #      PG_DATA: /var/lib/postgresql/data_graphql/
     volumes:
       #use this to easily share db volume with other users
@@ -48,3 +48,4 @@ networks:
   minaservernet:
 volumes:
   minaserver:
+  node_mod:

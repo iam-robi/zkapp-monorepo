@@ -14,4 +14,4 @@ COPY . .
 EXPOSE 3000
 
 #ENTRYPOINT npm run start:dev
-CMD npx mikro-orm migration:up && yarn build && yarn start:prod
+CMD ls -al && npx mikro-orm migration:up && yarn build && yarn start:prod
