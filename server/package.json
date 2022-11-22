@@ -19,9 +19,14 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "migration:create": "docker exec minaserver npx mikro-orm migration:create",
-    "migration:up": "docker exec minaserver npx mikro-orm migration:up",
-    "migration:fresh": "docker exec minaserver npx mikro-orm migration:fresh",
+    "migration:create": "ts-node node_modules/.bin/mikro-orm migration:create",
+    "server:migration:create": "docker exec oip-server npx mikro-orm migration:create",
+    "migration:up": "ts-node node_modules/.bin/mikro-orm migration:up",
+    "server:migration:up": "docker exec oip-server npx mikro-orm migration:up",
+    "migration:down": "ts-node node_modules/.bin/mikro-orm migration:down",
+    "server:migration:down": "docker exec oip-server npx mikro-orm migration:down",
+    "migration:fresh": "ts-node node_modules/.bin/mikro-orm migration:fresh",
+    "server:migration:fresh": "docker exec oip-server npx mikro-orm migration:fresh",
     "seeder:create": "docker exec minaserver npx mikro-orm seeder:create",
     "seeder:run": "docker exec minaserver npx mikro-orm seeder:run",
     "minaserver": "docker exec minaserver",
@@ -98,5 +103,12 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "mikro-orm": {
+    "useTsNode": true,
+    "configPaths": [
+      "./mikro-orm.config.ts",
+      "./dist/mikro-orm.config.js"
+    ]
   }
 }
