@@ -1,0 +1,7 @@
+steps:
+  - name: 'gcr.io/kaniko-project/executor:latest'
+    args:
+      - --destination=$GCR_REGION/$PROJECT_PATH/$REPO_NAME:$BRANCH_NAME-$SHORT_SHA
+      - --cache=true
+      - --cache-ttl=6h
+timeout: 900s

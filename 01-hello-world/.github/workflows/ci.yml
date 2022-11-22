@@ -1,5 +1,5 @@
 #
-# ci.yml
+# server-ci.yml
 #
 # Run tests for all pushed commits and opened pull requests on Github.
 #
