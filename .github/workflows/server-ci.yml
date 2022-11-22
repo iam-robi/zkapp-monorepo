@@ -39,4 +39,4 @@ jobs:
         with:
           context: ./server
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/mina-server:${{ steps.vars.outputs.sha_short }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/mina-server:main-${{ steps.vars.outputs.sha_short }}
