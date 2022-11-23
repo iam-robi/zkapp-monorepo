@@ -16,16 +16,16 @@ const config: Options = {
   debug: true,
   loadStrategy: LoadStrategy.JOINED,
   migrations: {
-    path: 'dist/src/migrations',
-    pathTs: 'src/migrations',
-    disableForeignKeys: false
+    path: 'dist/database/migrations',
+    pathTs: 'database/migrations',
+    disableForeignKeys: false,
   },
   seeder: {
     defaultSeeder: 'DatabaseSeeder',
     //generated seeder must be moved from dist to src folder (error)
-    path: 'dist/src/seeders',
+    path: 'dist/database/seeders',
     // pathTs is not changing output
-    // pathTs: './src/seeders'
+    pathTs: './database/seeders',
   },
 };
 
