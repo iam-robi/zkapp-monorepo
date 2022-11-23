@@ -6,8 +6,8 @@
   "tables": [
     {
       "columns": {
-        "uuid": {
-          "name": "uuid",
+        "id": {
+          "name": "id",
           "type": "uuid",
           "unsigned": false,
           "autoincrement": false,
@@ -17,6 +17,15 @@
         },
         "name": {
           "name": "name",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "nzame": {
+          "name": "nzame",
           "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,
@@ -51,7 +60,7 @@
         {
           "keyName": "registration_pkey",
           "columnNames": [
-            "uuid"
+            "id"
           ],
           "composite": false,
           "primary": true,
@@ -74,6 +83,15 @@
         },
         "password": {
           "name": "password",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "password2": {
+          "name": "password2",
           "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,
@@ -119,12 +137,12 @@
         },
         "gender": {
           "name": "gender",
-          "type": "int",
+          "type": "jsonb",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": true,
-          "mappedType": "integer"
+          "mappedType": "json"
         },
         "created_at": {
           "name": "created_at",

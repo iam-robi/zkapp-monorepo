@@ -1,26 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { CreateRegistrationInput } from './dto/create-registration.input';
 import { UpdateRegistrationInput } from './dto/update-registration.input';
+import { BaseService } from '../base/base.service'
+import {Registration} from "./entities/registration.entity";
+import { InjectRepository } from '@mikro-orm/nestjs'
+import { EntityRepository } from '@mikro-orm/postgresql'
 
 @Injectable()
-export class RegistrationService {
-  create(createRegistrationInput: CreateRegistrationInput) {
-    return 'This action adds a new registration';
-  }
+export class RegistrationService extends BaseService<Registration>{
 
-  findAll() {
-    return `This action returns all registration`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} registration`;
-  }
-
-  update(id: number, updateRegistrationInput: UpdateRegistrationInput) {
-    return `This action updates a #${id} registration`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} registration`;
+  constructor(@InjectRepository(Registration) repository: EntityRepository<Registration>) {
+    super(repository)
   }
 }

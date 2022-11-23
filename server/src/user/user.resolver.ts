@@ -14,20 +14,7 @@ import {SignedUser} from "../sign/types";
 export class UserResolver {
   constructor(private readonly userService: UserService, private signService: SignService) {}
 
-  @Mutation(() => User)
-  createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
-    return this.userService.create(createUserInput);
-  }
 
-  @Query(() => [User], { name: 'user' })
-  findAll() {
-    return this.userService.findAll();
-  }
-
-  @Query(() => User, { name: 'user' })
-  findOne(@Args('id', { type: () => String }) id: string) {
-    return this.userService.findOne(id);
-  }
 
   @Query(() => SignedUser, { name: 'userProfile' })
   @UseGuards(GqlAuthGuard)
@@ -35,16 +22,6 @@ export class UserResolver {
     const userData = await this.userService.findOne(user.id);
     const signedData = this.signService.minaSign(userData);
     return signedData;
-    // return this.userService.findOne(user.id);
   }
 
-  @Mutation(() => User)
-  updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
-    return this.userService.update(updateUserInput.id, updateUserInput);
-  }
-
-  @Mutation(() => User)
-  removeUser(@Args('id', { type: () => Int }) id: number) {
-    return this.userService.remove(id);
-  }
 }

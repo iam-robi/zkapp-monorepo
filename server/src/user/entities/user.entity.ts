@@ -14,6 +14,10 @@ export class User {
   @Property()
   password!: string;
 
+  @Property()
+  password2: string;
+
+
   @Field()
   @Property()
   firstName!: string;

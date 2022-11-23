@@ -24,7 +24,7 @@ import GraphQLJSON from "graphql-type-json";
       persistedQueries: false,
       resolvers: { JSON: GraphQLJSON },
     }),
-    RegistrationModule,
+    // RegistrationModule,
     UserModule,
     AuthModule,
     SignModule

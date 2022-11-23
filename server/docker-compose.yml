@@ -8,7 +8,7 @@ services:
       dockerfile: ./Dockerfile
     volumes:
       - .:/usr/src/app
-      - node_mod:/usr/src/app/node_modules
+      - /usr/src/app/node_modules
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
 

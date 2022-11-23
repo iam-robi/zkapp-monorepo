@@ -18,12 +18,6 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type Registration {
-  uuid: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
 type SignedUser {
   data: User!
   signature: JSON!
@@ -36,38 +30,5 @@ The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://
 scalar JSON
 
 type Query {
-  registration(id: Int!): Registration!
-  user(id: String!): User!
   userProfile: SignedUser!
-}
-
-type Mutation {
-  createRegistration(createRegistrationInput: CreateRegistrationInput!): Registration!
-  updateRegistration(updateRegistrationInput: UpdateRegistrationInput!): Registration!
-  removeRegistration(id: Int!): Registration!
-  createUser(createUserInput: CreateUserInput!): User!
-  updateUser(updateUserInput: UpdateUserInput!): User!
-  removeUser(id: Int!): User!
-}
-
-input CreateRegistrationInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-input UpdateRegistrationInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
-}
-
-input CreateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-input UpdateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
 }

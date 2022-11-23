@@ -4,8 +4,8 @@ import { MikroOrmModuleOptions as Options } from '@mikro-orm/nestjs';
 import { LoadStrategy } from '@mikro-orm/core';
 
 const config: Options = {
-  entities: ['dist/**/*.entity.js'],
-  entitiesTs: ['src/**/*.entity.ts'],
+  entities: ['dist/src/**/entities/**.entity{.ts,.js}'],
+  entitiesTs: ['src/**/entities/**.entity{.ts,.js}'],
   // entities: [Registration],
   user: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,

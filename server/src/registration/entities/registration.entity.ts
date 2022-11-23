@@ -7,7 +7,7 @@ import * as crypto from 'crypto';
 export class Registration {
   @Field(() => ID)
   @PrimaryKey({ type: 'uuid' })
-  uuid: string = crypto.randomUUID();
+  id: string = crypto.randomUUID();
 
   @Property()
   name!: string;
