@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+
 import {MikroOrmModule} from "@mikro-orm/nestjs";
 import {GraphQLModule} from "@nestjs/graphql";
 import {ApolloDriver} from "@nestjs/apollo";
@@ -11,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 
 import { SignModule } from './sign/sign.module';
 import GraphQLJSON from "graphql-type-json";
+import {AuthService} from "./auth/auth.service";
 @Module({
   imports: [
     MikroOrmModule.forRoot(),
@@ -32,7 +32,6 @@ import GraphQLJSON from "graphql-type-json";
     AuthModule,
     SignModule
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  providers: [],
 })
 export class AppModule {}
