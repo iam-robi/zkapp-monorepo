@@ -3,14 +3,12 @@ import { Module } from '@nestjs/common';
 import {MikroOrmModule} from "@mikro-orm/nestjs";
 import {GraphQLModule} from "@nestjs/graphql";
 import {ApolloDriver} from "@nestjs/apollo";
-import { RegistrationModule } from './registration/registration.module';
 
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 
 import { SignModule } from './sign/sign.module';
 import GraphQLJSON from "graphql-type-json";
-import {AuthService} from "./auth/auth.service";
 import { CollectionProofModule } from './collection-proof/collection-proof.module';
 @Module({
   imports: [
@@ -28,7 +26,6 @@ import { CollectionProofModule } from './collection-proof/collection-proof.modul
         credentials: true,
       },
     }),
-    RegistrationModule,
     UserModule,
     AuthModule,
     SignModule,
