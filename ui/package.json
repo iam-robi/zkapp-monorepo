@@ -5,12 +5,35 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "codegen:oracle": "graphql-codegen --config oracle.codegen.ts"
   },
   "devDependencies": {
-    "nuxt": "3.0.0"
+    "@graphql-codegen/cli": "2.13.12",
+    "@graphql-codegen/client-preset": "^1.1.4",
+    "@graphql-codegen/introspection": "2.2.1",
+    "@graphql-codegen/typescript": "^2.8.2",
+    "@graphql-codegen/typescript-resolvers": "^2.7.7",
+    "@intlify/unplugin-vue-i18n": "^0.7.0",
+    "@vueuse/components": "^9.3.1",
+    "@vueuse/core": "^9.2.0",
+    "@vueuse/nuxt": "^9.2.0",
+    "nuxt": "^3.0.0",
+    "sass": "^1.55.0",
+    "typescript": "^4.9.3",
+    "vue-i18n": "^9.2.2"
   },
   "dependencies": {
-    "magic-sdk": "^10.1.0"
+    "@css-render/vue3-ssr": "^0.15.11",
+    "@pinia/nuxt": "^0.4.2",
+    "@spruceid/ssx": "^1.0.0",
+    "ethers": "^5.7.2",
+    "naive-ui": "^2.33.5",
+    "nuxt-graphql-client": "^0.2.10"
+  },
+  "resolutions": {
+    "@graphql-codegen/cli": "2.13.4",
+    "@graphql-codegen/core": "2.6.2",
+    "@graphql-codegen/plugin-helpers": "2.7.1"
   }
 }

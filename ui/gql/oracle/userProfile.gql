@@ -1,0 +1,18 @@
+query userProfile {
+    userProfile{
+        data {
+            id
+            email
+            lastName
+            firstName
+            age
+            gender
+            createdAt
+            updatedAt
+        }
+        signature
+        publicKey
+
+
+    }
+}
