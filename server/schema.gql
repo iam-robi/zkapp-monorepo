@@ -41,10 +41,28 @@ The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://
 """
 scalar JSON
 
+type CollectionProof {
+  id: ID!
+  name: String!
+  description: String!
+  address: String!
+  chainId: Float!
+  minaProofAddress: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type GetCollectionProofListResponse {
+  data: [CollectionProof!]!
+  totalCount: Int!
+}
+
 type Query {
   registrations(search: String, withDeleted: Boolean): GetTagListResponse!
   registration(id: ID!, withDeleted: Boolean): Registration
   userProfile: SignedUser!
+  collectionproofs(search: String, withDeleted: Boolean): GetCollectionProofListResponse!
+  collectionproof(id: ID!, withDeleted: Boolean): CollectionProof
 }
 
 type Mutation {
@@ -52,9 +70,18 @@ type Mutation {
   softRemoveRegistration(id: ID!): Boolean!
   restoreRegistration(id: ID!): Registration!
   createRegistration(createRegistrationInput: CreateRegistrationInput!): Registration!
+  removeCollectionProof(id: ID!): Boolean!
+  softRemoveCollectionProof(id: ID!): Boolean!
+  restoreCollectionProof(id: ID!): CollectionProof!
+  createCollectionProof(createCollectionProofInput: CreateCollectionProofInput!): CollectionProof!
 }
 
 input CreateRegistrationInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input CreateCollectionProofInput {
   """Example field (placeholder)"""
   exampleField: Int!
 }

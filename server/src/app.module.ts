@@ -11,6 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import { SignModule } from './sign/sign.module';
 import GraphQLJSON from "graphql-type-json";
 import {AuthService} from "./auth/auth.service";
+import { CollectionProofModule } from './collection-proof/collection-proof.module';
 @Module({
   imports: [
     MikroOrmModule.forRoot(),
@@ -30,7 +31,8 @@ import {AuthService} from "./auth/auth.service";
     RegistrationModule,
     UserModule,
     AuthModule,
-    SignModule
+    SignModule,
+    CollectionProofModule
   ],
   providers: [],
 })
