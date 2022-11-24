@@ -8,6 +8,7 @@ import { GqlAuthGuard } from '../auth/gql-auth.guard';
 import {CurrentUser} from "./helpers/CurrentUser";
 import {SignService} from "../sign/sign.service";
 import {SignedUser} from "../sign/types";
+import {SSXGuard} from "../auth/ssx-auth.guard";
 
 
 @Resolver(() => User)
@@ -17,11 +18,15 @@ export class UserResolver {
 
 
   @Query(() => SignedUser, { name: 'userProfile' })
-  @UseGuards(GqlAuthGuard)
+  @UseGuards(SSXGuard)
   async getUserProfile(@CurrentUser() user: User) {
-    const userData = await this.userService.findOne(user.id);
-    const signedData = this.signService.minaSign(userData);
-    return signedData;
+    //TODO: find a way to get current user
+    // const userData = await this.userService.find({where: {
+    //     id: user.id
+    //   }});
+    // const signedData = this.signService.minaSign(userData);
+    // return signedData;
+    return "WIP"
   }
 
 }

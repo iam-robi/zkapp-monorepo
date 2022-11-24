@@ -21,7 +21,7 @@ export class UserFactory extends Factory<User> {
         Gender.UNDEFINED,
       ]),
       email: faker.internet.email(firstName, lastName),
-      password: faker.lorem.word(5),
+      address: faker.finance.ethereumAddress()
     };
   }
 }

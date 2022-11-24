@@ -4,11 +4,12 @@
 
 type User {
   id: ID!
-  firstName: String!
-  lastName: String!
+  firstName: String
+  lastName: String
   email: String
-  age: Float!
-  gender: Float!
+  address: String!
+  age: Float
+  gender: Float
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -17,6 +18,17 @@ type User {
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
+
+type Registration {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type GetTagListResponse {
+  data: [Registration!]!
+  totalCount: Int!
+}
 
 type SignedUser {
   data: User!
@@ -30,5 +42,19 @@ The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://
 scalar JSON
 
 type Query {
+  registrations(search: String, withDeleted: Boolean): GetTagListResponse!
+  registration(id: ID!, withDeleted: Boolean): Registration
   userProfile: SignedUser!
+}
+
+type Mutation {
+  removeRegistration(id: ID!): Boolean!
+  softRemoveRegistration(id: ID!): Boolean!
+  restoreRegistration(id: ID!): Registration!
+  createRegistration(createRegistrationInput: CreateRegistrationInput!): Registration!
+}
+
+input CreateRegistrationInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
 }

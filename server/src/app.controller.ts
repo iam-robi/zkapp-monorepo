@@ -4,6 +4,7 @@ import {LocalAuthGuard} from "./auth/local-auth.guard";
 import {AuthService} from "./auth/auth.service";
 import {JwtAuthGuard} from "./auth/jwt-auth.guard";
 import {UserService} from "./user/user.service";
+import {Cookie} from "express-session";
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService, private authService: AuthService , private userService: UserService) {}
@@ -13,17 +14,24 @@ export class AppController {
   async login(@Req() req) {
     return this.authService.login(req.user);
   }
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Get('hello')
+  getHello(@Req() req ): string {
+    console.log("hello", req.cookies)
+    console.log("hello", req.ssx)
+    return "hello";
+    // return this.appService.getHello();
   }
 
-  @UseGuards(JwtAuthGuard)
+
+  // @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@Req() req) {
 
-    const userData = this.userService.findOne(req.user.id);
-
-    return userData;
+    console.log(req.ssx.verified)
+    return req.ssx.verified
+    //
+    // const userData = this.userService.findOne(req.user.id);
+    //
+    // return userData;
   }
 }

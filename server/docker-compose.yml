@@ -28,6 +28,9 @@ services:
     image: redis:5
     networks:
       - minaservernet
+    ports:
+      - 6379:6379
+
   database:
     container_name: minaserver-db
     networks:

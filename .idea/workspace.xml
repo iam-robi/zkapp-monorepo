@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0dfa547a-01a6-411a-ba84-25916c4a05fc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../ssx/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/mina-server.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mina-server.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ssx/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../ssx/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ssx/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../ssx/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +42,7 @@
     "nodejs_package_manager_path": "npm",
     "prettierjs.PrettierConfiguration.Package": "/Users/robin.sarfati/oip/astronot-api/node_modules/prettier",
     "settings.editor.selected.configurable": "configurable.group.editor",
-    "ts.external.directory.path": "/Users/robin.sarfati/mina/mina-server/01-hello-world/node_modules/typescript/lib",
+    "ts.external.directory.path": "/Users/robin.sarfati/mina/ssx/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>

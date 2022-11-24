@@ -24,15 +24,6 @@
           "nullable": false,
           "mappedType": "string"
         },
-        "nzame": {
-          "name": "nzame",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "string"
-        },
         "created_at": {
           "name": "created_at",
           "type": "timestamptz(0)",
@@ -81,31 +72,13 @@
           "nullable": false,
           "mappedType": "uuid"
         },
-        "password": {
-          "name": "password",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "string"
-        },
-        "password2": {
-          "name": "password2",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "string"
-        },
         "first_name": {
           "name": "first_name",
           "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
-          "nullable": false,
+          "nullable": true,
           "mappedType": "string"
         },
         "last_name": {
@@ -114,11 +87,20 @@
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
-          "nullable": false,
+          "nullable": true,
           "mappedType": "string"
         },
         "email": {
           "name": "email",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "string"
+        },
+        "address": {
+          "name": "address",
           "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,

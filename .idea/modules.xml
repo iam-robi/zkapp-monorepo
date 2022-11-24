@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/mina-server.iml" filepath="$PROJECT_DIR$/.idea/mina-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ssx/.idea/ssx.iml" filepath="$PROJECT_DIR$/../ssx/.idea/ssx.iml" />
     </modules>
   </component>
 </project>

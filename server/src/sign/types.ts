@@ -22,7 +22,7 @@ export function Signed<T>(classRef: Type<T>): Type<ISignedType<T>> {
     signature: Signature;
 
     @Field((type) => String)
-    publicKey: PublicKey;
+    publicKey: PublicKey ;
   }
   return SignedType as Type<ISignedType<T>>;
 }

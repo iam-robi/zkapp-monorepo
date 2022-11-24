@@ -4,6 +4,7 @@ import { UserResolver } from './user.resolver';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { User } from './entities/user.entity';
 import { SignModule } from '../sign/sign.module';
+import {AuthModule} from "../auth/auth.module";
 
 @Module({
   providers: [UserResolver, UserService],

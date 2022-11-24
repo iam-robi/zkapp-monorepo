@@ -11,30 +11,27 @@ export class User {
   @PrimaryKey({ type: 'uuid'})
   id: string = crypto.randomUUID();
 
-  @Property()
-  password!: string;
-
-  @Property()
-  password2: string;
-
-
-  @Field()
-  @Property()
-  firstName!: string;
-
-  @Field()
-  @Property()
-  lastName!: string;
+  @Field({ nullable: true })
+  @Property({ nullable: true })
+  firstName: string;
 
   @Field({ nullable: true })
-  @Property()
-  email!: string;
+  @Property({ nullable: true })
+  lastName: string;
+
+  @Field({ nullable: true })
+  @Property({ nullable: true })
+  email: string;
 
   @Field()
+  @Property()
+  address: string;
+
+  @Field({ nullable: true })
   @Property({nullable: true})
   age: Number;
 
-  @Field()
+  @Field({ nullable: true })
   @Property({nullable: true})
   gender: Gender;
 
