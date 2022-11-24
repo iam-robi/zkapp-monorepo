@@ -5,7 +5,7 @@ import { UseGuards } from '@nestjs/common';
 import {SignService} from "../sign/sign.service";
 import {SignedUser} from "../sign/types";
 import {SSXGuard} from "../auth/ssx-auth.guard";
-import {CurrentUserAddress} from "../auth/currentuser.decorator";
+import {CurrentUserAddress} from "./helpers/currentuseraddress.decorator";
 
 
 @Resolver(() => User)

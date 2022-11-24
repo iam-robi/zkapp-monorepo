@@ -2,22 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0dfa547a-01a6-411a-ba84-25916c4a05fc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ui/gql/oracle/.graphqlconfig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/gql/oracle/userProfile.gql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/i18n/en.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/i18n/fr.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/oracle.codegen.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/pages/Login.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/plugins/i18n.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/plugins/ssx.client.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/store/account/account.index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/store/account/account.types.ts" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../ssx/.idea/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/app.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/nuxt.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/nuxt.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/ui/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ui/yarn.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ssx/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../ssx/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ssx/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../ssx/yarn.lock" afterDir="false" />
     </list>
