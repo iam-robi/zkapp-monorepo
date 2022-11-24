@@ -4,7 +4,7 @@ import * as crypto from 'crypto';
 
 @Entity()
 @ObjectType()
-export class CollectionProof {
+export class Contract {
 
   @Field(() => ID)
   @PrimaryKey({ type: 'uuid' })

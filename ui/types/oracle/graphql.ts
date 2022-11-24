@@ -18,75 +18,83 @@ export type Scalars = {
   JSON: any;
 };
 
-export type CollectionProof = {
-  __typename?: 'CollectionProof';
+export type Contract = {
+  __typename?: 'Contract';
   address: Scalars['String'];
   chainId: Scalars['Int'];
   createdAt: Scalars['DateTime'];
-  description: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   minaProofAddress?: Maybe<Scalars['String']>;
-  name: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
   updatedAt: Scalars['DateTime'];
 };
 
-export type GetCollectionProofListResponse = {
-  __typename?: 'GetCollectionProofListResponse';
-  data: Array<CollectionProof>;
+export type GetContractListResponse = {
+  __typename?: 'GetContractListResponse';
+  data: Array<Contract>;
   totalCount: Scalars['Int'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
-  removeCollectionProof: Scalars['Boolean'];
-  restoreCollectionProof: CollectionProof;
-  softRemoveCollectionProof: Scalars['Boolean'];
+  removeContract: Scalars['Boolean'];
+  restoreContract: Contract;
+  softRemoveContract: Scalars['Boolean'];
 };
 
 
-export type MutationRemoveCollectionProofArgs = {
+export type MutationRemoveContractArgs = {
   id: Scalars['ID'];
 };
 
 
-export type MutationRestoreCollectionProofArgs = {
+export type MutationRestoreContractArgs = {
   id: Scalars['ID'];
 };
 
 
-export type MutationSoftRemoveCollectionProofArgs = {
+export type MutationSoftRemoveContractArgs = {
   id: Scalars['ID'];
+};
+
+export type OwnershipData = {
+  __typename?: 'OwnershipData';
+  address: Scalars['String'];
+  balance: Scalars['Int'];
+  chainId: Scalars['Int'];
+  createdAt: Scalars['DateTime'];
 };
 
 export type Query = {
   __typename?: 'Query';
-  collectionproof?: Maybe<CollectionProof>;
-  collectionproofs: GetCollectionProofListResponse;
-  getSignedCollectionProof: SignedCollectionProof;
+  contract?: Maybe<Contract>;
+  contracts: GetContractListResponse;
+  getOwnershipSignedData: SignedOwnershipData;
   userProfile: SignedUser;
 };
 
 
-export type QueryCollectionproofArgs = {
+export type QueryContractArgs = {
   id: Scalars['ID'];
   withDeleted?: InputMaybe<Scalars['Boolean']>;
 };
 
 
-export type QueryCollectionproofsArgs = {
+export type QueryContractsArgs = {
   search?: InputMaybe<Scalars['String']>;
   withDeleted?: InputMaybe<Scalars['Boolean']>;
 };
 
 
-export type QueryGetSignedCollectionProofArgs = {
+export type QueryGetOwnershipSignedDataArgs = {
   address: Scalars['String'];
-  chainId: Scalars['Int'];
+  ercType: Scalars['String'];
 };
 
-export type SignedCollectionProof = {
-  __typename?: 'SignedCollectionProof';
-  data: CollectionProof;
+export type SignedOwnershipData = {
+  __typename?: 'SignedOwnershipData';
+  data: OwnershipData;
   publicKey: Scalars['String'];
   signature: Scalars['JSON'];
 };
@@ -111,10 +119,19 @@ export type User = {
   updatedAt: Scalars['DateTime'];
 };
 
+export type GetOwnershipSignedDataQueryVariables = Exact<{
+  address: Scalars['String'];
+  ercType: Scalars['String'];
+}>;
+
+
+export type GetOwnershipSignedDataQuery = { __typename?: 'Query', getOwnershipSignedData: { __typename?: 'SignedOwnershipData', signature: any, publicKey: string, data: { __typename?: 'OwnershipData', address: string, chainId: number, createdAt: any, balance: number } } };
+
 export type UserProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type UserProfileQuery = { __typename?: 'Query', userProfile: { __typename?: 'SignedUser', signature: any, publicKey: string, data: { __typename?: 'User', id: string, email?: string | null, lastName?: string | null, firstName?: string | null, age?: number | null, gender?: number | null, createdAt: any, updatedAt: any } } };
 
 
+export const GetOwnershipSignedDataDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getOwnershipSignedData"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"address"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ercType"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getOwnershipSignedData"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"address"},"value":{"kind":"Variable","name":{"kind":"Name","value":"address"}}},{"kind":"Argument","name":{"kind":"Name","value":"ercType"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ercType"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"chainId"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"balance"}}]}},{"kind":"Field","name":{"kind":"Name","value":"signature"}},{"kind":"Field","name":{"kind":"Name","value":"publicKey"}}]}}]}}]} as unknown as DocumentNode<GetOwnershipSignedDataQuery, GetOwnershipSignedDataQueryVariables>;
 export const UserProfileDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"userProfile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userProfile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"age"}},{"kind":"Field","name":{"kind":"Name","value":"gender"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"signature"}},{"kind":"Field","name":{"kind":"Name","value":"publicKey"}}]}}]}}]} as unknown as DocumentNode<UserProfileQuery, UserProfileQueryVariables>;

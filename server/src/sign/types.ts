@@ -3,7 +3,6 @@ import {Field, ObjectType ,  } from '@nestjs/graphql';
 import { Type } from '@nestjs/common';
 import {User} from "../user/entities/user.entity";
 import GraphQLJSON from "graphql-type-json";
-import {CollectionProof} from "../collection-proof/entities/collection-proof.entity";
 
 
 

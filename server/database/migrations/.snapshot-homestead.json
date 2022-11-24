@@ -81,11 +81,11 @@
           "mappedType": "datetime"
         }
       },
-      "name": "collection_proof",
+      "name": "contract",
       "schema": "public",
       "indexes": [
         {
-          "keyName": "collection_proof_pkey",
+          "keyName": "contract_pkey",
           "columnNames": [
             "id"
           ],

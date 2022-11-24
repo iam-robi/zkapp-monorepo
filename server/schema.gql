@@ -30,7 +30,7 @@ The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://
 """
 scalar JSON
 
-type CollectionProof {
+type Contract {
   id: ID!
   name: String
   description: String
@@ -41,33 +41,33 @@ type CollectionProof {
   updatedAt: DateTime!
 }
 
-type GetCollectionProofListResponse {
-  data: [CollectionProof!]!
+type GetContractListResponse {
+  data: [Contract!]!
   totalCount: Int!
 }
 
-type OwnershipProof {
+type OwnershipData {
   address: String!
   chainId: Int!
-  quantity: Int!
+  balance: Int!
   createdAt: DateTime!
 }
 
-type SignedOwnershipProof {
-  data: OwnershipProof!
+type SignedOwnershipData {
+  data: OwnershipData!
   signature: JSON!
   publicKey: String!
 }
 
 type Query {
   userProfile: SignedUser!
-  collectionproofs(search: String, withDeleted: Boolean): GetCollectionProofListResponse!
-  collectionproof(id: ID!, withDeleted: Boolean): CollectionProof
-  getOwnershipProof(address: String!): SignedOwnershipProof!
+  contracts(search: String, withDeleted: Boolean): GetContractListResponse!
+  contract(id: ID!, withDeleted: Boolean): Contract
+  getOwnershipSignedData(address: String!, ercType: String!): SignedOwnershipData!
 }
 
 type Mutation {
-  removeCollectionProof(id: ID!): Boolean!
-  softRemoveCollectionProof(id: ID!): Boolean!
-  restoreCollectionProof(id: ID!): CollectionProof!
+  removeContract(id: ID!): Boolean!
+  softRemoveContract(id: ID!): Boolean!
+  restoreContract(id: ID!): Contract!
 }

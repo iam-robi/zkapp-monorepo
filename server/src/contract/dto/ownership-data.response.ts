@@ -2,7 +2,7 @@ import {InputType, Int, Field, ObjectType} from '@nestjs/graphql';
 import {Property} from "@mikro-orm/core";
 
 @ObjectType()
-export class OwnershipProof {
+export class OwnershipData {
 
     @Field()
     address!: string;
@@ -13,7 +13,7 @@ export class OwnershipProof {
 
     @Field(() => Int)
     @Property()
-    quantity!: number;
+    balance!: number;
 
     @Field(() => Date)
     createdAt: Date = new Date();

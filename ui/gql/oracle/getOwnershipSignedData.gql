@@ -1,0 +1,12 @@
+query getOwnershipSignedData($address: String! , $ercType: String!) {
+    getOwnershipSignedData(address: $address, ercType: $ercType){
+        data {
+            address
+            chainId
+            createdAt
+            balance
+        }
+        signature
+        publicKey
+    }
+}

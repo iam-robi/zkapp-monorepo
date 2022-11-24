@@ -1,15 +1,15 @@
 import type { EntityManager } from '@mikro-orm/core';
 import {faker, Seeder} from '@mikro-orm/seeder';
 import {UserFactory} from "../factories/user.factory";
-import {CollectionProofFactory} from "../factories/collection-proof.factory";
-import {CollectionProof} from "../../src/collection-proof/entities/collection-proof.entity";
+import {ContractFactory} from "../factories/contract.factory";
+import {Contract} from "../../src/contract/entities/contract.entity";
 
 export class DatabaseSeeder extends Seeder {
 
   async run(em: EntityManager): Promise<void> {
     new UserFactory(em).make(100)
-    new CollectionProofFactory(em).make(10)
-    const boredApeExample = em.create(CollectionProof, {
+    new ContractFactory(em).make(10)
+    const boredApeExample = em.create(Contract, {
       name: 'Bored Ape Yacht Club',
       description: faker.lorem.paragraph(),
       chainId: 1,

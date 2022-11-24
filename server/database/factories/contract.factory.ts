@@ -1,12 +1,12 @@
 import { Factory, Faker } from '@mikro-orm/seeder';
 import { Gender } from '../../src/user/enums';
-import {CollectionProof} from "../../src/collection-proof/entities/collection-proof.entity";
+import {Contract} from "../../src/contract/entities/contract.entity";
 
 
-export class CollectionProofFactory extends Factory<CollectionProof> {
-    model = CollectionProof;
+export class ContractFactory extends Factory<Contract> {
+    model = Contract;
 
-    definition(faker: Faker): Partial<CollectionProof> {
+    definition(faker: Faker): Partial<Contract> {
         const name = faker.lorem.words(3);
         const description = faker.lorem.paragraph();
         const address = faker.finance.ethereumAddress();

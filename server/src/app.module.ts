@@ -9,7 +9,7 @@ import { AuthModule } from './auth/auth.module';
 
 import { SignModule } from './sign/sign.module';
 import GraphQLJSON from "graphql-type-json";
-import { CollectionProofModule } from './collection-proof/collection-proof.module';
+import { ContractModule } from './contract/contract.module';
 @Module({
   imports: [
     MikroOrmModule.forRoot(),
@@ -29,8 +29,9 @@ import { CollectionProofModule } from './collection-proof/collection-proof.modul
     UserModule,
     AuthModule,
     SignModule,
-    CollectionProofModule
+    ContractModule
   ],
   providers: [],
 })
+
 export class AppModule {}

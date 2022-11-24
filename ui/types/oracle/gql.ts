@@ -13,9 +13,14 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel-plugin for production.
  */
 const documents = {
+    "query getOwnershipSignedData($address: String!, $ercType: String!) {\n  getOwnershipSignedData(address: $address, ercType: $ercType) {\n    data {\n      address\n      chainId\n      createdAt\n      balance\n    }\n    signature\n    publicKey\n  }\n}": types.GetOwnershipSignedDataDocument,
     "query userProfile {\n  userProfile {\n    data {\n      id\n      email\n      lastName\n      firstName\n      age\n      gender\n      createdAt\n      updatedAt\n    }\n    signature\n    publicKey\n  }\n}": types.UserProfileDocument,
 };
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query getOwnershipSignedData($address: String!, $ercType: String!) {\n  getOwnershipSignedData(address: $address, ercType: $ercType) {\n    data {\n      address\n      chainId\n      createdAt\n      balance\n    }\n    signature\n    publicKey\n  }\n}"): (typeof documents)["query getOwnershipSignedData($address: String!, $ercType: String!) {\n  getOwnershipSignedData(address: $address, ercType: $ercType) {\n    data {\n      address\n      chainId\n      createdAt\n      balance\n    }\n    signature\n    publicKey\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
