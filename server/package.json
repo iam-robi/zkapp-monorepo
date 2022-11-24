@@ -32,6 +32,7 @@
     "minaserver": "docker exec minaserver",
     "mikroorm": "docker exec minaserver npx mikro-orm",
     "keygen": "node scripts/keygen.js",
+    "collectionproof": "node scripts/collectionProof.js",
     "test:connect": "node scripts/connect.js"
   },
   "dependencies": {

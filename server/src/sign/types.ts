@@ -3,6 +3,7 @@ import {Field, ObjectType ,  } from '@nestjs/graphql';
 import { Type } from '@nestjs/common';
 import {User} from "../user/entities/user.entity";
 import GraphQLJSON from "graphql-type-json";
+import {CollectionProof} from "../collection-proof/entities/collection-proof.entity";
 
 
 
@@ -27,5 +28,3 @@ export function Signed<T>(classRef: Type<T>): Type<ISignedType<T>> {
   return SignedType as Type<ISignedType<T>>;
 }
 
-@ObjectType()
-export class SignedUser extends Signed(User) {}

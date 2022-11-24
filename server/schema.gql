@@ -32,10 +32,10 @@ scalar JSON
 
 type CollectionProof {
   id: ID!
-  name: String!
-  description: String!
+  name: String
+  description: String
   address: String!
-  chainId: Float!
+  chainId: Int!
   minaProofAddress: String
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -46,20 +46,28 @@ type GetCollectionProofListResponse {
   totalCount: Int!
 }
 
+type OwnershipProof {
+  address: String!
+  chainId: Int!
+  quantity: Int!
+  createdAt: DateTime!
+}
+
+type SignedOwnershipProof {
+  data: OwnershipProof!
+  signature: JSON!
+  publicKey: String!
+}
+
 type Query {
   userProfile: SignedUser!
   collectionproofs(search: String, withDeleted: Boolean): GetCollectionProofListResponse!
   collectionproof(id: ID!, withDeleted: Boolean): CollectionProof
+  getOwnershipProof(address: String!): SignedOwnershipProof!
 }
 
 type Mutation {
   removeCollectionProof(id: ID!): Boolean!
   softRemoveCollectionProof(id: ID!): Boolean!
   restoreCollectionProof(id: ID!): CollectionProof!
-  createCollectionProof(createCollectionProofInput: CreateCollectionProofInput!): CollectionProof!
-}
-
-input CreateCollectionProofInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
 }

@@ -18,69 +18,77 @@ export type Scalars = {
   JSON: any;
 };
 
-export type CreateRegistrationInput = {
-  /** Example field (placeholder) */
-  exampleField: Scalars['Int'];
+export type CollectionProof = {
+  __typename?: 'CollectionProof';
+  address: Scalars['String'];
+  chainId: Scalars['Int'];
+  createdAt: Scalars['DateTime'];
+  description: Scalars['String'];
+  id: Scalars['ID'];
+  minaProofAddress?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
 };
 
-export type GetTagListResponse = {
-  __typename?: 'GetTagListResponse';
-  data: Array<Registration>;
+export type GetCollectionProofListResponse = {
+  __typename?: 'GetCollectionProofListResponse';
+  data: Array<CollectionProof>;
   totalCount: Scalars['Int'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createRegistration: Registration;
-  removeRegistration: Scalars['Boolean'];
-  restoreRegistration: Registration;
-  softRemoveRegistration: Scalars['Boolean'];
+  removeCollectionProof: Scalars['Boolean'];
+  restoreCollectionProof: CollectionProof;
+  softRemoveCollectionProof: Scalars['Boolean'];
 };
 
 
-export type MutationCreateRegistrationArgs = {
-  createRegistrationInput: CreateRegistrationInput;
-};
-
-
-export type MutationRemoveRegistrationArgs = {
+export type MutationRemoveCollectionProofArgs = {
   id: Scalars['ID'];
 };
 
 
-export type MutationRestoreRegistrationArgs = {
+export type MutationRestoreCollectionProofArgs = {
   id: Scalars['ID'];
 };
 
 
-export type MutationSoftRemoveRegistrationArgs = {
+export type MutationSoftRemoveCollectionProofArgs = {
   id: Scalars['ID'];
 };
 
 export type Query = {
   __typename?: 'Query';
-  registration?: Maybe<Registration>;
-  registrations: GetTagListResponse;
+  collectionproof?: Maybe<CollectionProof>;
+  collectionproofs: GetCollectionProofListResponse;
+  getSignedCollectionProof: SignedCollectionProof;
   userProfile: SignedUser;
 };
 
 
-export type QueryRegistrationArgs = {
+export type QueryCollectionproofArgs = {
   id: Scalars['ID'];
   withDeleted?: InputMaybe<Scalars['Boolean']>;
 };
 
 
-export type QueryRegistrationsArgs = {
+export type QueryCollectionproofsArgs = {
   search?: InputMaybe<Scalars['String']>;
   withDeleted?: InputMaybe<Scalars['Boolean']>;
 };
 
-export type Registration = {
-  __typename?: 'Registration';
-  createdAt: Scalars['DateTime'];
-  id: Scalars['ID'];
-  updatedAt: Scalars['DateTime'];
+
+export type QueryGetSignedCollectionProofArgs = {
+  address: Scalars['String'];
+  chainId: Scalars['Int'];
+};
+
+export type SignedCollectionProof = {
+  __typename?: 'SignedCollectionProof';
+  data: CollectionProof;
+  publicKey: Scalars['String'];
+  signature: Scalars['JSON'];
 };
 
 export type SignedUser = {

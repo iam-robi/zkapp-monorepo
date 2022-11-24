@@ -7,9 +7,3 @@ export enum Gender {
     NB,
     UNDEFINED
 }
-
-export type SignedUser = {
-    data: User
-    signature: Signature
-    publicKey: PublicKey
-}

@@ -2,7 +2,7 @@
 import { defineStore } from 'pinia'
 import { AccountState } from "~/store/account/account.types";
 import { useNuxtApp, useRuntimeConfig } from "#app";
-import {GqlUserProfile} from "#imports";
+import {GqlGetOwnershipProof, GqlGetSignedCollectionProof, GqlUserProfile} from "#imports";
 
 export const useAccount = defineStore('account', {
     state: (): AccountState => ({
@@ -18,7 +18,6 @@ export const useAccount = defineStore('account', {
     }),
 
     actions: {
-
         signIn: async function() {
             const config = useRuntimeConfig();
             let { $ssx } = useNuxtApp();
@@ -31,6 +30,12 @@ export const useAccount = defineStore('account', {
         getUserInfo: async function(){
             try {
                 const res = await GqlUserProfile()
+            } catch (error) {
+            }
+        },
+        getSignedCollectionProof: async function(address: string){
+            try {
+                const res = await GqlGetOwnershipProof({address})
             } catch (error) {
             }
         }

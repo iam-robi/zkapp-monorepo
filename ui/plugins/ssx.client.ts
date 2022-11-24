@@ -1,12 +1,13 @@
 import {defineNuxtPlugin} from "#app";
-import {ethers} from "ethers";
 import { SSX } from "@spruceid/ssx";
+
 
 const ssx = new SSX({
 
-    enableDaoLogin: true,
+    enableDaoLogin: false,
     // resolveEns: true,
     providers: {
+        // @ts-ignore
         web3: { driver: window.ethereum },
         server: { host: "http://localhost:3008" },
     },

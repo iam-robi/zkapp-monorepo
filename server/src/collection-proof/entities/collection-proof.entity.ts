@@ -10,21 +10,21 @@ export class CollectionProof {
   @PrimaryKey({ type: 'uuid' })
   id: string = crypto.randomUUID();
 
-  @Field()
-  @Property()
-  name!: string;
+  @Field({nullable: true})
+  @Property({nullable: true})
+  name: string;
 
-  @Field()
-  @Property({type: "text"})
+  @Field({nullable: true})
+  @Property({type: "text" , nullable: true})
   description: string;
 
   @Field()
   @Property()
   address!: string;
 
-  @Field()
+  @Field(() => Int)
   @Property()
-  chainId!: Number;
+  chainId!: number;
 
   @Field({nullable: true})
   @Property({nullable: true})

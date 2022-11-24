@@ -3,7 +3,7 @@ import { UserService } from './user.service';
 import { User } from './entities/user.entity';
 import { UseGuards } from '@nestjs/common';
 import {SignService} from "../sign/sign.service";
-import {SignedUser} from "../sign/types";
+import {SignedUser} from "./dto/get-signed-user-data.response";
 import {SSXGuard} from "../auth/ssx-auth.guard";
 import {CurrentUserAddress} from "./helpers/currentuseraddress.decorator";
 

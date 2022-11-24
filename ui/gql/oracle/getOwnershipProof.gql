@@ -1,0 +1,12 @@
+query getOwnershipProof($address: String!) {
+    getOwnershipProof(address: $address){
+        data {
+            address
+            chainId
+            createdAt
+            quantity
+        }
+        signature
+        publicKey
+    }
+}
