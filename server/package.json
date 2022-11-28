@@ -33,7 +33,8 @@
     "mikroorm": "docker exec minaserver npx mikro-orm",
     "keygen": "node scripts/keygen.js",
     "collectionproof": "node scripts/collectionProof.js",
-    "test:connect": "node scripts/connect.js"
+    "test:connect": "node scripts/connect.js",
+    "test:signature": "node scripts/signature.js"
   },
   "dependencies": {
     "@mikro-orm/core": "^5.5.3",

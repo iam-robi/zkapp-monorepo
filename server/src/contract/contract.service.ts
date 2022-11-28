@@ -85,7 +85,6 @@ export class ContractService extends BaseService<Contract>{
       createdAt,
       balance
     }
-    console.log(result)
     let signedResult = await this.signService.minaSign(result);
     return  signedResult
 
