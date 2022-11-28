@@ -1,4 +1,4 @@
-import {Field, Struct} from "snarkyjs";
+import {Field, PublicKey, Struct} from "snarkyjs";
 
 export class EvmAddress extends Struct({
     fields: [Field, Field],
@@ -8,3 +8,14 @@ export class EvmAddress extends Struct({
         return this.fields.toString();
     }
 }
+
+export class VerifiedOwnership extends Struct({
+    evmContractAddress: EvmAddress,
+    minaAddress: PublicKey
+}) {
+    // toString() {
+    //     return this.fields.toString();
+    // }
+}
+
+

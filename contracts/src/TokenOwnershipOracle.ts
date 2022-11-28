@@ -10,7 +10,7 @@ import {
     Signature,
     PrivateKey, Struct, Encoding,
 } from 'snarkyjs';
-import {EvmAddress} from "./structs";
+import {EvmAddress, VerifiedOwnership} from "./structs";
 
 // The public key of our trusted data provider
 const ORACLE_PUBLIC_KEY =
@@ -27,7 +27,7 @@ export class TokenOwnershipOracle extends SmartContract {
 
     // Define contract events
     events = {
-        verified: Field,
+        verified: VerifiedOwnership
     };
 
     deploy(args: DeployArgs) {
@@ -46,11 +46,10 @@ export class TokenOwnershipOracle extends SmartContract {
         let chainIdField = Field(CHAIN_ID)
         let evmAddress = new EvmAddress({fields, chainId: chainIdField})
         this.evmAddress.set(evmAddress)
-        // Specify that caller should include signature with tx instead of proof
         this.requireSignature();
     }
 
-    @method verify(balance: Field, address: EvmAddress,  signature: Signature) {
+    @method verify(balance: Field, address: EvmAddress,  signature: Signature , pvKey: PrivateKey) {
 
         const oraclePublicKey = this.oraclePublicKey.get()
         this.oraclePublicKey.assertEquals(oraclePublicKey);
@@ -66,7 +65,11 @@ export class TokenOwnershipOracle extends SmartContract {
         address.fields[0].assertEquals(evmAddress.fields[0])
         address.fields[1].assertEquals(evmAddress.fields[1])
 
-        this.emitEvent('verified', address.chainId);
+        const verifiedOwnership = new VerifiedOwnership({evmContractAddress: evmAddress, minaAddress: pvKey.toPublicKey()})
+        this.emitEvent('verified', verifiedOwnership);
+        // this.emitEvent('test',  {
+        //     "de": "ddd"
+        // });
 
     }
 }

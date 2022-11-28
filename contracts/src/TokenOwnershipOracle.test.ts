@@ -90,7 +90,6 @@ describe('TokenOwnershipOracle', () => {
     const evmAddress = zkAppInstance.evmAddress.get()
     expect(evmAddress.fields).toEqual(Encoding.stringToFields(CONTRACT_ADDRESS))
     expect(evmAddress.chainId).toEqual(Field(CHAIN_ID))
-    console.log(evmAddress.fields)
   });
 
 
@@ -114,13 +113,15 @@ describe('TokenOwnershipOracle', () => {
       const validSignature = signature.verify(PublicKey.fromBase58(ORACLE_PUBLIC_KEY), [balance,chainId,...addressToFields]);
       validSignature.assertTrue()
 
-      let snarkyAddress = new EvmAddress({ fields: addressToFields, chainId: chainId});
+      let address = new EvmAddress({ fields: addressToFields, chainId: chainId});
 
+      const pvKey = PrivateKey.random()
       const txn = await Mina.transaction(deployerAccount, () => {
         zkAppInstance.verify(
             balance,
-            snarkyAddress,
-            signature ?? fail('something is wrong with the signature')
+            address,
+            signature ?? fail('something is wrong with the signature'),
+            pvKey
         );
       });
       await txn.prove();
@@ -128,13 +129,14 @@ describe('TokenOwnershipOracle', () => {
       //
       const events = await zkAppInstance.fetchEvents();
 
-      events.map(event => {
-        if(event.type === 'verified'){
-          console.log(event.event.toString())
-        }
-      })
-      // const verifiedEventValue = events[0].event.toFields(null)[0];
-      // expect(verifiedEventValue).toEqual(id);
+      let verifiedEvent = events[0];
+
+      // @ts-ignore
+      expect(verifiedEvent.event.minaAddress.toBase58()).toEqual(pvKey.toPublicKey().toBase58());
+      // @ts-ignore
+      expect(verifiedEvent.event.evmContractAddress.chainId.toString()).toEqual(String(CHAIN_ID));
+      // @ts-ignore
+      expect(Encoding.stringFromFields(verifiedEvent.event.evmContractAddress.fields)).toEqual(CONTRACT_ADDRESS);
     });
     it('errors if wrong chain Id is provided', async () => {
       const zkAppInstance = new TokenOwnershipOracle(zkAppAddress);
@@ -145,13 +147,15 @@ describe('TokenOwnershipOracle', () => {
       //TODO: add created at , read about how to use timestamps
       const signature = Signature.fromJSON(userExampleData.data.getOwnershipSignedDataTest.signature);
       let snarkyAddress = new EvmAddress({ fields: addressToFields, chainId: Field(1)});
+      const pvKey = PrivateKey.random()
       //@ts-ignore
       expect(async () => {
         await Mina.transaction(deployerAccount, () => {
           zkAppInstance.verify(
               balance,
               snarkyAddress,
-              signature ?? fail('something is wrong with the signature')
+              signature ?? fail('something is wrong with the signature'),
+              pvKey
           );
         });
       }).rejects;
