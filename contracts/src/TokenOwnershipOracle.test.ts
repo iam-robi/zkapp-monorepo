@@ -9,7 +9,7 @@ import {
   AccountUpdate,
   Signature, Encoding,
 } from 'snarkyjs';
-import {EvmAddress} from "./structs";
+import {EvmAddress} from "./TokenOwnershipOracle";
 
 const userExampleData = {
   "data": {
@@ -92,8 +92,6 @@ describe('TokenOwnershipOracle', () => {
 
   });
 
-
-
   describe('deploys a verifier contract for token balance', () => {
     it('emits an `verified` event containing the user mina address if their token balance is at least 1', async () => {
       const zkAppInstance = new TokenOwnershipOracle(zkAppAddress);
@@ -162,6 +160,11 @@ describe('TokenOwnershipOracle', () => {
     });
     it.todo('errors if signature is wrong');
     it.todo('errors if balance below 1');
+  });
+
+  describe('admin', () => {
+    it.todo('changes oracle public key');
+    it.todo('errors if non admin tries to change oracle public key');
   });
 
 });

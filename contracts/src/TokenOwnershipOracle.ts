@@ -10,22 +10,29 @@ import {
     Signature,
     PrivateKey, Struct, Encoding,
 } from 'snarkyjs';
-import {EvmAddress, VerifiedOwnership} from "./structs";
 
-// The public key of our trusted data provider
+
+export class EvmAddress extends Struct({
+    fields: [Field, Field],
+    chainId: Field
+}) {
+    toString() {
+        return this.fields.toString();
+    }
+}
+
+export class VerifiedOwnership extends Struct({
+    evmContractAddress: EvmAddress,
+    minaAddress: PublicKey
+}) {
+}
 const ORACLE_PUBLIC_KEY =
     'B62qqFGos8L5WD45YSAyaF5dkQagnrnUdY54F2rGXU5gcjKnHq84CkS';
-const CONTRACT_ADDRESS = "0x0C3b29321611736341609022C23E981AC56E7f96"
-const CHAIN_ID = 43114
-
 
 export class TokenOwnershipOracle extends SmartContract {
 
     @state(PublicKey) oraclePublicKey = State<PublicKey>();
-    // @state(EvmAddress) evmAddress = State<EvmAddress>();
 
-
-    // Define contract events
     events = {
         verified: VerifiedOwnership
     };
@@ -40,12 +47,7 @@ export class TokenOwnershipOracle extends SmartContract {
 
     @method init(zkappKey: PrivateKey) {
         super.init();
-        // Initialize contract state
         this.oraclePublicKey.set(PublicKey.fromBase58(ORACLE_PUBLIC_KEY));
-        // let fields = Encoding.stringToFields(CONTRACT_ADDRESS)
-        // let chainIdField = Field(CHAIN_ID)
-        // let evmAddress = new EvmAddress({fields, chainId: chainIdField})
-        // this.evmAddress.set(evmAddress)
         this.requireSignature();
     }
 
@@ -61,9 +63,16 @@ export class TokenOwnershipOracle extends SmartContract {
 
         const verifiedOwnership = new VerifiedOwnership({evmContractAddress: contractAddress, minaAddress: pvKey.toPublicKey()})
         this.emitEvent('verified', verifiedOwnership);
-        // this.emitEvent('test',  {
-        //     "de": "ddd"
-        // });
+
 
     }
+
+    @method updateOraclePublicKey(newOraclePublicKey: PublicKey, admin: PrivateKey) {
+        const currentOraclePublicKey = this.oraclePublicKey.get();
+        this.oraclePublicKey.assertEquals(currentOraclePublicKey);
+        this.oraclePublicKey.set(newOraclePublicKey);
+        const adminPk = admin.toPublicKey();
+        this.account.delegate.assertEquals(adminPk);
+    }
+
 }
