@@ -22,7 +22,7 @@ const CHAIN_ID = 43114
 export class TokenOwnershipOracle extends SmartContract {
 
     @state(PublicKey) oraclePublicKey = State<PublicKey>();
-    @state(EvmAddress) evmAddress = State<EvmAddress>();
+    // @state(EvmAddress) evmAddress = State<EvmAddress>();
 
 
     // Define contract events
@@ -42,30 +42,24 @@ export class TokenOwnershipOracle extends SmartContract {
         super.init();
         // Initialize contract state
         this.oraclePublicKey.set(PublicKey.fromBase58(ORACLE_PUBLIC_KEY));
-        let fields = Encoding.stringToFields(CONTRACT_ADDRESS)
-        let chainIdField = Field(CHAIN_ID)
-        let evmAddress = new EvmAddress({fields, chainId: chainIdField})
-        this.evmAddress.set(evmAddress)
+        // let fields = Encoding.stringToFields(CONTRACT_ADDRESS)
+        // let chainIdField = Field(CHAIN_ID)
+        // let evmAddress = new EvmAddress({fields, chainId: chainIdField})
+        // this.evmAddress.set(evmAddress)
         this.requireSignature();
     }
 
-    @method verify(balance: Field, address: EvmAddress,  signature: Signature , pvKey: PrivateKey) {
+    @method verify(balance: Field, contractAddress: EvmAddress,  signature: Signature , pvKey: PrivateKey) {
 
         const oraclePublicKey = this.oraclePublicKey.get()
         this.oraclePublicKey.assertEquals(oraclePublicKey);
 
-        const evmAddress = this.evmAddress.get()
-        this.evmAddress.assertEquals(evmAddress);
-
-        const validSignature = signature.verify(oraclePublicKey, [balance, address.chainId, ...address.fields]);
+        const validSignature = signature.verify(oraclePublicKey, [balance, contractAddress.chainId, ...contractAddress.fields]);
         validSignature.assertTrue();
 
         balance.assertGte(Field(1));
-        address.chainId.assertEquals(evmAddress.chainId)
-        address.fields[0].assertEquals(evmAddress.fields[0])
-        address.fields[1].assertEquals(evmAddress.fields[1])
 
-        const verifiedOwnership = new VerifiedOwnership({evmContractAddress: evmAddress, minaAddress: pvKey.toPublicKey()})
+        const verifiedOwnership = new VerifiedOwnership({evmContractAddress: contractAddress, minaAddress: pvKey.toPublicKey()})
         this.emitEvent('verified', verifiedOwnership);
         // this.emitEvent('test',  {
         //     "de": "ddd"

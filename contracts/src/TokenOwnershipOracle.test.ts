@@ -11,10 +11,9 @@ import {
 } from 'snarkyjs';
 import {EvmAddress} from "./structs";
 
-
 const userExampleData = {
   "data": {
-    "getOwnershipSignedDataTest": {
+    "getOwnershipSignedData": {
       "data": {
         "address": "0x0C3b29321611736341609022C23E981AC56E7f96",
         "chainId": 43114,
@@ -33,8 +32,6 @@ const userExampleData = {
 // The public key of our trusted data provider
 const ORACLE_PUBLIC_KEY =
     'B62qqFGos8L5WD45YSAyaF5dkQagnrnUdY54F2rGXU5gcjKnHq84CkS';
-const CONTRACT_ADDRESS = "0x0C3b29321611736341609022C23E981AC56E7f96"
-const CHAIN_ID = 43114
 
 
 let proofsEnabled = false;
@@ -64,9 +61,13 @@ describe('TokenOwnershipOracle', () => {
       zkAppAddress: PublicKey,
       zkAppPrivateKey: PrivateKey;
 
+
+
   beforeAll(async () => {
     await isReady;
     if (proofsEnabled) TokenOwnershipOracle.compile();
+    let contractAddress = userExampleData.data.getOwnershipSignedData.data.address;
+    let userPrivateKey = PrivateKey.random()
   });
 
   beforeEach(async () => {
@@ -87,9 +88,8 @@ describe('TokenOwnershipOracle', () => {
     await localDeploy(zkAppInstance, zkAppPrivateKey, deployerAccount);
     const oraclePublicKey = zkAppInstance.oraclePublicKey.get();
     expect(oraclePublicKey).toEqual(PublicKey.fromBase58(ORACLE_PUBLIC_KEY));
-    const evmAddress = zkAppInstance.evmAddress.get()
-    expect(evmAddress.fields).toEqual(Encoding.stringToFields(CONTRACT_ADDRESS))
-    expect(evmAddress.chainId).toEqual(Field(CHAIN_ID))
+
+
   });
 
 
@@ -104,22 +104,22 @@ describe('TokenOwnershipOracle', () => {
       // );
       // const data = await response.json();
 
-      const balance = Field(userExampleData.data.getOwnershipSignedDataTest.data.balance)
-      const chainId = Field(userExampleData.data.getOwnershipSignedDataTest.data.chainId)
-      const addressToFields = Encoding.stringToFields(userExampleData.data.getOwnershipSignedDataTest.data.address);
+      const balance = Field(userExampleData.data.getOwnershipSignedData.data.balance)
+      const chainId = Field(userExampleData.data.getOwnershipSignedData.data.chainId)
+      const addressToFields = Encoding.stringToFields(userExampleData.data.getOwnershipSignedData.data.address);
       //TODO: add created at , read about how to use timestamps
 
-      const signature = Signature.fromJSON(userExampleData.data.getOwnershipSignedDataTest.signature);
+      const signature = Signature.fromJSON(userExampleData.data.getOwnershipSignedData.signature);
       const validSignature = signature.verify(PublicKey.fromBase58(ORACLE_PUBLIC_KEY), [balance,chainId,...addressToFields]);
       validSignature.assertTrue()
 
-      let address = new EvmAddress({ fields: addressToFields, chainId: chainId});
+      let contractAddress = new EvmAddress({ fields: addressToFields, chainId: chainId});
 
       const pvKey = PrivateKey.random()
       const txn = await Mina.transaction(deployerAccount, () => {
         zkAppInstance.verify(
             balance,
-            address,
+            contractAddress,
             signature ?? fail('something is wrong with the signature'),
             pvKey
         );
@@ -134,18 +134,18 @@ describe('TokenOwnershipOracle', () => {
       // @ts-ignore
       expect(verifiedEvent.event.minaAddress.toBase58()).toEqual(pvKey.toPublicKey().toBase58());
       // @ts-ignore
-      expect(verifiedEvent.event.evmContractAddress.chainId.toString()).toEqual(String(CHAIN_ID));
+      expect(verifiedEvent.event.evmContractAddress.chainId.toString()).toEqual(String(userExampleData.data.getOwnershipSignedData.data.chainId));
       // @ts-ignore
-      expect(Encoding.stringFromFields(verifiedEvent.event.evmContractAddress.fields)).toEqual(CONTRACT_ADDRESS);
+      expect(Encoding.stringFromFields(verifiedEvent.event.evmContractAddress.fields)).toEqual(userExampleData.data.getOwnershipSignedData.data.address);
     });
     it('errors if wrong chain Id is provided', async () => {
       const zkAppInstance = new TokenOwnershipOracle(zkAppAddress);
       await localDeploy(zkAppInstance, zkAppPrivateKey, deployerAccount);
-      const balance = Field(userExampleData.data.getOwnershipSignedDataTest.data.balance)
-      const chainId = Field(userExampleData.data.getOwnershipSignedDataTest.data.chainId)
-      const addressToFields = Encoding.stringToFields(userExampleData.data.getOwnershipSignedDataTest.data.address);
+      const balance = Field(userExampleData.data.getOwnershipSignedData.data.balance)
+      const chainId = Field(userExampleData.data.getOwnershipSignedData.data.chainId)
+      const addressToFields = Encoding.stringToFields(userExampleData.data.getOwnershipSignedData.data.address);
       //TODO: add created at , read about how to use timestamps
-      const signature = Signature.fromJSON(userExampleData.data.getOwnershipSignedDataTest.signature);
+      const signature = Signature.fromJSON(userExampleData.data.getOwnershipSignedData.signature);
       let snarkyAddress = new EvmAddress({ fields: addressToFields, chainId: Field(1)});
       const pvKey = PrivateKey.random()
       //@ts-ignore
