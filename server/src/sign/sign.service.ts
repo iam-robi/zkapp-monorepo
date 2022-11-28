@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import {PrivateKey, Signature, Field, isReady, Poseidon, Encoding} from "snarkyjs";
-import {User} from "../user/entities/user.entity";
+import {PrivateKey, Signature, Field, isReady, Encoding } from "snarkyjs";
+
 @Injectable()
 export class SignService {
   constructor() {}
@@ -30,7 +30,28 @@ export class SignService {
     };
 
     return result;
-    //console.log(result);
-    // return result;
+
+  }
+  async signTokenBalance(balance: number, address: string, chainId: number) {
+
+    await isReady;
+    const privateKey = PrivateKey.fromBase58(process.env.MINA_PRIVATE_KEY);
+    const publicKey = privateKey.toPublicKey();
+
+    const addressToFields = Encoding.stringToFields(address);
+    //const address = new CircuitString(address)
+    // //TODO: add created at , read about how to use timestamps
+    //
+    const signature = Signature.create(privateKey, [Field(balance), Field(chainId), ...addressToFields])
+    const createdAt = new Date()
+
+    const result = {
+      data: { balance, address,  chainId, createdAt},
+      signature: signature.toJSON(),
+      publicKey: privateKey.toPublicKey(),
+    };
+
+    return result;
+
   }
 }
