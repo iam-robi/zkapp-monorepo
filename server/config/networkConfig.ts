@@ -5,7 +5,8 @@ const networkConfig = {
         rpcUrls: {
             Main: {
                 name: 'Main',
-                url: 'https://rpc.ankr.com/eth',
+                //url: 'https://rpc.ankr.com/eth',
+                url: 'https://eth-rpc.gateway.pokt.network'
             },
             Figment: {
                 name: 'Figment',
