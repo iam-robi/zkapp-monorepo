@@ -2,7 +2,8 @@
 import { defineStore } from 'pinia'
 import { AccountState } from "~/store/account/account.types";
 import { useNuxtApp, useRuntimeConfig } from "#app";
-import {GqlGetOwnershipProof, GqlGetOwnershipSignedData, GqlGetSignedCollectionProof, GqlUserProfile} from "#imports";
+import { GqlGetOwnershipSignedData, GqlUserProfile} from "#imports";
+// import {Encoding, Field, isReady} from "snarkyjs";
 export enum ERCType  {
     ERC20 = 'ERC20',
     ERC721 = 'ERC721'
@@ -17,7 +18,7 @@ export const useAccount = defineStore('account', {
         provider: null,
         userInfo: null,
         balance: null,
-        nfts: []
+        ownershipData: null
     }),
 
     actions: {
@@ -37,8 +38,24 @@ export const useAccount = defineStore('account', {
         getSignedOwnershipData: async function(address: string, ercType: ERCType){
             try {
                 const res = await GqlGetOwnershipSignedData({address, ercType})
+                console.log("res",res)
+                this.ownershipData = res.getOwnershipSignedData
             } catch (error) {
             }
+        },
+        verifyOwnership: async function(){
+            console.log("hello")
+            //await isReady;
+            // const balance = Field(20)
+            // const address = Field(this.ownershipData.data.chainId)
+            // const addressToFields = Encoding.stringToFields(this.ownershipData.data.address);
+            // console.log(balance, address, addressToFields)
+        },
+
+    },
+    getters: {
+        getVerificationData(state){
+
         }
     }
 

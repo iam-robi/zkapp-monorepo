@@ -17,6 +17,7 @@ export default defineNuxtConfig({
                 ],
             },
         ],
+        '@nuxtjs/partytown'
     ],
     runtimeConfig: {
         public: {
@@ -50,7 +51,20 @@ export default defineNuxtConfig({
         ,
     },
     vite: {
+        build: {
+            target: ["es2020"]
+        },
         plugins: [
+            {
+                name: "configure-response-headers",
+                configureServer: (server) => {
+                    server.middlewares.use((_req, res, next) => {
+                        res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+                        res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+                        next();
+                    });
+                },
+            },
             // VueI18nVitePlugin({
             //     include: [
             //         resolve(dirname(fileURLToPath(import.meta.url)), './locales/*.json')
@@ -58,7 +72,8 @@ export default defineNuxtConfig({
             // })
         ],
         define: {
-            'process.env': {}
+            'process.env': {},
+            'imports.env': {}
         },
         optimizeDeps: {
             include:

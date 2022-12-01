@@ -1,3 +1,5 @@
+import {SignedOwnershipData} from "~/types/oracle/graphql";
+
 export interface AccountState {
     address: string
     email: string
@@ -7,7 +9,7 @@ export interface AccountState {
     provider: any
     userInfo: any
     balance: any
-    nfts: []
+    ownershipData: SignedOwnershipData | null
 }
 
 export enum SupportedWalletType {

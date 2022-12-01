@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0dfa547a-01a6-411a-ba84-25916c4a05fc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/ui/pages/Mina.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../ssx/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ssx/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../ssx/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ssx/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../ssx/yarn.lock" afterDir="false" />
     </list>
@@ -133,7 +133,7 @@
       <workItem from="1668721565412" duration="39984000" />
       <workItem from="1669025294461" duration="1868000" />
       <workItem from="1669027442629" duration="31769000" />
-      <workItem from="1669735928543" duration="13174000" />
+      <workItem from="1669735928543" duration="26995000" />
     </task>
     <servers />
   </component>
@@ -161,9 +161,15 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/contracts/build/src/utils/deploy.js</url>
-          <line>26</line>
+          <line>28</line>
           <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/contracts/src/utils/deploy.ts</url>
+          <line>36</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
