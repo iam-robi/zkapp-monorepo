@@ -41,12 +41,12 @@ export class TokenOwnershipOracle extends SmartContract {
         super.deploy(args);
         this.setPermissions({
             ...Permissions.default(),
-            editState: Permissions.proofOrSignature(),
+            editState: Permissions.signature(),
         });
     }
 
     @method init(zkappKey: PrivateKey) {
-        super.init();
+        super.init(zkappKey);
         this.oraclePublicKey.set(PublicKey.fromBase58(ORACLE_PUBLIC_KEY));
         this.requireSignature();
     }
