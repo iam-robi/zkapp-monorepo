@@ -31,7 +31,8 @@
     "ethers": "^5.7.2",
     "naive-ui": "^2.33.5",
     "nuxt-graphql-client": "^0.2.10",
-    "snarkyjs": "^0.7.3"
+    "snarkyjs": "^0.7.3",
+    "vite-plugin-cross-origin-isolation": "^0.1.6"
   },
   "resolutions": {
     "@graphql-codegen/cli": "2.13.4",

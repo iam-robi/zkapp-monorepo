@@ -22,6 +22,9 @@
     <n-space>
 
         <n-button type="info" @click="go">Verify</n-button>
+      <ClientOnly>
+        <Test></Test>
+      </ClientOnly>
 
     </n-space>
   </div>
@@ -30,7 +33,10 @@
 import {NButton, NInput} from "naive-ui";
 import {useAsyncData, useCookie, useFetch, useRoute} from "#app";
 import { useAccount } from "~/store/account/account.index";
-import {useGqlCors} from "#imports";
+import {onMounted, useGqlCors, ref} from "#imports";
+import { Test } from '#components'
+
+
 
 const accountStore = useAccount()
 const go = async function() {

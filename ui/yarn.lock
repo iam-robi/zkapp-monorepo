@@ -7720,6 +7720,11 @@ vite-plugin-checker@^0.5.1:
     vscode-languageserver-textdocument "^1.0.1"
     vscode-uri "^3.0.2"
 
+vite-plugin-cross-origin-isolation@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/vite-plugin-cross-origin-isolation/-/vite-plugin-cross-origin-isolation-0.1.6.tgz#1bde75138ad318da0060cf635a14f3f85d5efb64"
+  integrity sha512-OY0naW9nPUDrKTffYnY7FRYXOgZdHoNwMGpPxUmj/n32mGZi01fcq+J536jkmwGWX7DLT95XBQVHHbrAJzTvrw==
+
 vite@^3.0.0, vite@~3.2.4:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/vite/-/vite-3.2.4.tgz#d8c7892dd4268064e04fffbe7d866207dd24166e"
@@ -8106,3 +8111,8 @@ zip-stream@^4.1.0:
     archiver-utils "^2.1.0"
     compress-commons "^4.1.0"
     readable-stream "^3.6.0"
+
+zkapp-snarkyjs@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/zkapp-snarkyjs/-/zkapp-snarkyjs-0.1.6.tgz#c06f0a7708cfb0314ccf2bb7e867711fcc20349a"
+  integrity sha512-oaZp0noCBgMFl+INB1U7dSpAHDhwm7a65rrB9SEOXFqgOulcKlYpPjvtGgNxugYkZNVbosLili3Xfa6DeIMZqQ==
