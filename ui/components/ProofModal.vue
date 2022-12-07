@@ -56,8 +56,7 @@ Current Step{{snarkyStore.currentStep}} , {{snarkyStore.steps.signInEvm.isFinish
         </div>
       </n-step>
       <n-step title="Get Signed Data" :status="snarkyStore.steps.dataFetch.isFinished ? 'finish' : snarkyStore.steps.signInEvm.isFinished ? 'process': 'wait'">
-        <div class="n-step-description" v-if="snarkyStore.currentStep === 4">
-          <!--          <p>Al through the day, I me mine I me mine, I me mine</p>-->
+        <div class="n-step-description"  v-if="snarkyStore.currentStep === 4" >
           Selected Contract 0x0C3b29321611736341609022C23E981AC56E7f96 (Avalanche)
           <n-button
               v-if="snarkyStore.currentStep === 4"
@@ -70,24 +69,13 @@ Current Step{{snarkyStore.currentStep}} , {{snarkyStore.steps.signInEvm.isFinish
 
         </div>
       </n-step>
-<!--        <div class="n-step-description">-->
-<!--          &lt;!&ndash;          <p>Al through the day, I me mine I me mine, I me mine</p>&ndash;&gt;-->
-<!--          <n-button-->
-<!--              v-if="current === 1"-->
-<!--              size="small"-->
-<!--              @click="accountStore.getSignedOwnershipData('0x0C3b29321611736341609022C23E981AC56E7f96' , 'ERC721')"-->
-<!--          >-->
-<!--            Your oracle approved data for Contract 0x0C3b29321611736341609022C23E981AC56E7f96 (Avalanche)-->
-<!--          </n-button>-->
-<!--        </div>-->
-<!--      </>-->
       <n-step title="Prove on Mina" :status="snarkyStore.steps.proofTransaction.isFinished ? 'finish' : snarkyStore.steps.dataFetch.isFinished ? 'process': 'wait'">
 
         <div class="n-step-description">
           <!--          v-if="snarkyStore.currentStep === 5"   :loading="snarkyStore.steps.proofTransaction.isLoading"   </p>-->
           <n-button
 
-
+              :loading="snarkyStore.steps.proofTransaction.isLoading"
               size="small"
               @click="verify"
           >
@@ -100,23 +88,6 @@ Current Step{{snarkyStore.currentStep}} , {{snarkyStore.steps.signInEvm.isFinish
     </n-steps>
 
   </n-space>
-<!--  Snarky {{snarkyStore.isLoaded ? 'loaded': 'not loaded'}}-->
-<!--  <div v-if="snarkyStore.isLoaded">-->
-<!--    <n-button @click="compileZkApp"> Compile </n-button>-->
-<!--    contract {{snarkyStore.tokenOwnershipOracleIsCompiled ? 'compiled': 'not compiled'}}-->
-<!--  </div>-->
-<!--  <div v-if="snarkyStore.tokenOwnershipOracleIsCompiled">-->
-<!--    <n-button @click="setZkApp"> Set Zk App </n-button>-->
-<!--    zkapp {{snarkyStore.tokenOwnershipOracleIsSet ? 'set': 'not set'}}-->
-<!--  </div>-->
-<!--&lt;!&ndash;  <div v-if="snarkyStore.tokenOwnershipOracleIsSet">&ndash;&gt;-->
-<!--  <div>-->
-<!--    <n-button v-if="!$ssx.session" type="primary" @click="signInToEvm">{{$t('account.signIn')}}</n-button>-->
-<!--    <div>Session Info: {{accountStore.address}} {{$ssx.session}} </div>-->
-<!--    <n-button v-if="$ssx.session" type="primary" @click="fetchCertifiedData"> Get NFT Data for collection 0x0C3b29321611736341609022C23E981AC56E7f96 (Novax AVALANCHE)</n-button>-->
-<!--    <div>{{accountStore.ownershipData}}</div>-->
-<!--  </div>-->
-<!--  <n-button v-if="accountStore.ownershipData" type="primary" @click="verify">Prove on Mina</n-button>-->
 
 </template>
 <script setup>
@@ -214,46 +185,34 @@ const verify = async function() {
 
   let addressToFields =  Encoding.stringToFields(accountStore.ownershipData.data.address)
   let balance = Field(accountStore.ownershipData.data.balance)
-  let chainId = Field(accountStore.ownershipData.data.chainId)
+  let chainId = Field(Number(accountStore.ownershipData.data.chainId))
+
   const signature = Signature.fromJSON(accountStore.ownershipData.signature)
+  // for debugging: check signature
+  const validSignature = signature.verify(PublicKey.fromBase58(snarkyStore.oracleSignerPublicKey), [balance,chainId,...addressToFields]);
+  console.log("validSignature", validSignature)
 
 
-  let { account, error } = await fetchAccount({ publicKey: PublicKey.fromBase58("B62qrYrpVQHev7f1jQ3EaM44nCSFsTYbxCMqqDCm8GCJEZQM8EAVbMG")})
-  let app = new TokenOwnershipOracle(PublicKey.fromBase58("B62qrYrpVQHev7f1jQ3EaM44nCSFsTYbxCMqqDCm8GCJEZQM8EAVbMG"));
-
-
-  //TODO: get privatekey by logging in
-  const pvKey = PrivateKey.fromBase58("")
+  let app = new TokenOwnershipOracle(PublicKey.fromBase58(snarkyStore.tokenOwnershipOracleAddress));
   let contractAddress = new EvmAddress({ fields: addressToFields, chainId: chainId});
 
-
-  let oraclePk = app.oraclePublicKey.get()
-  console.log(oraclePk.toBase58(), "oracle")
-
-  const validSignature = signature.verify(oraclePk, [balance,chainId,...addressToFields]);
-  console.log(validSignature)
-  validSignature.assertTrue()
-  console.log("validSignature")
-  console.log(contractAddress, "contract address struct")
-
-
-  try {
-    const txn = await Mina.transaction(pvKey, () => {
-      app.verify(
-          balance,
-          contractAddress,
-          signature ?? fail('something is wrong with the signature'),
-          pvKey
-      );
-    });
-    await txn.prove();
-    await txn.send();
-
-    accountStore.transaction = txn
-
-  } catch(err) {
-    console.log("error", err)
-  }
+  // try {
+  //   const txn = await Mina.transaction(pvKey, () => {
+  //     app.verify(
+  //         balance,
+  //         contractAddress,
+  //         signature ?? fail('something is wrong with the signature'),
+  //         pvKey
+  //     );
+  //   });
+  //   await txn.prove();
+  //   await txn.send();
+  //
+  //   accountStore.transaction = txn
+  //
+  // } catch(err) {
+  //   console.log("error", err)
+  // }
 
   snarkyStore.steps.proofTransaction.isLoading = false
   snarkyStore.steps.proofTransaction.isFinished = true

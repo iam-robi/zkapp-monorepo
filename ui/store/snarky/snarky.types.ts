@@ -16,6 +16,7 @@ export interface OwnershipOracleSteps {
 export interface SnarkyState {
     isLoaded: Boolean,
     tokenOwnershipOracleAddress: string,
+    oracleSignerPublicKey: string,
     currentStep:  Number,
     account?: any,
     zkApp?: any,

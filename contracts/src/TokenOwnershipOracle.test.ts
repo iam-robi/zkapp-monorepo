@@ -110,6 +110,12 @@ describe('TokenOwnershipOracle', () => {
       const signature = Signature.fromJSON(userExampleData.data.getOwnershipSignedData.signature);
       const validSignature = signature.verify(PublicKey.fromBase58(ORACLE_PUBLIC_KEY), [balance,chainId,...addressToFields]);
       validSignature.assertTrue()
+      console.log("validSignature", validSignature)
+      console.log("signature", signature)
+
+      console.log("balance", balance)
+      console.log("chainId", chainId)
+      console.log("addresstoFields", addressToFields[0])
 
       let contractAddress = new EvmAddress({ fields: addressToFields, chainId: chainId});
 

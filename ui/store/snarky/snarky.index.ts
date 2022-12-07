@@ -9,6 +9,7 @@ export const useSnarky = defineStore('snarky', {
     state: (): SnarkyState => ({
         isLoaded: false,
         tokenOwnershipOracleAddress: "B62qrYrpVQHev7f1jQ3EaM44nCSFsTYbxCMqqDCm8GCJEZQM8EAVbMG",
+        oracleSignerPublicKey: "B62qqFGos8L5WD45YSAyaF5dkQagnrnUdY54F2rGXU5gcjKnHq84CkS",
         account: undefined,
         zkApp: undefined,
         currentStep: 0,
