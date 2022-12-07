@@ -64,7 +64,6 @@ type Query {
   contracts(search: String, withDeleted: Boolean): GetContractListResponse!
   contract(id: ID!, withDeleted: Boolean): Contract
   getOwnershipSignedData(address: String!, ercType: String!): SignedOwnershipData!
-  getOwnershipSignedDataTest: SignedOwnershipData!
 }
 
 type Mutation {

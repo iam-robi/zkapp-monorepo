@@ -26,7 +26,7 @@ export class ContractService extends BaseService<Contract>{
   }
 
 
-  async verify(address: string, chainId: Number, ercType: ERCType, userAddress: string) {
+  async getBalanceData(address: string, chainId: Number, ercType: ERCType, userAddress: string) {
 
     const contractData = await this.repository.findOne({
       address,
@@ -79,14 +79,13 @@ export class ContractService extends BaseService<Contract>{
     }
 
     const createdAt = new Date();
-    let result = {
+    return {
       address,
       chainId,
       createdAt,
       balance
-    }
-    let signedResult = await this.signService.minaSign(result);
-    return  signedResult
+    };
+
 
   }
 }
