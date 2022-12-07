@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0dfa547a-01a6-411a-ba84-25916c4a05fc" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/../ssx/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/components/ProofModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/components/ProofModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/store/snarky/snarky.index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/store/snarky/snarky.index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/store/snarky/snarky.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/store/snarky/snarky.types.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ssx/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../ssx/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ssx/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../ssx/yarn.lock" afterDir="false" />
     </list>
@@ -16,7 +12,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/contracts" />
   </component>
   <component name="KubernetesApiPersistence">
     <option name="context" value="gke_oip-cluster_europe-west1_saas-prod-cluster" />
@@ -139,7 +135,7 @@
       <workItem from="1669735928543" duration="41957000" />
       <workItem from="1669979059728" duration="599000" />
       <workItem from="1670002916064" duration="11871000" />
-      <workItem from="1670364232952" duration="39471000" />
+      <workItem from="1670364232952" duration="39533000" />
     </task>
     <servers />
   </component>
@@ -177,7 +173,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/contracts/src/TokenOwnershipOracle.test.ts</url>
-          <line>123</line>
+          <line>117</line>
           <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="9" />
         </line-breakpoint>
