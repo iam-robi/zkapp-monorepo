@@ -9,7 +9,9 @@ export interface AccountState {
     provider: any
     userInfo: any
     balance: any
-    ownershipData: SignedOwnershipData | null
+    ownershipData: SignedOwnershipData | null,
+    session: any,
+    transaction: any
 }
 
 export enum SupportedWalletType {

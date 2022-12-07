@@ -18,7 +18,9 @@ export const useAccount = defineStore('account', {
         provider: null,
         userInfo: null,
         balance: null,
-        ownershipData: null
+        ownershipData: null,
+        session: null,
+        transaction: null
     }),
 
     actions: {
@@ -27,7 +29,10 @@ export const useAccount = defineStore('account', {
             let { $ssx } = useNuxtApp();
             await $ssx.signIn();
             const userAddress = $ssx.address();
-            const session = $ssx.session;
+            const userSession = $ssx.session;
+            this.address = userAddress;
+            this.session = $ssx.session;
+
         },
         getUserInfo: async function(){
             try {
@@ -45,8 +50,9 @@ export const useAccount = defineStore('account', {
         },
         verifyOwnership: async function(){
             console.log("hello")
+
             //await isReady;
-            // const balance = Field(20)
+
             // const address = Field(this.ownershipData.data.chainId)
             // const addressToFields = Encoding.stringToFields(this.ownershipData.data.address);
             // console.log(balance, address, addressToFields)

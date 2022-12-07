@@ -1,4 +1,4 @@
 // import {OracleExample } from './CreditScoreOracle'
-import {TokenOwnershipOracle} from "./TokenOwnershipOracle";
+import {TokenOwnershipOracle , EvmAddress} from "./TokenOwnershipOracle";
 
-export { TokenOwnershipOracle };
+export { TokenOwnershipOracle , EvmAddress };

@@ -2,15 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0dfa547a-01a6-411a-ba84-25916c4a05fc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ui/components/Test.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/components/Tutorial.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/pages/index.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/public/test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/app.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/components/ProofModal.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/layouts/default.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/pages/proofofownership.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/pages/proofoftrade.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/store/snarky/snarky.index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/store/snarky/snarky.types.ts" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../ssx/.idea/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/nuxt.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/nuxt.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/components/Test.vue" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/ui/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/pages/Mina.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/pages/Mina.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/public/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/ui/public/test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/store/account/account.index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/store/account/account.index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/store/account/account.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/store/account/account.types.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ui/yarn.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ssx/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../ssx/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ssx/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../ssx/yarn.lock" afterDir="false" />
@@ -143,7 +149,8 @@
       <workItem from="1669027442629" duration="31769000" />
       <workItem from="1669735928543" duration="41957000" />
       <workItem from="1669979059728" duration="599000" />
-      <workItem from="1670002916064" duration="7161000" />
+      <workItem from="1670002916064" duration="11871000" />
+      <workItem from="1670364232952" duration="31872000" />
     </task>
     <servers />
   </component>
@@ -180,15 +187,22 @@
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/ui/nuxt.config.ts</url>
-          <line>47</line>
-          <option name="timeStamp" value="6" />
+          <url>file://$PROJECT_DIR$/contracts/src/TokenOwnershipOracle.test.ts</url>
+          <line>117</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/ui/nuxt.config.ts</url>
-          <line>14</line>
+          <url>file://$PROJECT_DIR$/ui/components/ProofModal.vue</url>
+          <line>211</line>
           <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="7" />
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/ui/components/ProofModal.vue</url>
+          <line>175</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="15" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

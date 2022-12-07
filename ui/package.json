@@ -28,11 +28,13 @@
     "@css-render/vue3-ssr": "^0.15.11",
     "@pinia/nuxt": "^0.4.2",
     "@spruceid/ssx": "^1.0.0",
+    "@vicons/ionicons4": "^0.12.0",
     "ethers": "^5.7.2",
     "naive-ui": "^2.33.5",
     "nuxt-graphql-client": "^0.2.10",
     "snarkyjs": "^0.7.3",
-    "vite-plugin-cross-origin-isolation": "^0.1.6"
+    "vite-plugin-cross-origin-isolation": "^0.1.6",
+    "zkapp-oracles": "0.1.2"
   },
   "resolutions": {
     "@graphql-codegen/cli": "2.13.4",
