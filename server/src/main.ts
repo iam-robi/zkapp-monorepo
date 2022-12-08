@@ -33,6 +33,7 @@ async function bootstrap() {
   const options = {
     //TODO: set single host in prod https://github.com/nestjs/nest/issues/1579
     "origin": true,
+    domain: "mina-oracle-ui.dev.lensuscloud.com",
     // "methods": "GET,HEAD,PUT,PATCH,POST",
     // "preflightContinue": false,
     // "optionsSuccessStatus": 204,
