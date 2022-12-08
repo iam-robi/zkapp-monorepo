@@ -11,10 +11,8 @@
 </template>
 <script setup lang="ts">
 
-import { useGqlCors } from "#imports";
 import ProofModal from "~/components/ProofModal.vue";
 import {NCard, NLayout} from "naive-ui";
-useGqlCors({credentials: "include" , client: 'oracle'})
 
 </script>
 <style scoped>

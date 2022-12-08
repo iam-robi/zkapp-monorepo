@@ -9,6 +9,15 @@ const ssx = new SSXServer({
   signingKey: process.env.APP_SECRET,
   providers: {
     metrics: { service: "ssx", apiKey: process.env.SSX_API_KEY },
+    sessionConfig: {
+
+      //https://github.com/DefinitelyTyped/DefinitelyTyped/blob/a24d35afe48f7fb702e7617b983ddca1904ba36b/types/express-session/index.d.ts#L52
+      sessionOptions: {
+        cookie: {
+          domain: "lensuscloud.com"
+        }
+      }
+    }
   },
 });
 
