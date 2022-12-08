@@ -12,6 +12,9 @@ export class SSXGuard {
         const ctx = GqlExecutionContext.create(context);
         const req = ctx.getContext().req
         const ssx = req.ssx
+
+        console.log(req.headers.cookie)
+
         console.log("ssx", ssx.verified)
         if(!ssx.verified){
             console.log("Not Signed In with an EVM Chain")
