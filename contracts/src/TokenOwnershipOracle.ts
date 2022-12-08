@@ -8,7 +8,7 @@ import {
     Permissions,
     PublicKey,
     Signature,
-    PrivateKey, Struct, Encoding,
+    PrivateKey, Struct, Encoding, AccountUpdate,
 } from 'snarkyjs';
 
 
@@ -51,7 +51,8 @@ export class TokenOwnershipOracle extends SmartContract {
         this.requireSignature();
     }
 
-    @method verify(balance: Field, contractAddress: EvmAddress,  signature: Signature , pvKey: PrivateKey) {
+    //TODO: private key can't be sent as argument by auro wallet - how to access signer of the transaction ?
+    @method verify(balance: Field, contractAddress: EvmAddress,  signature: Signature , publicKey: PublicKey) {
 
         const oraclePublicKey = this.oraclePublicKey.get()
         this.oraclePublicKey.assertEquals(oraclePublicKey);
@@ -61,9 +62,8 @@ export class TokenOwnershipOracle extends SmartContract {
 
         balance.assertGte(Field(1));
 
-        const verifiedOwnership = new VerifiedOwnership({evmContractAddress: contractAddress, minaAddress: pvKey.toPublicKey()})
+        const verifiedOwnership = new VerifiedOwnership({evmContractAddress: contractAddress, minaAddress: publicKey})
         this.emitEvent('verified', verifiedOwnership);
-
 
     }
 

@@ -97,11 +97,6 @@ describe('TokenOwnershipOracle', () => {
       const zkAppInstance = new TokenOwnershipOracle(zkAppAddress);
       await localDeploy(zkAppInstance, zkAppPrivateKey, deployerAccount);
 
-      // const response = await fetch(
-      //     'https://mina-credit-score-signer-pe3eh.ondigitalocean.app/user/1'
-      // );
-      // const data = await response.json();
-
       const balance = Field(userExampleData.data.getOwnershipSignedData.data.balance)
       const chainId = Field(userExampleData.data.getOwnershipSignedData.data.chainId)
       const addressToFields = Encoding.stringToFields(userExampleData.data.getOwnershipSignedData.data.address);
@@ -113,16 +108,20 @@ describe('TokenOwnershipOracle', () => {
 
       let contractAddress = new EvmAddress({ fields: addressToFields, chainId: chainId});
 
+
       const pvKey = PrivateKey.random()
+
       const txn = await Mina.transaction(deployerAccount, () => {
+        //AccountUpdate.fundNewAccount(pvKey);
         zkAppInstance.verify(
             balance,
             contractAddress,
             signature ?? fail('something is wrong with the signature'),
-            pvKey
+            pvKey.toPublicKey()
         );
       });
       await txn.prove();
+      await txn.sign();
       await txn.send();
       //
       const events = await zkAppInstance.fetchEvents();
@@ -145,21 +144,27 @@ describe('TokenOwnershipOracle', () => {
       //TODO: add created at , read about how to use timestamps
       const signature = Signature.fromJSON(userExampleData.data.getOwnershipSignedData.signature);
       let snarkyAddress = new EvmAddress({ fields: addressToFields, chainId: Field(1)});
-      const pvKey = PrivateKey.random()
+      const randomUser = PrivateKey.random()
+      await Mina.transaction(deployerAccount, () => {
+        AccountUpdate.fundNewAccount(randomUser)
+      })
+
       //@ts-ignore
       expect(async () => {
-        await Mina.transaction(deployerAccount, () => {
+        await Mina.transaction(randomUser, () => {
+
           zkAppInstance.verify(
               balance,
               snarkyAddress,
               signature ?? fail('something is wrong with the signature'),
-              pvKey
+              randomUser.toPublicKey()
           );
         });
       }).rejects;
     });
     it.todo('errors if signature is wrong');
     it.todo('errors if balance below 1');
+    it.todo('errors if feepayer is not same as public key provided (modify smart contract)');
   });
 
   describe('admin', () => {
