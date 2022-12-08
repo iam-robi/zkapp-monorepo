@@ -31,7 +31,7 @@ export default defineNuxtConfig({
             'graphql-client':{
                 clients: {
                     oracle: {
-                        host: process.env.ORACLE_SERVER_ENDPOINT
+                        host: `${process.env.VITE_ORACLE_SERVER_ENDPOINT}/graphql`
                     }
                 }
             }

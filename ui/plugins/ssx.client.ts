@@ -1,4 +1,4 @@
-import {defineNuxtPlugin} from "#app";
+import {defineNuxtPlugin, useRuntimeConfig} from "#app";
 import { SSX } from "@spruceid/ssx";
 
 
@@ -9,11 +9,13 @@ const ssx = new SSX({
     providers: {
         // @ts-ignore
         web3: { driver: window.ethereum },
-        server: { host: process.env.ORACLE_SERVER_ENDPOINT },
+        server: { host: import.meta.env["VITE_ORACLE_SERVER_ENDPOINT"] },
     },
 });
 
 export default defineNuxtPlugin(( nuxtApp) => {
 
+    const runtimeConfig = useRuntimeConfig()
+    console.log(runtimeConfig.public)
     nuxtApp.provide('ssx', ssx)
 })
