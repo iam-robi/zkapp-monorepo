@@ -15,7 +15,7 @@ const ssx = new SSXServer({
       sessionOptions: {
         cookie: {
           maxAge: 1000 * 60 * 60,
-          // domain: "mina-oracle-ui.dev.lensuscloud.com",
+          domain: "mina-oracle-ui.dev.lensuscloud.com",
           sameSite: "none",
           secure: true
         }
@@ -28,9 +28,10 @@ const ssx = new SSXServer({
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(cookieParser());
+
   const options = {
     //TODO: set single host in prod https://github.com/nestjs/nest/issues/1579
-    "origin": /^(.*)/,
+    "origin": "https://mina-oracle-ui.dev.lensuscloud.com",
     "methods": "GET,HEAD,PUT,PATCH,POST",
     "preflightContinue": false,
     "optionsSuccessStatus": 204,
