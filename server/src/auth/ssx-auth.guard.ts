@@ -14,6 +14,7 @@ export class SSXGuard {
         const ssx = req.ssx
 
         console.log(req.headers.cookie)
+        console.log(ssx.getExpressSessionConfig())
 
         console.log("ssx", ssx.verified)
         if(!ssx.verified){
