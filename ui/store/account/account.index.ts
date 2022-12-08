@@ -24,7 +24,8 @@ export const useAccount = defineStore('account',
             transaction: null,
             minaAccounts: null,
             minaAddress: null,
-            minaInstalled: false
+            minaInstalled: false,
+            minaLoggedIn: false
         }),
 
         actions: {

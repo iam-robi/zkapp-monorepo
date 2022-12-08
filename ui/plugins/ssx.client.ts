@@ -16,6 +16,5 @@ const ssx = new SSX({
 export default defineNuxtPlugin(( nuxtApp) => {
 
     const runtimeConfig = useRuntimeConfig()
-    console.log(runtimeConfig.public)
     nuxtApp.provide('ssx', ssx)
 })
