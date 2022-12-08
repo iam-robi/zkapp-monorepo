@@ -1,0 +1,28 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+# GitHub recommends pinning actions to a commit SHA.
+# To get a newer version, you will need to update the SHA.
+# You can also reference a tag or branch, but the action may change without warning.
+
+name: Publish Docker image
+
+on:
+  push:
+    branches: [main]
+
+
+jobs:
+  use-release:
+    uses: OpenInnovationProgram/github-workflows/.github/workflows/server-node-dockerhub-release.yml@main
+    with:
+      context: ./server
+      argo_template_name: .oracle.yaml.template
+      registry_path: iam0robi/mina-oracle-server
+    secrets:
+      argo_template_path: ${{ secrets.ARGO_TEMPLATE_PATH }}
+      repo_auth_url: ${{ secrets.REPO_AUTH_URL }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
