@@ -31,7 +31,7 @@ export default defineNuxtConfig({
             'graphql-client':{
                 clients: {
                     oracle: {
-                        host: 'http://localhost:3008/graphql'
+                        host: process.env.ORACLE_SERVER_ENDPOINT
                     }
                 }
             }
@@ -62,24 +62,7 @@ export default defineNuxtConfig({
             target: "es2020"
         },
         plugins: [
-            // {
-            //     name: "configure-response-headers",
-            //     configureServer: (server) => {
-            //         server.middlewares.use((_req, res, next) => {
-            //             res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
-            //             res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
-            //             res.setHeader("Cross-Origin-Resource-Policy", "same-site");
-            //             // Cross-Origin-Resource-Policy: same-site
-            //             next();
-            //         });
-            //     },
-            // },
             crossOriginIsolation()
-            // VueI18nVitePlugin({
-            //     include: [
-            //         resolve(dirname(fileURLToPath(import.meta.url)), './locales/*.json')
-            //     ]
-            // })
         ],
         define: {
             'process.env': {},

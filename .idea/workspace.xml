@@ -4,6 +4,12 @@
     <list default="true" id="0dfa547a-01a6-411a-ba84-25916c4a05fc" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/../ssx/.idea/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/components/ProofModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/components/ProofModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/nuxt.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/nuxt.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/ui/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/types/oracle/fragment-masking.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/types/oracle/fragment-masking.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/types/oracle/graphql.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/types/oracle/graphql.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ui/yarn.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ssx/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../ssx/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ssx/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../ssx/yarn.lock" afterDir="false" />
     </list>
@@ -13,7 +19,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/contracts" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="KubernetesApiPersistence">
     <option name="context" value="gke_oip-cluster_europe-west1_saas-prod-cluster" />
@@ -136,7 +142,8 @@
       <workItem from="1669735928543" duration="41957000" />
       <workItem from="1669979059728" duration="599000" />
       <workItem from="1670002916064" duration="11871000" />
-      <workItem from="1670364232952" duration="52143000" />
+      <workItem from="1670364232952" duration="54054000" />
+      <workItem from="1670495365321" duration="2426000" />
     </task>
     <servers />
   </component>
@@ -175,26 +182,28 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/contracts/src/TokenOwnershipOracle.test.ts</url>
           <line>115</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/ui/components/ProofModal.vue</url>
           <line>182</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/ui/components/ProofModal.vue</url>
           <line>146</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/contracts/src/TokenOwnershipOracle.test.ts</url>
           <line>137</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/ui/nuxt.config.ts</url>
+          <line>28</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

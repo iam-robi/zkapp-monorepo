@@ -196,27 +196,36 @@ const verify = async function() {
   let app = new TokenOwnershipOracle(PublicKey.fromBase58(snarkyStore.tokenOwnershipOracleAddress));
   let contractAddress = new EvmAddress({ fields: addressToFields, chainId: chainId});
 
-  //TODO: avoid sending private key in arguments (not supported by Auro), get address from signer in smart contract
-  // try {
-  //   const txn = await Mina.transaction(pvKey, () => {
-  //     app.verify(
-  //         balance,
-  //         contractAddress,
-  //         signature ?? fail('something is wrong with the signature'),
-  //         pvKey
-  //     );
-  //   });
-  //   console.log("start proving")
-  //   await txn.prove();
+
+  try {
+    const txn = await Mina.transaction(() => {
+      app.verify(
+          balance,
+          contractAddress,
+          signature ?? fail('something is wrong with the signature'),
+          PublicKey.fromBase58(accountStore.minaAccounts[0])
+      );
+    });
+    console.log(txn)
+
+      console.log("start proving")
+      //TODO: proving completeley
+      await txn.prove();
+
+
+      const { hash } = await window.mina.sendTransaction({
+      transaction: txn.toJSON(),
+      feePayer: {
+        fee: 0.1,
+        memo: "zk"
+      }
+      })
+      console.log("transaction hash", hash);//
+      accountStore.transaction = hash
   //
-  //   console.log("start sending")
-  //   await txn.send();
-  //
-  //   accountStore.transaction = txn
-  //
-  // } catch(err) {
-  //   console.log("error", err)
-  // }
+  } catch(err) {
+    console.log("error", err)
+  }
 
   snarkyStore.steps.proofTransaction.isLoading = false
   snarkyStore.steps.proofTransaction.isFinished = true

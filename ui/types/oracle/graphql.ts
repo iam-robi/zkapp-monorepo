@@ -71,7 +71,6 @@ export type Query = {
   contract?: Maybe<Contract>;
   contracts: GetContractListResponse;
   getOwnershipSignedData: SignedOwnershipData;
-  getOwnershipSignedDataTest: SignedOwnershipData;
   userProfile: SignedUser;
 };
 
