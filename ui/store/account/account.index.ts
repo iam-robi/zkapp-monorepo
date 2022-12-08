@@ -31,6 +31,7 @@ export const useAccount = defineStore('account',
             signIn: async function () {
                 const config = useRuntimeConfig();
                 let {$ssx} = useNuxtApp();
+                console.log($ssx)
                 await $ssx.signIn();
                 const userAddress = $ssx.address();
                 const userSession = $ssx.session;
