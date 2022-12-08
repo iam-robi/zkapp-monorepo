@@ -12,14 +12,14 @@ const ssx = new SSXServer({
     sessionConfig: {
 
       //https://github.com/DefinitelyTyped/DefinitelyTyped/blob/a24d35afe48f7fb702e7617b983ddca1904ba36b/types/express-session/index.d.ts#L52
-      // sessionOptions: {
-      //   cookie: {
-      //     maxAge: 1000 * 60 * 60,
-      //     domain: "mina-oracle-ui.dev.lensuscloud.com",
-      //     sameSite: "lax",
-      //     secure: true
-      //   }
-      // }
+      sessionOptions: {
+        cookie: {
+          maxAge: 1000 * 60 * 60,
+          domain: "mina-oracle-ui.dev.lensuscloud.com",
+          // sameSite: "lax",
+          secure: true
+        }
+      }
     }
   },
 });
@@ -32,8 +32,7 @@ async function bootstrap() {
 
   const options = {
     //TODO: set single host in prod https://github.com/nestjs/nest/issues/1579
-    "origin": true,
-    domain: "mina-oracle-ui.dev.lensuscloud.com",
+    "origin": "https://mina-oracle-ui.dev.lensuscloud.com",
     // "methods": "GET,HEAD,PUT,PATCH,POST",
     // "preflightContinue": false,
     // "optionsSuccessStatus": 204,
