@@ -196,6 +196,7 @@ const verify = async function() {
   let app = new TokenOwnershipOracle(PublicKey.fromBase58(snarkyStore.tokenOwnershipOracleAddress));
   let contractAddress = new EvmAddress({ fields: addressToFields, chainId: chainId});
 
+  //TODO: avoid sending private key in arguments (not supported by Auro), get address from signer in smart contract
   // try {
   //   const txn = await Mina.transaction(pvKey, () => {
   //     app.verify(
@@ -205,7 +206,10 @@ const verify = async function() {
   //         pvKey
   //     );
   //   });
+  //   console.log("start proving")
   //   await txn.prove();
+  //
+  //   console.log("start sending")
   //   await txn.send();
   //
   //   accountStore.transaction = txn

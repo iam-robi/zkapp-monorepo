@@ -11,7 +11,11 @@ export interface AccountState {
     balance: any
     ownershipData: SignedOwnershipData | null,
     session: any,
-    transaction: any
+    transaction: any,
+    minaAccounts: any,
+    minaAddress: string | null,
+    minaInstalled: Boolean,
+    minaLoggedIn: true
 }
 
 export enum SupportedWalletType {

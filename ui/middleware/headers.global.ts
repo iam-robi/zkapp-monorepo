@@ -1,11 +1,15 @@
 import {defineNuxtRouteMiddleware} from "#imports";
+import {useAccount} from "~/store/account/account.index";
+import {useNuxtApp} from "#app";
+export default defineNuxtRouteMiddleware(async (to, from)=> {
+    const accountStore = useAccount();
+    const {$mina} = useNuxtApp()
+    if(!$mina){
+        accountStore.minaInstalled = false
+    }
+    if($mina){
+        accountStore.minaInstalled = true
+        console.log($mina)
+    }
 
-export default defineNuxtRouteMiddleware((to, from)=> {
-    // console.log("headers middleware", to , from)
-    // res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
-    // res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
-    // if (to.params.id === '1') {
-    //     return abortNavigation()
-    // }
-    // return navigateTo('/')
 })
