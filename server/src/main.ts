@@ -15,7 +15,7 @@ const ssx = new SSXServer({
       sessionOptions: {
         cookie: {
           maxAge: 1000 * 60 * 60,
-          domain: "lensuscloud.com",
+          domain: "mina-oracle-ui.dev.lensuscloud.com",
           sameSite: "lax",
           secure: true
         }
