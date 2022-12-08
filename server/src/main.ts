@@ -9,19 +9,19 @@ const ssx = new SSXServer({
   signingKey: process.env.APP_SECRET,
   providers: {
     metrics: { service: "ssx", apiKey: process.env.SSX_API_KEY },
-    sessionConfig: {
-
-      //https://github.com/DefinitelyTyped/DefinitelyTyped/blob/a24d35afe48f7fb702e7617b983ddca1904ba36b/types/express-session/index.d.ts#L52
-      sessionOptions: {
-        cookie: {
-          maxAge: 1000 * 60 * 60,
-          domain: "ui.oracle.staging.lensuscloud.com",
-          // sameSite: "lax",
-          sameSite: "none",
-          secure: true
-        }
-      }
-    }
+    // sessionConfig: {
+    //
+    //   //https://github.com/DefinitelyTyped/DefinitelyTyped/blob/a24d35afe48f7fb702e7617b983ddca1904ba36b/types/express-session/index.d.ts#L52
+    //   sessionOptions: {
+    //     cookie: {
+    //       maxAge: 1000 * 60 * 60,
+    //       domain: "ui.oracle.staging.lensuscloud.com",
+    //       // sameSite: "lax",
+    //       sameSite: "none",
+    //       secure: true
+    //     }
+    //   }
+    // }
   },
 });
 
