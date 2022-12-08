@@ -9,7 +9,7 @@ const ssx = new SSX({
     providers: {
         // @ts-ignore
         web3: { driver: window.ethereum },
-        server: { host: "http://localhost:3008" },
+        server: { host: process.env.ORACLE_SERVER_ENDPOINT },
     },
 });
 
