@@ -1,24 +1,26 @@
-import {SignedOwnershipData} from "~/types/oracle/graphql";
-import {TokenOwnershipOracle} from "zkapp-oracles";
+import { SignedOwnershipData } from "~/types/oracle/graphql";
+import { TokenOwnershipOracle } from "zkapp-oracles";
 export interface StepInfo {
-    isLoading: Boolean,
-    isFinished: Boolean
+  isLoading: Boolean;
+  isFinished: Boolean;
 }
 export interface OwnershipOracleSteps {
-    snarkyLoad: StepInfo,
-    compilation: StepInfo,
-    instance: StepInfo,
-    signInEvm: StepInfo,
-    dataFetch: StepInfo,
-    proofTransaction: StepInfo
+  snarkyLoad: StepInfo;
+  compilation: StepInfo;
+  instance: StepInfo;
+  signInEvm: StepInfo;
+  dataFetch: StepInfo;
+  proofTransaction: StepInfo;
 }
 
 export interface SnarkyState {
-    isLoaded: Boolean,
-    tokenOwnershipOracleAddress: string,
-    oracleSignerPublicKey: string,
-    currentStep:  Number,
-    account?: any,
-    zkApp?: any,
-    steps: OwnershipOracleSteps
+  isLoaded: Boolean;
+  tokenOwnershipOracleAddress: string;
+  oracleSignerPublicKey: string;
+  selectedTokenAddress: string | null;
+  selectedChainId: number;
+  currentStep: Number;
+  account?: any;
+  zkApp?: any;
+  steps: OwnershipOracleSteps;
 }

@@ -3,7 +3,6 @@
 Current Step{{snarkyStore.currentStep}} , {{snarkyStore.steps.signInEvm.isFinished ? `Connected to ${accountStore.address}` : ''}}
     Data: {{accountStore.ownershipData}}
     <n-steps vertical :current="snarkyStore.currentStep" >
-
       <n-step
           :status="snarkyStore.isLoaded ? 'finish' : 'process'"
           title="Load Snarky JS"
@@ -29,7 +28,7 @@ Current Step{{snarkyStore.currentStep}} , {{snarkyStore.steps.signInEvm.isFinish
 
         </div>
       </n-step>
-      <n-step title="Set ZkApp Instance" :status="snarkyStore.steps.instance.isFinished ? 'finish' : snarkyStore.steps.compilation.isFinished ? 'process': 'wait'">
+      <n-step title="Get ZkApp Instance Info" :status="snarkyStore.steps.instance.isFinished ? 'finish' : snarkyStore.steps.compilation.isFinished ? 'process': 'wait'">
         <div class="n-step-description">
           <!--          <p>Al through the day, I me mine I me mine, I me mine</p>-->
           <n-button
@@ -71,10 +70,12 @@ Current Step{{snarkyStore.currentStep}} , {{snarkyStore.steps.signInEvm.isFinish
       </n-step>
       <n-step title="Prove on Mina" :status="snarkyStore.steps.proofTransaction.isFinished ? 'finish' : snarkyStore.steps.dataFetch.isFinished ? 'process': 'wait'">
 
-        <div class="n-step-description">
+
+        <div class="n-step-description" v-if="snarkyStore.currentStep === 5">
           <!--          v-if="snarkyStore.currentStep === 5"   :loading="snarkyStore.steps.proofTransaction.isLoading"   </p>-->
+          <MinaLogIn v-if="!accountStore.minaLoggedIn"></MinaLogIn>
           <n-button
-              v-if="snarkyStore.currentStep === 5"
+              v-if="snarkyStore.currentStep === 5 && accountStore.minaLoggedIn"
               :loading="snarkyStore.steps.proofTransaction.isLoading"
               size="small"
               @click="verify"
@@ -109,6 +110,8 @@ import {onMounted, ref, computed} from "#imports";
 import { useAccount } from "../store/account/account.index";
 import {useSnarky} from "../store/snarky/snarky.index";
 import {TokenOwnershipOracle , EvmAddress} from "zkapp-oracles";
+import MinaLogIn from "~/components/wallets/MinaLogIn";
+
 const accountStore = useAccount()
 
 
@@ -155,7 +158,8 @@ const setZkApp = async () => {
   try {
     snarkyStore.zkApp = new TokenOwnershipOracle(PublicKey.fromBase58("B62qrYrpVQHev7f1jQ3EaM44nCSFsTYbxCMqqDCm8GCJEZQM8EAVbMG"));
     let value = snarkyStore.zkApp.oraclePublicKey.get()
-    console.log(`Found deployed zkapp, with state ${value.toBase58()}`);
+
+    console.log(`Found deployed zkapp, with state oraclePublic Key =  ${value.toBase58()}`);
   } catch (error) {
     console.log(error)
   }

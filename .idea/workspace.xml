@@ -2,10 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0dfa547a-01a6-411a-ba84-25916c4a05fc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/prettier.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/components/wallets/MinaLogIn.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../ssx/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/server-publish.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/server-publish.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/components/ProofModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/components/ProofModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/vercel.json" beforeDir="false" afterPath="$PROJECT_DIR$/ui/vercel.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/layouts/default.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/layouts/default.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/pages/Mina.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/store/account/account.index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/store/account/account.index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/store/account/account.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/store/account/account.types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/store/snarky/snarky.index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/store/snarky/snarky.index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/store/snarky/snarky.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/store/snarky/snarky.types.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ssx/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../ssx/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ssx/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../ssx/yarn.lock" afterDir="false" />
     </list>
@@ -29,22 +37,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Project.color&quot;: &quot;454f32&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/robin.sarfati/mina/mina-server&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/robin.sarfati/oip/astronot-api/node_modules/prettier&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.editor&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/robin.sarfati/mina/ssx/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Project.color": "454f32",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/Users/robin.sarfati/mina/mina-server",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "prettierjs.PrettierConfiguration.Package": "/Users/robin.sarfati/mina/mina-server/server/node_modules/prettier",
+    "settings.editor.selected.configurable": "settings.javascript.prettier",
+    "ts.external.directory.path": "/Users/robin.sarfati/mina/ssx/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/migrations" />
@@ -110,6 +118,9 @@
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="0dfa547a-01a6-411a-ba84-25916c4a05fc" name="Changes" comment="" />
@@ -140,6 +151,7 @@
       <workItem from="1670002916064" duration="11871000" />
       <workItem from="1670364232952" duration="54054000" />
       <workItem from="1670495365321" duration="3582000" />
+      <workItem from="1670580463658" duration="2815000" />
     </task>
     <servers />
   </component>
@@ -182,18 +194,24 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/ui/components/ProofModal.vue</url>
-          <line>182</line>
+          <line>186</line>
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/ui/components/ProofModal.vue</url>
-          <line>146</line>
+          <line>149</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/contracts/src/TokenOwnershipOracle.test.ts</url>
           <line>137</line>
           <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/ui/components/ProofModal.vue</url>
+          <line>70</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
