@@ -46,7 +46,7 @@ Current Step{{snarkyStore.currentStep}} , {{snarkyStore.steps.signInEvm.isFinish
         <div class="n-step-description">
           <!--          <p>Al through the day, I me mine I me mine, I me mine</p>-->
           <n-button
-
+              v-if="snarkyStore.currentStep === 3"
               :loading="snarkyStore.steps.signInEvm.isLoading"
               size="small"
               @click="signInToEvm"
@@ -74,7 +74,7 @@ Current Step{{snarkyStore.currentStep}} , {{snarkyStore.steps.signInEvm.isFinish
         <div class="n-step-description">
           <!--          v-if="snarkyStore.currentStep === 5"   :loading="snarkyStore.steps.proofTransaction.isLoading"   </p>-->
           <n-button
-
+              v-if="snarkyStore.currentStep === 5"
               :loading="snarkyStore.steps.proofTransaction.isLoading"
               size="small"
               @click="verify"
