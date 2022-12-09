@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import {PrivateKey, Signature, Field, isReady, Encoding } from "snarkyjs";
+import { PrivateKey, Signature, Field, isReady, Encoding } from 'snarkyjs';
+import { TradingData } from '../exchange/dto/trading-data.response';
 
 @Injectable()
 export class SignService {
   constructor() {}
 
   async minaSign(data: any) {
-
     await isReady;
     const privateKey = PrivateKey.fromBase58(process.env.MINA_PRIVATE_KEY);
     const publicKey = privateKey.toPublicKey();
@@ -21,7 +21,7 @@ export class SignService {
     const dataString = JSON.stringify(data);
     const encodedData = Encoding.stringToFields(dataString);
 
-     const signature = Signature.create(privateKey, encodedData);
+    const signature = Signature.create(privateKey, encodedData);
 
     const result = {
       data: data,
@@ -30,10 +30,28 @@ export class SignService {
     };
 
     return result;
+  }
+  async signTradingData(tradingData: TradingData) {
+    await isReady;
+    const privateKey = PrivateKey.fromBase58(process.env.MINA_PRIVATE_KEY);
+    const publicKey = privateKey.toPublicKey();
+    const addressToFields = Encoding.stringToFields(tradingData.address);
+    const dex = Encoding.stringToFields(tradingData.dex);
+    const signature = Signature.create(privateKey, [
+      Field(tradingData.swapCounts),
+      Field(tradingData.amountUsd),
+      ...addressToFields,
+      ...dex,
+    ]);
 
+    const result = {
+      data: tradingData,
+      signature: signature.toJSON(),
+      publicKey: privateKey.toPublicKey(),
+    };
+    return result;
   }
   async signTokenBalance(balance: number, address: string, chainId: number) {
-
     await isReady;
     const privateKey = PrivateKey.fromBase58(process.env.MINA_PRIVATE_KEY);
     const publicKey = privateKey.toPublicKey();
@@ -42,16 +60,19 @@ export class SignService {
     //const address = new CircuitString(address)
     // //TODO: add created at , read about how to use timestamps
     //
-    const signature = Signature.create(privateKey, [Field(balance), Field(chainId), ...addressToFields])
-    const createdAt = new Date()
+    const signature = Signature.create(privateKey, [
+      Field(balance),
+      Field(chainId),
+      ...addressToFields,
+    ]);
+    const createdAt = new Date();
 
     const result = {
-      data: { balance, address,  chainId, createdAt},
+      data: { balance, address, chainId, createdAt },
       signature: signature.toJSON(),
       publicKey: privateKey.toPublicKey(),
     };
 
     return result;
-
   }
 }

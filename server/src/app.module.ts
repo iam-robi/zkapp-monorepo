@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { SignModule } from './sign/sign.module';
 import GraphQLJSON from "graphql-type-json";
 import { ContractModule } from './contract/contract.module';
+import { ExchangeModule } from './exchange/exchange.module';
 @Module({
   imports: [
     MikroOrmModule.forRoot(),
@@ -29,7 +30,8 @@ import { ContractModule } from './contract/contract.module';
     UserModule,
     AuthModule,
     SignModule,
-    ContractModule
+    ContractModule,
+    ExchangeModule
   ],
   providers: [],
 })

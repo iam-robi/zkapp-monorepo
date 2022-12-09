@@ -59,15 +59,52 @@ type SignedOwnershipData {
   publicKey: String!
 }
 
+type Exchange {
+  id: ID!
+
+  """Example field (placeholder)"""
+  name: SupportedDex!
+}
+
+enum SupportedDex {
+  Pangolin
+  Uniswap
+}
+
+type GetExchangeListResponse {
+  data: [Exchange!]!
+  totalCount: Int!
+}
+
+type TradingData {
+  address: String!
+  dex: String!
+  swapCounts: Int!
+  amountUsd: Int!
+  createdAt: DateTime!
+}
+
+type SignedTradingData {
+  data: TradingData!
+  signature: JSON!
+  publicKey: String!
+}
+
 type Query {
   userProfile: SignedUser!
   contracts(search: String, withDeleted: Boolean): GetContractListResponse!
   contract(id: ID!, withDeleted: Boolean): Contract
   getOwnershipSignedData(address: String!, ercType: String!): SignedOwnershipData!
+  exchanges(search: String, withDeleted: Boolean): GetExchangeListResponse!
+  exchange(id: ID!, withDeleted: Boolean): Exchange
+  getTradingSignedData(dex: String!): SignedTradingData!
 }
 
 type Mutation {
   removeContract(id: ID!): Boolean!
   softRemoveContract(id: ID!): Boolean!
   restoreContract(id: ID!): Contract!
+  removeExchange(id: ID!): Boolean!
+  softRemoveExchange(id: ID!): Boolean!
+  restoreExchange(id: ID!): Exchange!
 }
