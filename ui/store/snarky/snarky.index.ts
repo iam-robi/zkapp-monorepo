@@ -1,8 +1,7 @@
 // following this example https://github.com/productdevbook/oku-nuxt3-template/tree/master/src
 import { defineStore } from "pinia";
-import { AccountState } from "~/store/account/account.types";
-import { useNuxtApp, useRuntimeConfig } from "#app";
 import { SnarkyState } from "~/store/snarky/snarky.types";
+import { ERCType } from "~/store/account/account.index";
 // import {Encoding, Field, isReady} from "snarkyjs";
 
 export const useSnarky = defineStore("snarky", {
@@ -15,7 +14,8 @@ export const useSnarky = defineStore("snarky", {
     account: undefined,
     zkApp: undefined,
     selectedTokenAddress: null,
-    selectedChainId: 1,
+    selectedChainId: undefined,
+    selectedTokenType: ERCType.ERC721,
     currentStep: 0,
     steps: {
       snarkyLoad: {

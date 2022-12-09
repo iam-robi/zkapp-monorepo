@@ -1,6 +1,7 @@
 import { SignedOwnershipData } from "~/types/oracle/graphql";
 
 export interface AccountState {
+  chains: any;
   evmAddress: string;
   loading: Boolean;
   walletType?: SupportedWalletType | null;

@@ -2,14 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0dfa547a-01a6-411a-ba84-25916c4a05fc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/prettier.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/components/wallets/MinaLogIn.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/components/forms/selectTokenAddress.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../ssx/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/server-publish.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/server-publish.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/components/ProofModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/components/ProofModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/layouts/default.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/layouts/default.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/pages/Mina.vue" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/store/account/account.index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/store/account/account.index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/store/account/account.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/store/account/account.types.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/store/snarky/snarky.index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/store/snarky/snarky.index.ts" afterDir="false" />
@@ -151,7 +147,7 @@
       <workItem from="1670002916064" duration="11871000" />
       <workItem from="1670364232952" duration="54054000" />
       <workItem from="1670495365321" duration="3582000" />
-      <workItem from="1670580463658" duration="2815000" />
+      <workItem from="1670580463658" duration="12904000" />
     </task>
     <servers />
   </component>
@@ -194,12 +190,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/ui/components/ProofModal.vue</url>
-          <line>186</line>
+          <line>270</line>
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/ui/components/ProofModal.vue</url>
-          <line>149</line>
+          <line>216</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -209,9 +205,15 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/ui/components/ProofModal.vue</url>
-          <line>70</line>
+          <line>133</line>
           <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/ui/components/ProofModal.vue</url>
+          <line>206</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="18" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

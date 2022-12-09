@@ -1,5 +1,6 @@
 import { SignedOwnershipData } from "~/types/oracle/graphql";
 import { TokenOwnershipOracle } from "zkapp-oracles";
+import { ERCType } from "~/store/account/account.index";
 export interface StepInfo {
   isLoading: Boolean;
   isFinished: Boolean;
@@ -18,7 +19,8 @@ export interface SnarkyState {
   tokenOwnershipOracleAddress: string;
   oracleSignerPublicKey: string;
   selectedTokenAddress: string | null;
-  selectedChainId: number;
+  selectedChainId?: number;
+  selectedTokenType: ERCType;
   currentStep: Number;
   account?: any;
   zkApp?: any;
