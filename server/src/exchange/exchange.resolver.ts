@@ -31,13 +31,13 @@ export class ExchangeResolver extends BaseResolver(
 
   //@Query(() => SignedExchange, { name: 'getSignedExchange' })
   @Query(() => SignedTradingData, { name: 'getTradingSignedData' })
-  // @UseGuards(SSXGuard)
+  @UseGuards(SSXGuard)
   async getTradingSignedData(
     @Args() args: SignedTradingDataInput,
     @Siwe() siwe: any,
   ) {
     const tData = await this.exchangeService.getTradingData(
-      '0x04cB6fd7e278096A8eAB5CcE44a821ea1D43D476',
+      siwe.address,
       SupportedDex.Uniswap,
     );
 
