@@ -4,9 +4,6 @@ import { SupportedDex } from '../enums';
 
 @ObjectType()
 export class TradingData {
-  @Field()
-  address!: string;
-
   @Field(() => String)
   @Property()
   dex!: SupportedDex;

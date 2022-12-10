@@ -17,7 +17,7 @@ export class ExchangeService extends BaseService<Exchange> {
     super(repository);
   }
 
-  async getTradingData(address: string, onDex: SupportedDex) {
+  async getTradingData(address: string, dex: SupportedDex) {
     //@ts-ignore
     const getTradingData = gql`
       query transactions($address: Bytes!) {
@@ -49,12 +49,9 @@ export class ExchangeService extends BaseService<Exchange> {
     const amounts = data.swaps.map((swap) => parseInt(swap.amountUSD));
     const amountUsd = _.sum(amounts);
 
-    const dex = onDex;
-
     const createdAt = new Date();
 
     return {
-      address,
       amountUsd,
       swapCounts,
       dex,

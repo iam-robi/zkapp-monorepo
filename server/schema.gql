@@ -77,7 +77,6 @@ type GetExchangeListResponse {
 }
 
 type TradingData {
-  address: String!
   dex: String!
   swapCounts: Int!
   amountUsd: Int!

@@ -35,12 +35,26 @@ export class SignService {
     await isReady;
     const privateKey = PrivateKey.fromBase58(process.env.MINA_PRIVATE_KEY);
     const publicKey = privateKey.toPublicKey();
-    const addressToFields = Encoding.stringToFields(tradingData.address);
+    // const addressToFields = Encoding.stringToFields(tradingData.address);
     const dex = Encoding.stringToFields(tradingData.dex);
+    console.log(dex);
+    console.log(dex[0]);
+    console.log(Encoding.stringToFields('UNISWAP'));
+    console.log(Encoding.stringToFields('UNISWAP')[0]);
+    console.log(
+      Encoding.stringToFields(
+        'UNISWAPUNISWAPUNISWAPUNISWAPUNISWAPUNISWAPUNISWAP',
+      ),
+    );
+    console.log(
+      Encoding.stringToFields(
+        'UNISWAPUNISWAPUNISWAPUNISWAPUNISWAPUNISWAPUNISWAP',
+      )[0],
+    );
+
     const signature = Signature.create(privateKey, [
       Field(tradingData.swapCounts),
       Field(tradingData.amountUsd),
-      ...addressToFields,
       ...dex,
     ]);
 
