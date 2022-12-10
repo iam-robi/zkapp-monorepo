@@ -7,32 +7,15 @@ import {
   PrivateKey,
   PublicKey,
   AccountUpdate,
-  Signature, Encoding,
+  Signature,
+  Encoding,
 } from 'snarkyjs';
-import {EvmAddress} from "./TokenOwnershipOracle";
 
-const userExampleData = {
-  "data": {
-    "getOwnershipSignedData": {
-      "data": {
-        "address": "0x0C3b29321611736341609022C23E981AC56E7f96",
-        "chainId": 43114,
-        "createdAt": "2022-11-28T09:30:08.226Z",
-        "balance": 20
-      },
-      "signature": {
-        "r": "20602730057308047063052483389166938333466728007610673901102282888577720421520",
-        "s": "4386131374594108274228104479871987355783710889454917710865910307160901634535"
-      },
-      "publicKey": "B62qqFGos8L5WD45YSAyaF5dkQagnrnUdY54F2rGXU5gcjKnHq84CkS"
-    }
-  }
-}
-
+import { tokenOwnershipDataSample } from './utils/data_samples';
+import { EvmAddress } from './TokenOwnershipOracle';
 // The public key of our trusted data provider
 const ORACLE_PUBLIC_KEY =
-    'B62qqFGos8L5WD45YSAyaF5dkQagnrnUdY54F2rGXU5gcjKnHq84CkS';
-
+  'B62qqFGos8L5WD45YSAyaF5dkQagnrnUdY54F2rGXU5gcjKnHq84CkS';
 
 let proofsEnabled = false;
 function createLocalBlockchain() {
@@ -42,9 +25,9 @@ function createLocalBlockchain() {
 }
 
 async function localDeploy(
-    zkAppInstance: TokenOwnershipOracle,
-    zkAppPrivatekey: PrivateKey,
-    deployerAccount: PrivateKey
+  zkAppInstance: TokenOwnershipOracle,
+  zkAppPrivatekey: PrivateKey,
+  deployerAccount: PrivateKey
 ) {
   const txn = await Mina.transaction(deployerAccount, () => {
     AccountUpdate.fundNewAccount(deployerAccount);
@@ -58,16 +41,15 @@ async function localDeploy(
 
 describe('TokenOwnershipOracle', () => {
   let deployerAccount: PrivateKey,
-      zkAppAddress: PublicKey,
-      zkAppPrivateKey: PrivateKey;
-
-
+    zkAppAddress: PublicKey,
+    zkAppPrivateKey: PrivateKey;
 
   beforeAll(async () => {
     await isReady;
     if (proofsEnabled) TokenOwnershipOracle.compile();
-    let contractAddress = userExampleData.data.getOwnershipSignedData.data.address;
-    let userPrivateKey = PrivateKey.random()
+    let contractAddress =
+      tokenOwnershipDataSample.data.getOwnershipSignedData.data.address;
+    let userPrivateKey = PrivateKey.random();
   });
 
   beforeEach(async () => {
@@ -88,8 +70,6 @@ describe('TokenOwnershipOracle', () => {
     await localDeploy(zkAppInstance, zkAppPrivateKey, deployerAccount);
     const oraclePublicKey = zkAppInstance.oraclePublicKey.get();
     expect(oraclePublicKey).toEqual(PublicKey.fromBase58(ORACLE_PUBLIC_KEY));
-
-
   });
 
   describe('deploys a verifier contract for token balance', () => {
@@ -97,27 +77,40 @@ describe('TokenOwnershipOracle', () => {
       const zkAppInstance = new TokenOwnershipOracle(zkAppAddress);
       await localDeploy(zkAppInstance, zkAppPrivateKey, deployerAccount);
 
-      const balance = Field(userExampleData.data.getOwnershipSignedData.data.balance)
-      const chainId = Field(userExampleData.data.getOwnershipSignedData.data.chainId)
-      const addressToFields = Encoding.stringToFields(userExampleData.data.getOwnershipSignedData.data.address);
+      const balance = Field(
+        tokenOwnershipDataSample.data.getOwnershipSignedData.data.balance
+      );
+      const chainId = Field(
+        tokenOwnershipDataSample.data.getOwnershipSignedData.data.chainId
+      );
+      const addressToFields = Encoding.stringToFields(
+        tokenOwnershipDataSample.data.getOwnershipSignedData.data.address
+      );
       //TODO: add created at , read about how to use timestamps
 
-      const signature = Signature.fromJSON(userExampleData.data.getOwnershipSignedData.signature);
-      const validSignature = signature.verify(PublicKey.fromBase58(ORACLE_PUBLIC_KEY), [balance,chainId,...addressToFields]);
-      validSignature.assertTrue()
+      const signature = Signature.fromJSON(
+        tokenOwnershipDataSample.data.getOwnershipSignedData.signature
+      );
+      const validSignature = signature.verify(
+        PublicKey.fromBase58(ORACLE_PUBLIC_KEY),
+        [balance, chainId, ...addressToFields]
+      );
+      validSignature.assertTrue();
 
-      let contractAddress = new EvmAddress({ fields: addressToFields, chainId: chainId});
+      let contractAddress = new EvmAddress({
+        fields: addressToFields,
+        chainId: chainId,
+      });
 
-
-      const pvKey = PrivateKey.random()
+      const pvKey = PrivateKey.random();
 
       const txn = await Mina.transaction(deployerAccount, () => {
         //AccountUpdate.fundNewAccount(pvKey);
         zkAppInstance.verify(
-            balance,
-            contractAddress,
-            signature ?? fail('something is wrong with the signature'),
-            pvKey.toPublicKey()
+          balance,
+          contractAddress,
+          signature ?? fail('something is wrong with the signature'),
+          pvKey.toPublicKey()
         );
       });
       await txn.prove();
@@ -129,47 +122,69 @@ describe('TokenOwnershipOracle', () => {
       let verifiedEvent = events[0];
 
       // @ts-ignore
-      expect(verifiedEvent.event.minaAddress.toBase58()).toEqual(pvKey.toPublicKey().toBase58());
+      expect(verifiedEvent.event.minaAddress.toBase58()).toEqual(
+        pvKey.toPublicKey().toBase58()
+      );
       // @ts-ignore
-      expect(verifiedEvent.event.evmContractAddress.chainId.toString()).toEqual(String(userExampleData.data.getOwnershipSignedData.data.chainId));
+      expect(verifiedEvent.event.evmContractAddress.chainId.toString()).toEqual(
+        String(
+          tokenOwnershipDataSample.data.getOwnershipSignedData.data.chainId
+        )
+      );
       // @ts-ignore
-      expect(Encoding.stringFromFields(verifiedEvent.event.evmContractAddress.fields)).toEqual(userExampleData.data.getOwnershipSignedData.data.address);
+      // console.log(verifiedEvent.event);
+      // expect(
+      //   Encoding.stringFromFields(verifiedEvent.event.evmContractAddress.fields)
+      // ).toEqual(
+      //   tokenOwnershipDataSample.data.getOwnershipSignedData.data.address
+      // );
     });
     it('errors if wrong chain Id is provided', async () => {
       const zkAppInstance = new TokenOwnershipOracle(zkAppAddress);
       await localDeploy(zkAppInstance, zkAppPrivateKey, deployerAccount);
-      const balance = Field(userExampleData.data.getOwnershipSignedData.data.balance)
-      const chainId = Field(userExampleData.data.getOwnershipSignedData.data.chainId)
-      const addressToFields = Encoding.stringToFields(userExampleData.data.getOwnershipSignedData.data.address);
+      const balance = Field(
+        tokenOwnershipDataSample.data.getOwnershipSignedData.data.balance
+      );
+      const chainId = Field(
+        tokenOwnershipDataSample.data.getOwnershipSignedData.data.chainId
+      );
+      const addressToFields = Encoding.stringToFields(
+        tokenOwnershipDataSample.data.getOwnershipSignedData.data.address
+      );
       //TODO: add created at , read about how to use timestamps
-      const signature = Signature.fromJSON(userExampleData.data.getOwnershipSignedData.signature);
-      let snarkyAddress = new EvmAddress({ fields: addressToFields, chainId: Field(1)});
-      const randomUser = PrivateKey.random()
+      const signature = Signature.fromJSON(
+        tokenOwnershipDataSample.data.getOwnershipSignedData.signature
+      );
+      let snarkyAddress = new EvmAddress({
+        fields: addressToFields,
+        chainId: Field(1),
+      });
+      const randomUser = PrivateKey.random();
       await Mina.transaction(deployerAccount, () => {
-        AccountUpdate.fundNewAccount(randomUser)
-      })
+        AccountUpdate.fundNewAccount(randomUser);
+      });
 
       //@ts-ignore
       expect(async () => {
         await Mina.transaction(randomUser, () => {
-
           zkAppInstance.verify(
-              balance,
-              snarkyAddress,
-              signature ?? fail('something is wrong with the signature'),
-              randomUser.toPublicKey()
+            balance,
+            snarkyAddress,
+            signature ?? fail('something is wrong with the signature'),
+            randomUser.toPublicKey()
           );
         });
       }).rejects;
     });
     it.todo('errors if signature is wrong');
     it.todo('errors if balance below 1');
-    it.todo('errors if feepayer is not same as public key provided (modify smart contract)');
+    it.todo(
+      'errors if feepayer is not same as public key provided (modify smart contract)'
+    );
   });
 
   describe('admin', () => {
     it.todo('changes oracle public key');
     it.todo('errors if non admin tries to change oracle public key');
   });
-
 });

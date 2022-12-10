@@ -10,31 +10,18 @@ import {
   Signature,
   PrivateKey,
   Struct,
+  Encoding,
+  AccountUpdate,
 } from 'snarkyjs';
-
-export class EvmAddress extends Struct({
-  fields: [Field, Field],
-  chainId: Field,
-}) {
-  toString() {
-    return this.fields.toString();
-  }
-}
-
-export class VerifiedOwnership extends Struct({
-  evmContractAddress: EvmAddress,
-  minaAddress: PublicKey,
-}) {}
-// const ORACLE_PUBLIC_KEY =
-//   'B62qqFGos8L5WD45YSAyaF5dkQagnrnUdY54F2rGXU5gcjKnHq84CkS';
 
 import { ORACLE_PUBLIC_KEY } from './utils/constants';
 
-export class TokenOwnershipOracle extends SmartContract {
+export class ProofOfTrade extends SmartContract {
   @state(PublicKey) oraclePublicKey = State<PublicKey>();
+  @state(Field) dex = State<Field>();
 
   events = {
-    verified: VerifiedOwnership,
+    verified: PublicKey,
   };
 
   deploy(args: DeployArgs) {
@@ -47,14 +34,17 @@ export class TokenOwnershipOracle extends SmartContract {
 
   @method init(zkappKey: PrivateKey) {
     super.init(zkappKey);
+    //dex can only be 3 letters
+    this.dex.set(Encoding.stringToFields('UNI')[0]);
     this.oraclePublicKey.set(PublicKey.fromBase58(ORACLE_PUBLIC_KEY));
     this.requireSignature();
   }
 
   //TODO: private key can't be sent as argument by auro wallet - how to access signer of the transaction ?
   @method verify(
-    balance: Field,
-    contractAddress: EvmAddress,
+    swapCounts: Field,
+    amountUsd: Field,
+    dex: Field,
     signature: Signature,
     publicKey: PublicKey
   ) {
@@ -62,19 +52,16 @@ export class TokenOwnershipOracle extends SmartContract {
     this.oraclePublicKey.assertEquals(oraclePublicKey);
 
     const validSignature = signature.verify(oraclePublicKey, [
-      balance,
-      contractAddress.chainId,
-      ...contractAddress.fields,
+      swapCounts,
+      amountUsd,
+      dex,
     ]);
     validSignature.assertTrue();
 
-    balance.assertGte(Field(1));
+    swapCounts.assertGte(Field(2));
+    amountUsd.assertGte(Field(10000));
 
-    const verifiedOwnership = new VerifiedOwnership({
-      evmContractAddress: contractAddress,
-      minaAddress: publicKey,
-    });
-    this.emitEvent('verified', verifiedOwnership);
+    this.emitEvent('verified', publicKey);
   }
 
   @method updateOraclePublicKey(
