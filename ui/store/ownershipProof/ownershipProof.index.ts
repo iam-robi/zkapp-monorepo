@@ -3,6 +3,14 @@ import { defineStore } from "pinia";
 import { OwnershipProofState } from "~/store/ownershipProof/ownershipProof.types";
 import { ERCType } from "~/store/account/account.index";
 import { GqlGetOwnershipSignedData } from "#imports";
+import {
+  fetchAccount,
+  isReady,
+  Mina,
+  PublicKey,
+  setGraphqlEndpoint,
+} from "snarkyjs";
+import { TokenOwnershipOracle } from "zkapp-oracles";
 // import {Encoding, Field, isReady} from "snarkyjs";
 
 export const useOwnershipProof = defineStore("ownershipProof", {
@@ -44,6 +52,7 @@ export const useOwnershipProof = defineStore("ownershipProof", {
         isFinished: false,
       },
     },
+    events: [],
   }),
 
   actions: {
@@ -53,6 +62,40 @@ export const useOwnershipProof = defineStore("ownershipProof", {
         console.log("res", res);
         this.oracleData = res.getOwnershipSignedData;
       } catch (error) {}
+    },
+    getZkAppInstance: async function () {
+      await isReady;
+
+      const graphqlEndpoint = "https://proxy.berkeley.minaexplorer.com/graphql";
+      setGraphqlEndpoint(graphqlEndpoint);
+      let Berkeley = Mina.Network(graphqlEndpoint);
+      Mina.setActiveInstance(Berkeley);
+      //const pk = PublicKey.fromBase58(ownershipProofStore.zkAppAddress);
+      let { account, error } = await fetchAccount({
+        publicKey: PublicKey.fromBase58(this.zkAppAddress),
+      });
+      try {
+        this.zkApp = new TokenOwnershipOracle(
+          PublicKey.fromBase58(this.zkAppAddress)
+        );
+        let value = this.zkApp.oraclePublicKey.get();
+
+        console.log(
+          `Found deployed zkapp, with state oraclePublic Key =  ${value.toBase58()}`
+        );
+      } catch (error) {
+        console.log(error);
+      }
+      this.account = account;
+    },
+    getEvents: async function () {
+      if (!this.zkApp) {
+        console.log("setting instance from fetch events");
+        await this.getZkAppInstance();
+      } else {
+        console.log("fetching event");
+        this.events = await this.zkApp.fetchEvents();
+      }
     },
   },
   getters: {},

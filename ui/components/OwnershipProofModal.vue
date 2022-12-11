@@ -21,9 +21,6 @@
           title="Load Snarky JS"
       >
 
-
-
-
       </n-step>
       <n-step title="Compile Smart Contract" :status="ownershipProofStore.steps.compilation.isFinished ? 'finish' : ownershipProofStore.steps.snarkyLoad.isFinished ? 'process': 'wait'">
         <div class="n-step-description">
@@ -215,22 +212,12 @@ const compileZkApp = async (zkAppAddress) => {
   await sleep(500)
 }
 const setZkApp = async () => {
-  ownershipProofStore.steps.instance.isLoading = true
-  //const pk = PublicKey.fromBase58(ownershipProofStore.zkAppAddress);
-  let { account, error } = await fetchAccount({ publicKey: PublicKey.fromBase58(ownershipProofStore.zkAppAddress)})
-  console.log('account', JSON.stringify(account, null, 2));
-  console.log('error', JSON.stringify(error, null, 2));
-  ownershipProofStore.steps.instance.isLoading = false
-  ownershipProofStore.steps.instance.isFinished = true
-  try {
-    ownershipProofStore.zkApp = new TokenOwnershipOracle(PublicKey.fromBase58(ownershipProofStore.zkAppAddress));
-    let value = ownershipProofStore.zkApp.oraclePublicKey.get()
-
-    console.log(`Found deployed zkapp, with state oraclePublic Key =  ${value.toBase58()}`);
-  } catch (error) {
-    console.log(error)
+  if(!ownershipProofStore.zkApp){
+    ownershipProofStore.steps.instance.isLoading = true;
+    await ownershipProofStore.getZkAppInstance()
+    ownershipProofStore.steps.instance.isLoading = false;
   }
-  ownershipProofStore.account = account
+  ownershipProofStore.steps.instance.isFinished = true;
   ownershipProofStore.currentStep = 3
 }
 const signInToEvm = async function() {

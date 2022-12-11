@@ -52,16 +52,24 @@
 <script setup>
 import {NCard, NGrid, NGi, NList, NListItem, NTag, NThing,   NDataTable , NButton , NModal} from "naive-ui";
 import {h, ref} from "vue";
+import {onMounted} from "../.nuxt/imports";
+import {isReady, Mina, setGraphqlEndpoint} from "snarkyjs";
 const router = useRouter();
+import {useOwnershipProof} from "../store/ownershipProof/ownershipProof.index";
+const ownershipProofStore = useOwnershipProof()
+import {useTradeProof} from "../store/tradeProof/tradeProof.index";
+const tradeProofStore = useTradeProof()
+onMounted(async () => {
+  await tradeProofStore.getZkAppInstance()
+  await tradeProofStore.getEvents()
+})
 
 const showOwnershipModal = ref(false)
-
 const ownershipData = [
   { id: 1, address: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d', date: 'Sun Dec 11 2022',  link : 'https://opensea.io'},
   { id: 2, address: "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d", date: 'Sun Dec 11 2022', link : 'https://opensea.io'},
   { id: 3, address: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d', date: 'Sun Dec 11 2022',link : 'https://opensea.io' }
 ]
-
 const ownershipColumns = [
   {
     title: 'ID',
@@ -93,6 +101,8 @@ const ownershipColumns = [
   }
 
   ]
+
+
 const showTradeModal = ref(false)
 const tradeData = [
   { id: 1, exchange: 'UNISWAP', date: 'Sun Dec 11 2022' , threshold: '10000' },

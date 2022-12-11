@@ -6,6 +6,8 @@
     Proving for exchange: {{tradeProofStore.selectedExchange}}
     Number of swap found: {{tradeProofStore.oracleData?.data?.swapCounts}}
     Volume USD found: {{tradeProofStore.oracleData?.data?.amountUsd}}
+
+
     <n-steps vertical :current="tradeProofStore.currentStep" >
       <n-step
           :status="tradeProofStore.isLoaded ? 'finish' : 'process'"
@@ -181,21 +183,12 @@ const compileZkApp = async (zkAppAddress) => {
   await sleep(500)
 }
 const setZkApp = async () => {
-  tradeProofStore.steps.instance.isLoading = true
-  //const pk = PublicKey.fromBase58(tradeProofStore.tokenOwnershipOracleAddress);
-  let { account, error } = await fetchAccount({ publicKey: PublicKey.fromBase58(tradeProofStore.zkAppAddress)})
-  console.log('account', JSON.stringify(account, null, 2));
-  console.log('error', JSON.stringify(error, null, 2));
-  tradeProofStore.steps.instance.isLoading = false
-  tradeProofStore.steps.instance.isFinished = true
-  try {
-    tradeProofStore.zkApp = new ProofOfTrade(PublicKey.fromBase58(tradeProofStore.zkAppAddress));
-    let value = tradeProofStore.zkApp.oraclePublicKey.get()
-    console.log(`Found deployed zkapp, with state oraclePublic Key =  ${value.toBase58()}`);
-  } catch (error) {
-    console.log(error)
+  if(!tradeProofStore.zkApp){
+    tradeProofStore.steps.instance.isLoading = true;
+    await tradeProofStore.getZkAppInstance()
+    tradeProofStore.steps.instance.isLoading = false;
   }
-  tradeProofStore.account = account
+  tradeProofStore.steps.instance.isFinished = true;
   tradeProofStore.currentStep = 3
 }
 const signInToEvm = async function() {

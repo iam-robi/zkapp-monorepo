@@ -25,4 +25,5 @@ export interface OwnershipProofState {
   account?: any;
   zkApp?: any;
   steps: OwnershipOracleSteps;
+  events: any;
 }
