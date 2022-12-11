@@ -4,7 +4,7 @@
 
     <n-grid x-gap="12" :cols="2">
       <n-gi>
-        <n-card title="Proof Of Ownership Events">
+        <n-card title="Proof Of Ownership (NFTs) Events">
           <template #header-extra>
             <n-button @click="showOwnershipModal = true">New Proof</n-button>
           </template>
@@ -55,12 +55,11 @@ import {h, ref} from "vue";
 const router = useRouter();
 
 const showOwnershipModal = ref(false)
-const sampleDate = new Date().toDateString()
-console.log("sampleDate",sampleDate)
+
 const ownershipData = [
-  { id: 1, address: 'Wonderwall', date: 'Sun Dec 11 2022',  link : 'https://opensea.io'},
-  { id: 2, address: "Don't Look Back in Anger", date: 'Sun Dec 11 2022', link : 'https://opensea.io'},
-  { id: 3, address: 'Champagne Supernova', date: 'Sun Dec 11 2022',link : 'https://opensea.io' }
+  { id: 1, address: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d', date: 'Sun Dec 11 2022',  link : 'https://opensea.io'},
+  { id: 2, address: "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d", date: 'Sun Dec 11 2022', link : 'https://opensea.io'},
+  { id: 3, address: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d', date: 'Sun Dec 11 2022',link : 'https://opensea.io' }
 ]
 
 const ownershipColumns = [
