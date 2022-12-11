@@ -8051,10 +8051,10 @@ zip-stream@^4.1.0:
     compress-commons "^4.1.0"
     readable-stream "^3.6.0"
 
-zkapp-oracles@0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/zkapp-oracles/-/zkapp-oracles-0.2.1.tgz#401d1dc1e71f6def7049f8fa52a9342beffb36a9"
-  integrity sha512-JjcQ5aNT6qLL/emFIoUiqc0mJqZXvTgffJcbxWbGAb32127W9AQ0zO8s1nj124fP2wZpYjZepfofZZRFj5/kvQ==
+zkapp-oracles@0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/zkapp-oracles/-/zkapp-oracles-0.3.0.tgz#b7f2f2d5fe7c0120fb7f1ea38a39dee6f557f129"
+  integrity sha512-g6gYi+EA4bo40WZVlt23HNvLtPhnjeIAMcx0q1lRIYcGOfp0ynD6wCOgQxfiDk+Sm4f7VsTVFo2w+FmxqKEMww==
   dependencies:
     chalk "^5.1.2"
     dotenv "^16.0.3"

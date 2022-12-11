@@ -63,10 +63,10 @@ type Exchange {
   id: ID!
 
   """Example field (placeholder)"""
-  name: SupportedDex!
+  name: SupportedExchanges!
 }
 
-enum SupportedDex {
+enum SupportedExchanges {
   Pangolin
   Uniswap
 }
@@ -77,7 +77,7 @@ type GetExchangeListResponse {
 }
 
 type TradingData {
-  dex: String!
+  exchange: String!
   swapCounts: Int!
   amountUsd: Int!
   createdAt: DateTime!
@@ -96,7 +96,7 @@ type Query {
   getOwnershipSignedData(address: String!, ercType: String!): SignedOwnershipData!
   exchanges(search: String, withDeleted: Boolean): GetExchangeListResponse!
   exchange(id: ID!, withDeleted: Boolean): Exchange
-  getTradingSignedData(dex: String!): SignedTradingData!
+  getTradingSignedData(exchange: String!): SignedTradingData!
 }
 
 type Mutation {

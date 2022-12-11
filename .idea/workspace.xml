@@ -2,10 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0dfa547a-01a6-411a-ba84-25916c4a05fc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/mina-server.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mina-server.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/components/TradeProofModal.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/gql/oracle/getTradingSignedData.gql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/store/tradeProof/tradeProof.index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/store/tradeProof/tradeProof.types.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/ui/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/pages/proofoftrade.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/pages/proofoftrade.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/types/oracle/gql.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/types/oracle/gql.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/types/oracle/graphql.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/types/oracle/graphql.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ui/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,25 +33,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Project.color": "454f32",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/robin.sarfati/mina/zkapp-monorepo",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "prettierjs.PrettierConfiguration.Package": "/Users/robin.sarfati/mina/zkapp-monorepo/contracts/node_modules/prettier",
-    "settings.editor.selected.configurable": "settings.javascript.prettier",
-    "ts.external.directory.path": "/Users/robin.sarfati/mina/zkapp-monorepo/ui/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Project.color&quot;: &quot;454f32&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/robin.sarfati/mina/zkapp-monorepo&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/robin.sarfati/mina/zkapp-monorepo/contracts/node_modules/prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.prettier&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/robin.sarfati/mina/zkapp-monorepo/ui/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ui/gql/oracle" />
       <recent name="$PROJECT_DIR$/migrations" />
     </key>
   </component>
@@ -143,7 +150,7 @@
       <workItem from="1670364232952" duration="54054000" />
       <workItem from="1670495365321" duration="3582000" />
       <workItem from="1670580463658" duration="25004000" />
-      <workItem from="1670663962583" duration="8337000" />
+      <workItem from="1670663962583" duration="15472000" />
     </task>
     <servers />
   </component>
@@ -176,7 +183,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/contracts/src/utils/deploy.ts</url>
-          <line>36</line>
+          <line>42</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">

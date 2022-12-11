@@ -1,0 +1,12 @@
+query getTradingSignedData($exchange: String!) {
+    getTradingSignedData(exchange: $exchange ){
+        data {
+            swapCounts
+            amountUsd
+            exchange
+            createdAt
+        }
+        signature
+        publicKey
+    }
+}

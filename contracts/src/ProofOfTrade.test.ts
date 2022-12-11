@@ -79,8 +79,8 @@ describe('ProofOfTrade', () => {
         proofOfTradeDataSample.data.getTradingSignedData.data.amountUsd
       );
 
-      const dexFields = Encoding.stringToFields(
-        proofOfTradeDataSample.data.getTradingSignedData.data.dex
+      const exchangeFields = Encoding.stringToFields(
+        proofOfTradeDataSample.data.getTradingSignedData.data.exchange
       );
 
       //TODO: add created at , read about how to use timestamps
@@ -97,13 +97,13 @@ describe('ProofOfTrade', () => {
 
       const pvKey = PrivateKey.random();
       //
-      const dex = Encoding.stringToFields('UNI');
+      const exchange = Encoding.stringToFields('UNI');
       const txn = await Mina.transaction(deployerAccount, () => {
         //AccountUpdate.fundNewAccount(pvKey);
         zkAppInstance.verify(
           swapCounts,
           amountUsd,
-          dex[0],
+          exchange[0],
           signature ?? fail('something is wrong with the signature'),
           pvKey.toPublicKey()
         );

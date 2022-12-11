@@ -14,6 +14,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "query getOwnershipSignedData($address: String!, $ercType: String!) {\n  getOwnershipSignedData(address: $address, ercType: $ercType) {\n    data {\n      address\n      chainId\n      createdAt\n      balance\n    }\n    signature\n    publicKey\n  }\n}": types.GetOwnershipSignedDataDocument,
+    "query getTradingSignedData($exchange: String!) {\n  getTradingSignedData(exchange: $exchange) {\n    data {\n      swapCounts\n      amountUsd\n      exchange\n      createdAt\n    }\n    signature\n    publicKey\n  }\n}": types.GetTradingSignedDataDocument,
     "query userProfile {\n  userProfile {\n    data {\n      id\n      email\n      lastName\n      firstName\n      age\n      gender\n      createdAt\n      updatedAt\n    }\n    signature\n    publicKey\n  }\n}": types.UserProfileDocument,
 };
 
@@ -21,6 +22,10 @@ const documents = {
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "query getOwnershipSignedData($address: String!, $ercType: String!) {\n  getOwnershipSignedData(address: $address, ercType: $ercType) {\n    data {\n      address\n      chainId\n      createdAt\n      balance\n    }\n    signature\n    publicKey\n  }\n}"): (typeof documents)["query getOwnershipSignedData($address: String!, $ercType: String!) {\n  getOwnershipSignedData(address: $address, ercType: $ercType) {\n    data {\n      address\n      chainId\n      createdAt\n      balance\n    }\n    signature\n    publicKey\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query getTradingSignedData($exchange: String!) {\n  getTradingSignedData(exchange: $exchange) {\n    data {\n      swapCounts\n      amountUsd\n      exchange\n      createdAt\n    }\n    signature\n    publicKey\n  }\n}"): (typeof documents)["query getTradingSignedData($exchange: String!) {\n  getTradingSignedData(exchange: $exchange) {\n    data {\n      swapCounts\n      amountUsd\n      exchange\n      createdAt\n    }\n    signature\n    publicKey\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

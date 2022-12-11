@@ -22,7 +22,7 @@ export const proofOfTradeDataSample = {
       data: {
         swapCounts: 4,
         amountUsd: 11878,
-        dex: 'UNI',
+        exchange: 'UNI',
       },
       signature: {
         r: '3027363732111562368082797793133606645791599509446774769918804689575585042676',

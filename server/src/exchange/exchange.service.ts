@@ -5,7 +5,7 @@ import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityRepository } from '@mikro-orm/postgresql';
 import networkConfig from '../../config/networkConfig';
 import { SignService } from '../sign/sign.service';
-import { SupportedDex } from './enums';
+import { SupportedExchanges } from './enums';
 import { request, gql } from 'graphql-request';
 const { _ } = require('lodash');
 @Injectable()
@@ -17,7 +17,7 @@ export class ExchangeService extends BaseService<Exchange> {
     super(repository);
   }
 
-  async getTradingData(address: string, dex: SupportedDex) {
+  async getTradingData(address: string, exchange: SupportedExchanges) {
     //@ts-ignore
     const getTradingData = gql`
       query transactions($address: Bytes!) {
@@ -54,7 +54,7 @@ export class ExchangeService extends BaseService<Exchange> {
     return {
       amountUsd,
       swapCounts,
-      dex,
+      exchange,
       createdAt,
     };
   }

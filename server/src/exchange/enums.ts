@@ -1,4 +1,4 @@
-export enum SupportedDex {
+export enum SupportedExchanges {
   Pangolin = 'PNG',
   Uniswap = 'UNI',
 }

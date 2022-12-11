@@ -30,21 +30,42 @@ export type Contract = {
   updatedAt: Scalars['DateTime'];
 };
 
+export type Exchange = {
+  __typename?: 'Exchange';
+  id: Scalars['ID'];
+  /** Example field (placeholder) */
+  name: SupportedExchanges;
+};
+
 export type GetContractListResponse = {
   __typename?: 'GetContractListResponse';
   data: Array<Contract>;
   totalCount: Scalars['Int'];
 };
 
+export type GetExchangeListResponse = {
+  __typename?: 'GetExchangeListResponse';
+  data: Array<Exchange>;
+  totalCount: Scalars['Int'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   removeContract: Scalars['Boolean'];
+  removeExchange: Scalars['Boolean'];
   restoreContract: Contract;
+  restoreExchange: Exchange;
   softRemoveContract: Scalars['Boolean'];
+  softRemoveExchange: Scalars['Boolean'];
 };
 
 
 export type MutationRemoveContractArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationRemoveExchangeArgs = {
   id: Scalars['ID'];
 };
 
@@ -54,7 +75,17 @@ export type MutationRestoreContractArgs = {
 };
 
 
+export type MutationRestoreExchangeArgs = {
+  id: Scalars['ID'];
+};
+
+
 export type MutationSoftRemoveContractArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationSoftRemoveExchangeArgs = {
   id: Scalars['ID'];
 };
 
@@ -70,7 +101,10 @@ export type Query = {
   __typename?: 'Query';
   contract?: Maybe<Contract>;
   contracts: GetContractListResponse;
+  exchange?: Maybe<Exchange>;
+  exchanges: GetExchangeListResponse;
   getOwnershipSignedData: SignedOwnershipData;
+  getTradingSignedData: SignedTradingData;
   userProfile: SignedUser;
 };
 
@@ -87,9 +121,26 @@ export type QueryContractsArgs = {
 };
 
 
+export type QueryExchangeArgs = {
+  id: Scalars['ID'];
+  withDeleted?: InputMaybe<Scalars['Boolean']>;
+};
+
+
+export type QueryExchangesArgs = {
+  search?: InputMaybe<Scalars['String']>;
+  withDeleted?: InputMaybe<Scalars['Boolean']>;
+};
+
+
 export type QueryGetOwnershipSignedDataArgs = {
   address: Scalars['String'];
   ercType: Scalars['String'];
+};
+
+
+export type QueryGetTradingSignedDataArgs = {
+  exchange: Scalars['String'];
 };
 
 export type SignedOwnershipData = {
@@ -99,11 +150,31 @@ export type SignedOwnershipData = {
   signature: Scalars['JSON'];
 };
 
+export type SignedTradingData = {
+  __typename?: 'SignedTradingData';
+  data: TradingData;
+  publicKey: Scalars['String'];
+  signature: Scalars['JSON'];
+};
+
 export type SignedUser = {
   __typename?: 'SignedUser';
   data: User;
   publicKey: Scalars['String'];
   signature: Scalars['JSON'];
+};
+
+export enum SupportedExchanges {
+  Pangolin = 'Pangolin',
+  Uniswap = 'Uniswap'
+}
+
+export type TradingData = {
+  __typename?: 'TradingData';
+  amountUsd: Scalars['Int'];
+  createdAt: Scalars['DateTime'];
+  exchange: Scalars['String'];
+  swapCounts: Scalars['Int'];
 };
 
 export type User = {
@@ -127,6 +198,13 @@ export type GetOwnershipSignedDataQueryVariables = Exact<{
 
 export type GetOwnershipSignedDataQuery = { __typename?: 'Query', getOwnershipSignedData: { __typename?: 'SignedOwnershipData', signature: any, publicKey: string, data: { __typename?: 'OwnershipData', address: string, chainId: number, createdAt: any, balance: number } } };
 
+export type GetTradingSignedDataQueryVariables = Exact<{
+  exchange: Scalars['String'];
+}>;
+
+
+export type GetTradingSignedDataQuery = { __typename?: 'Query', getTradingSignedData: { __typename?: 'SignedTradingData', signature: any, publicKey: string, data: { __typename?: 'TradingData', swapCounts: number, amountUsd: number, exchange: string, createdAt: any } } };
+
 export type UserProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -134,4 +212,5 @@ export type UserProfileQuery = { __typename?: 'Query', userProfile: { __typename
 
 
 export const GetOwnershipSignedDataDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getOwnershipSignedData"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"address"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ercType"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getOwnershipSignedData"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"address"},"value":{"kind":"Variable","name":{"kind":"Name","value":"address"}}},{"kind":"Argument","name":{"kind":"Name","value":"ercType"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ercType"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"chainId"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"balance"}}]}},{"kind":"Field","name":{"kind":"Name","value":"signature"}},{"kind":"Field","name":{"kind":"Name","value":"publicKey"}}]}}]}}]} as unknown as DocumentNode<GetOwnershipSignedDataQuery, GetOwnershipSignedDataQueryVariables>;
+export const GetTradingSignedDataDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getTradingSignedData"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"exchange"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getTradingSignedData"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"exchange"},"value":{"kind":"Variable","name":{"kind":"Name","value":"exchange"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"swapCounts"}},{"kind":"Field","name":{"kind":"Name","value":"amountUsd"}},{"kind":"Field","name":{"kind":"Name","value":"exchange"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"signature"}},{"kind":"Field","name":{"kind":"Name","value":"publicKey"}}]}}]}}]} as unknown as DocumentNode<GetTradingSignedDataQuery, GetTradingSignedDataQueryVariables>;
 export const UserProfileDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"userProfile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userProfile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"age"}},{"kind":"Field","name":{"kind":"Name","value":"gender"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"signature"}},{"kind":"Field","name":{"kind":"Name","value":"publicKey"}}]}}]}}]} as unknown as DocumentNode<UserProfileQuery, UserProfileQueryVariables>;

@@ -1,6 +1,6 @@
 import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
 import { Entity, PrimaryKey } from '@mikro-orm/core';
-import { SupportedDex } from '../enums';
+import { SupportedExchanges } from '../enums';
 import crypto from 'crypto';
 
 @Entity()
@@ -10,6 +10,8 @@ export class Exchange {
   @PrimaryKey({ type: 'uuid' })
   id: string = crypto.randomUUID();
 
-  @Field(() => SupportedDex, { description: 'Example field (placeholder)' })
-  name: SupportedDex;
+  @Field(() => SupportedExchanges, {
+    description: 'Example field (placeholder)',
+  })
+  name: SupportedExchanges;
 }

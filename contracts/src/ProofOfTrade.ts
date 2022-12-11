@@ -14,8 +14,8 @@ import {
   AccountUpdate,
 } from 'snarkyjs';
 
-import { ORACLE_PUBLIC_KEY } from './utils/constants';
-
+const ORACLE_PUBLIC_KEY =
+  'B62qqFGos8L5WD45YSAyaF5dkQagnrnUdY54F2rGXU5gcjKnHq84CkS';
 export class ProofOfTrade extends SmartContract {
   @state(PublicKey) oraclePublicKey = State<PublicKey>();
   @state(Field) dex = State<Field>();

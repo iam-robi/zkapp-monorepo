@@ -13,7 +13,7 @@ import { Siwe } from '../user/helpers/siwe.decorator';
 import { SignService } from '../sign/sign.service';
 import SignedTradingData from './dto/signed-trading-data.response';
 import { SignedTradingDataInput } from './dto/signed-trading-data.input';
-import { SupportedDex } from './enums';
+import { SupportedExchanges } from './enums';
 import { UseGuards } from '@nestjs/common';
 import { SSXGuard } from '../auth/ssx-auth.guard';
 
@@ -31,14 +31,14 @@ export class ExchangeResolver extends BaseResolver(
 
   //@Query(() => SignedExchange, { name: 'getSignedExchange' })
   @Query(() => SignedTradingData, { name: 'getTradingSignedData' })
-  @UseGuards(SSXGuard)
+  // @UseGuards(SSXGuard)
   async getTradingSignedData(
     @Args() args: SignedTradingDataInput,
     @Siwe() siwe: any,
   ) {
     const tData = await this.exchangeService.getTradingData(
       siwe.address,
-      SupportedDex.Uniswap,
+      SupportedExchanges.Uniswap,
     );
 
     const result = await this.signService.signTradingData(tData);

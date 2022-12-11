@@ -1,12 +1,12 @@
 import { InputType, Int, Field, ObjectType } from '@nestjs/graphql';
 import { Property } from '@mikro-orm/core';
-import { SupportedDex } from '../enums';
+import { SupportedExchanges } from '../enums';
 
 @ObjectType()
 export class TradingData {
   @Field(() => String)
   @Property()
-  dex!: SupportedDex;
+  exchange!: SupportedExchanges;
 
   @Field(() => Int)
   @Property()
