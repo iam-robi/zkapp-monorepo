@@ -74,7 +74,6 @@ export const useAccount = defineStore("account", {
     minaInstalled: false,
     minaLoggedIn: false,
   }),
-
   actions: {
     signIn: async function () {
       const config = useRuntimeConfig();

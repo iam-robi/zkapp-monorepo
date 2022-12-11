@@ -25,8 +25,6 @@ export class VerifiedOwnership extends Struct({
   evmContractAddress: EvmAddress,
   minaAddress: PublicKey,
 }) {}
-// const ORACLE_PUBLIC_KEY =
-//   'B62qqFGos8L5WD45YSAyaF5dkQagnrnUdY54F2rGXU5gcjKnHq84CkS';
 
 import { ORACLE_PUBLIC_KEY } from './utils/constants';
 
