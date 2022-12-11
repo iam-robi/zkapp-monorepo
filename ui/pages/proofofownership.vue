@@ -3,7 +3,7 @@
     <n-layout embedded content-style="padding: 24px;">
       <n-card>
         <ClientOnly>
-          <ProofModal></ProofModal>
+          <OwnershipProofModal></OwnershipProofModal>
         </ClientOnly>
       </n-card>
     </n-layout>
@@ -11,8 +11,8 @@
 </template>
 <script setup lang="ts">
 
-import ProofModal from "~/components/ProofModal.vue";
 import {NCard, NLayout} from "naive-ui";
+import OwnershipProofModal from "~/components/OwnershipProofModal.vue";
 
 </script>
 <style scoped>

@@ -1,8 +1,8 @@
 // const { isReady, PrivateKey, shutdown } = require("snarkyjs");
-console.log("partytown started ")
+console.log("partytown started ");
 // async function generateKeypair() {
 //     await isReady;
-//     console.log("snarky loaded")
+//     console.log("ownershipProof loaded")
 //     const privateKey = PrivateKey.random();
 //     const publicKey = privateKey.toPublicKey();
 //     const encodedPrivateKey = privateKey.toBase58();

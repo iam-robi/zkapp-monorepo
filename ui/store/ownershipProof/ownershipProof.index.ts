@@ -1,14 +1,14 @@
 // following this example https://github.com/productdevbook/oku-nuxt3-template/tree/master/src
 import { defineStore } from "pinia";
-import { SnarkyState } from "~/store/snarky/snarky.types";
+import { OwnershipProofState } from "~/store/ownershipProof/ownershipProof.types";
 import { ERCType } from "~/store/account/account.index";
+import { GqlGetOwnershipSignedData } from "#imports";
 // import {Encoding, Field, isReady} from "snarkyjs";
 
-export const useSnarky = defineStore("snarky", {
-  state: (): SnarkyState => ({
+export const useOwnershipProof = defineStore("ownershipProof", {
+  state: (): OwnershipProofState => ({
     isLoaded: false,
-    tokenOwnershipOracleAddress:
-      "B62qrYrpVQHev7f1jQ3EaM44nCSFsTYbxCMqqDCm8GCJEZQM8EAVbMG",
+    zkAppAddress: "B62qrYrpVQHev7f1jQ3EaM44nCSFsTYbxCMqqDCm8GCJEZQM8EAVbMG",
     oracleSignerPublicKey:
       "B62qqFGos8L5WD45YSAyaF5dkQagnrnUdY54F2rGXU5gcjKnHq84CkS",
     account: undefined,
@@ -16,6 +16,7 @@ export const useSnarky = defineStore("snarky", {
     selectedTokenAddress: null,
     selectedChainId: undefined,
     selectedTokenType: ERCType.ERC721,
+    oracleData: null,
     currentStep: 0,
     steps: {
       snarkyLoad: {
@@ -45,6 +46,14 @@ export const useSnarky = defineStore("snarky", {
     },
   }),
 
-  actions: {},
+  actions: {
+    getSignedOwnershipData: async function (address: string, ercType: ERCType) {
+      try {
+        const res = await GqlGetOwnershipSignedData({ address, ercType });
+        console.log("res", res);
+        this.oracleData = res.getOwnershipSignedData;
+      } catch (error) {}
+    },
+  },
   getters: {},
 });

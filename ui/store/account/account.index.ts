@@ -66,9 +66,7 @@ export const useAccount = defineStore("account", {
     walletType: null,
     connected: false,
     provider: null,
-    userInfo: null,
     balance: null,
-    ownershipData: null,
     session: null,
     transaction: null,
     minaAccounts: null,
@@ -95,22 +93,6 @@ export const useAccount = defineStore("account", {
         console.log(err);
       }
       this.minaLoggedIn = true;
-    },
-    getSignedOwnershipData: async function (address: string, ercType: ERCType) {
-      try {
-        const res = await GqlGetOwnershipSignedData({ address, ercType });
-        console.log("res", res);
-        this.ownershipData = res.getOwnershipSignedData;
-      } catch (error) {}
-    },
-    verifyOwnership: async function () {
-      console.log("hello");
-
-      //await isReady;
-
-      // const address = Field(this.ownershipData.data.chainId)
-      // const addressToFields = Encoding.stringToFields(this.ownershipData.data.address);
-      // console.log(balance, address, addressToFields)
     },
   },
   getters: {
