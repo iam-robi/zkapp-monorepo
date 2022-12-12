@@ -32,4 +32,5 @@ export interface TradeProofState {
   defaultSteps: TradeProofSteps;
   oracleData: SignedTradingData | null;
   events: any;
+  eventsLoading: Boolean;
 }

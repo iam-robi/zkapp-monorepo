@@ -4,6 +4,8 @@
     <list default="true" id="0dfa547a-01a6-411a-ba84-25916c4a05fc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/pages/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/pages/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/store/ownershipProof/ownershipProof.index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/store/ownershipProof/ownershipProof.index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/store/ownershipProof/ownershipProof.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/store/ownershipProof/ownershipProof.types.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/store/tradeProof/tradeProof.index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/store/tradeProof/tradeProof.index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/store/tradeProof/tradeProof.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/store/tradeProof/tradeProof.types.ts" afterDir="false" />
     </list>
@@ -144,7 +146,7 @@
       <workItem from="1670364232952" duration="54054000" />
       <workItem from="1670495365321" duration="3582000" />
       <workItem from="1670580463658" duration="25004000" />
-      <workItem from="1670663962583" duration="48330000" />
+      <workItem from="1670663962583" duration="49828000" />
     </task>
     <servers />
   </component>

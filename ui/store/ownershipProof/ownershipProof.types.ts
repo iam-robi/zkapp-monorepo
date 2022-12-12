@@ -26,4 +26,5 @@ export interface OwnershipProofState {
   zkApp?: any;
   steps: OwnershipOracleSteps;
   events: any;
+  eventsLoading: Boolean;
 }

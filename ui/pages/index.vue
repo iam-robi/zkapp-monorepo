@@ -5,10 +5,18 @@
     <n-grid x-gap="12" :cols="2">
       <n-gi>
         <n-card title="Proof Of Ownership (NFTs) Events">
+
           <template #header-extra>
             <n-button @click="showOwnershipModal = true">New Proof</n-button>
           </template>
+
+          <div v-if="ownershipProofStore.eventsLoading">
+            <n-skeleton height="40px" style="margin-bottom: 7px;" width="100%" :sharp="false" />
+            <n-skeleton height="40px" style="margin-bottom: 7px;" width="100%" :sharp="false" />
+            <n-skeleton height="40px" style="margin-bottom: 7px;" width="100%" :sharp="false" />
+          </div>
         <n-data-table
+            v-else
             :columns="ownershipColumns"
             :data="ownershipData"
             :pagination="pagination"
@@ -19,15 +27,24 @@
       </n-gi>
       <n-gi>
         <n-card title="Proof Of Trade Events">
+
+          <template #header-extra>
+            <n-skeleton  text width="60%" />
+            <n-button  @click="showTradeModal = true" >New Proof</n-button>
+          </template>
+          <div v-if="tradeProofStore.eventsLoading">
+            <n-skeleton height="40px" style="margin-bottom: 7px;" width="100%" :sharp="false" />
+            <n-skeleton height="40px" style="margin-bottom: 7px;" width="100%" :sharp="false" />
+            <n-skeleton height="40px" style="margin-bottom: 7px;" width="100%" :sharp="false" />
+          </div>
           <n-data-table
+              v-else
               :columns="tradeColumns"
               :data="tradeData"
               :pagination="pagination"
               :bordered="false"
           />
-          <template #header-extra>
-            <n-button  @click="showTradeModal = true" >New Proof</n-button>
-          </template>
+
         </n-card>
       </n-gi>
     </n-grid>
@@ -51,7 +68,7 @@
   </div>
 </template>
 <script setup>
-import {NCard, NGrid, NGi, NList, NListItem, NTag, NThing,   NDataTable , NButton , NModal} from "naive-ui";
+import {NCard, NGrid, NGi, NList, NListItem, NTag, NThing,   NDataTable , NButton , NModal , NSkeleton} from "naive-ui";
 import {h, ref} from "vue";
 import {onMounted} from "../.nuxt/imports";
 import {isReady, Mina, setGraphqlEndpoint} from "snarkyjs";
@@ -61,8 +78,13 @@ const ownershipProofStore = useOwnershipProof()
 import {useTradeProof} from "../store/tradeProof/tradeProof.index";
 const tradeProofStore = useTradeProof()
 onMounted(async () => {
-  await tradeProofStore.getZkAppInstance()
+  //await tradeProofStore.getZkAppInstance()
+  tradeProofStore.eventsLoading = true
+  ownershipProofStore.eventsLoading = true
   await tradeProofStore.getEvents()
+  tradeProofStore.eventsLoading = false
+  await ownershipProofStore.getEvents()
+  ownershipProofStore.eventsLoading = false
 })
 
 const showOwnershipModal = ref(false)

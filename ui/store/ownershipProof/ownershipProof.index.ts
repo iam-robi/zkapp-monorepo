@@ -52,6 +52,7 @@ export const useOwnershipProof = defineStore("ownershipProof", {
         isFinished: false,
       },
     },
+    eventsLoading: false,
     events: [],
   }),
 

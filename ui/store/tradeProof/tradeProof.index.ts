@@ -28,6 +28,7 @@ export const useTradeProof = defineStore("tradeProof", {
     oracleData: null,
     currentStep: 0,
     events: [],
+    eventsLoading: false,
     steps: {
       snarkyLoad: {
         isLoading: false,
