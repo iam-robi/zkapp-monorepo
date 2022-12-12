@@ -3,6 +3,8 @@ import { TokenOwnershipOracle } from "zkapp-oracles";
 import { ERCType } from "~/store/account/account.index";
 
 import { SignedTradingData } from "~/types/oracle/graphql";
+import { Maybe } from "@graphql-tools/utils";
+import { Zkapp } from "~/types/minaexplorer/graphql";
 
 export enum SupportedExchanges {
   UNISWAP = "UNI",
@@ -31,6 +33,6 @@ export interface TradeProofState {
   steps: TradeProofSteps;
   defaultSteps: TradeProofSteps;
   oracleData: SignedTradingData | null;
-  events: any;
+  events: Array<Maybe<Zkapp>>;
   eventsLoading: Boolean;
 }

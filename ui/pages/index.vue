@@ -18,7 +18,7 @@
         <n-data-table
             v-else
             :columns="ownershipColumns"
-            :data="ownershipData"
+            :data="ownershipProofStore.events"
             :pagination="pagination"
             :bordered="false"
         />
@@ -40,7 +40,7 @@
           <n-data-table
               v-else
               :columns="tradeColumns"
-              :data="tradeData"
+              :data="tradeProofStore.events"
               :pagination="pagination"
               :bordered="false"
           />
@@ -71,11 +71,11 @@
 import {NCard, NGrid, NGi, NList, NListItem, NTag, NThing,   NDataTable , NButton , NModal , NSkeleton} from "naive-ui";
 import {h, ref} from "vue";
 import {onMounted} from "../.nuxt/imports";
-import {isReady, Mina, setGraphqlEndpoint} from "snarkyjs";
 const router = useRouter();
 import {useOwnershipProof} from "../store/ownershipProof/ownershipProof.index";
 const ownershipProofStore = useOwnershipProof()
 import {useTradeProof} from "../store/tradeProof/tradeProof.index";
+import {Bool, Encoding, Field, PublicKey} from "snarkyjs";
 const tradeProofStore = useTradeProof()
 onMounted(async () => {
   //await tradeProofStore.getZkAppInstance()
@@ -97,23 +97,22 @@ const ownershipModalStatusClosed = async function () {
   }
   ownershipProofStore.$reset()
 }
-const ownershipData = [
-  { id: 1, address: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d', date: 'Sun Dec 11 2022',  link : 'https://opensea.io'},
-  { id: 2, address: "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d", date: 'Sun Dec 11 2022', link : 'https://opensea.io'},
-  { id: 3, address: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d', date: 'Sun Dec 11 2022',link : 'https://opensea.io' }
-]
 const ownershipColumns = [
   {
     title: 'ID',
     key: 'id'
   },
   {
-    title: 'Address',
-    key: 'address'
+    title: 'Token Address',
+    key: 'tokenAddress'
   },
   {
-    title: 'Date',
-    key: 'date'
+    title: 'Chain Id',
+    key: 'chainId'
+  },
+  {
+    title: 'DateTime',
+    key: 'dateTime'
   },
   {
     title: 'Link',
@@ -123,17 +122,32 @@ const ownershipColumns = [
           NButton,
           {
             tag: 'a',
-            href: `https://opensea.io/assets?search[query]=${row.address}`,
+            href: `https://opensea.io/assets?search[query]=${row.tokenAddress}`,
             size: 'small',
             target: '_blank'
           },
-          { default: () => 'See Collection' }
+          { default: () => 'Opensea' }
+      )
+    }
+  },
+  {
+    title: 'Account',
+    key: 'minaAddress',
+    render (row) {
+      return h(
+          NButton,
+          {
+            tag: 'a',
+            href: `https://berkeley.minaexplorer.com/wallet/${row.minaAddress}`,
+            size: 'small',
+            target: '_blank'
+          },
+          { default: () => `${row.minaAddress.slice(0,5)}...${row.minaAddress.slice(-4)}` }
       )
     }
   }
 
   ]
-
 
 const showTradeModal = ref(false)
 const tradeModalStatusClosed = async function () {
@@ -145,11 +159,6 @@ const tradeModalStatusClosed = async function () {
   }
   tradeProofStore.$reset()
 }
-const tradeData = [
-  { id: 1, exchange: 'UNISWAP', date: 'Sun Dec 11 2022' , threshold: '10000' },
-  { id: 2, exchange: "UNISWAP", date: 'Sun Dec 11 2022' , threshold: '10000' },
-  { id: 3, exchange: 'UNISWAP', date: 'Sun Dec 11 2022' , threshold: '10000' }
-]
 const tradeColumns = [
   {
     title: 'ID',
@@ -160,12 +169,28 @@ const tradeColumns = [
     key: 'exchange'
   },
   {
-    title: 'Date',
-    key: 'date'
+    title: 'DateTime',
+    key: 'dateTime'
   },
   {
-    title: 'Threshold ($)',
-    key: 'threshold'
+    title: 'Trade Volume ($)',
+    key: 'tradeVolume'
+  },
+  {
+    title: 'Account',
+    key: 'minaAddress',
+    render (row) {
+      return h(
+          NButton,
+          {
+            tag: 'a',
+            href: `https://berkeley.minaexplorer.com/wallet/${row.minaAddress}`,
+            size: 'small',
+            target: '_blank'
+          },
+          { default: () => `${row.minaAddress.slice(0,5)}...${row.minaAddress.slice(-4)}` }
+      )
+    }
   }
   ]
 

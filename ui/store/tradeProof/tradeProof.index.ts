@@ -8,7 +8,9 @@ import { GqlGetEvents, GqlGetTradingSignedData } from "#imports";
 import { ERCType } from "~/store/account/account.index";
 // import {Encoding, Field, isReady} from "snarkyjs";
 import {
+  Bool,
   fetchAccount,
+  Field,
   isReady,
   Mina,
   PublicKey,
@@ -118,7 +120,28 @@ export const useTradeProof = defineStore("tradeProof", {
         console.log("setting instance from fetch events");
         await this.getZkAppInstance();
       }
-      this.events = await GqlGetEvents({ zkAppAddress: this.zkAppAddress });
+      const res = await GqlGetEvents({ zkAppAddress: this.zkAppAddress });
+      await isReady;
+
+      this.events = res.zkapps.map((event, index) => {
+        const dateTime = event.dateTime;
+        const verifiedEventStringArray =
+          event.zkappCommand.accountUpdates[0].body.events[0].split(",");
+
+        return {
+          id: index + 1,
+          dateTime: dateTime,
+          exchange: "UNISWAP",
+          tradeVolume: "10000",
+          minaAddress: PublicKey.from({
+            x: Field(verifiedEventStringArray[0]),
+            isOdd: Bool(Boolean(Number(verifiedEventStringArray[1]))),
+          }).toBase58(),
+        };
+      });
+      // console.log("res", res);
+      // this.events = res.zkapps;
+      // this.events = await GqlGetEvents({ zkAppAddress: this.zkAppAddress });
     },
   },
   getters: {},

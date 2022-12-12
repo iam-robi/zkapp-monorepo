@@ -7,7 +7,8 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "codegen:oracle": "graphql-codegen --config oracle.codegen.ts"
+    "codegen:oracle": "graphql-codegen --config oracle.codegen.ts",
+    "codegen:minaexplorer": "graphql-codegen --config minaexplorer.codegen.ts"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "2.13.12",

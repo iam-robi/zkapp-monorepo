@@ -4,7 +4,10 @@ import { OwnershipProofState } from "~/store/ownershipProof/ownershipProof.types
 import { ERCType } from "~/store/account/account.index";
 import { GqlGetEvents, GqlGetOwnershipSignedData } from "#imports";
 import {
+  Bool,
+  Encoding,
   fetchAccount,
+  Field,
   isReady,
   Mina,
   PublicKey,
@@ -94,7 +97,28 @@ export const useOwnershipProof = defineStore("ownershipProof", {
         console.log("setting instance from fetch events");
         await this.getZkAppInstance();
       }
-      this.events = await GqlGetEvents({ zkAppAddress: this.zkAppAddress });
+      const res = await GqlGetEvents({ zkAppAddress: this.zkAppAddress });
+      await isReady;
+      const eventDataList = res.zkapps.map((event, index) => {
+        const dateTime = event.dateTime;
+        const verifiedEventStringArray =
+          event.zkappCommand.accountUpdates[0].body.events[0].split(",");
+
+        return {
+          dateTime: dateTime,
+          chainId: Number(verifiedEventStringArray[0]),
+          tokenAddress: Encoding.stringFromFields([
+            Field(verifiedEventStringArray[1]),
+            Field(verifiedEventStringArray[2]),
+          ]),
+          minaAddress: PublicKey.from({
+            x: Field(verifiedEventStringArray[3]),
+            isOdd: Bool(Boolean(Number(verifiedEventStringArray[4]))),
+          }).toBase58(),
+          id: index + 1,
+        };
+      });
+      this.events = eventDataList;
     },
   },
   getters: {},

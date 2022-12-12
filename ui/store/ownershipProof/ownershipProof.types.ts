@@ -1,5 +1,7 @@
 import { SignedOwnershipData } from "~/types/oracle/graphql";
 import { ERCType } from "~/store/account/account.index";
+import { Maybe } from "@graphql-tools/utils";
+import { Zkapp } from "~/types/minaexplorer/graphql";
 export interface StepInfo {
   isLoading: Boolean;
   isFinished: Boolean;
@@ -25,6 +27,6 @@ export interface OwnershipProofState {
   account?: any;
   zkApp?: any;
   steps: OwnershipOracleSteps;
-  events: any;
+  events: Array<Maybe<Zkapp>>;
   eventsLoading: Boolean;
 }
