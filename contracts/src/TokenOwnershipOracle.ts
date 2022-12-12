@@ -26,7 +26,8 @@ export class VerifiedOwnership extends Struct({
   minaAddress: PublicKey,
 }) {}
 
-import { ORACLE_PUBLIC_KEY } from './utils/constants';
+export const ORACLE_PUBLIC_KEY =
+  'B62qqFGos8L5WD45YSAyaF5dkQagnrnUdY54F2rGXU5gcjKnHq84CkS';
 
 export class TokenOwnershipOracle extends SmartContract {
   @state(PublicKey) oraclePublicKey = State<PublicKey>();

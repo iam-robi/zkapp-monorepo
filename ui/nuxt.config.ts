@@ -33,6 +33,9 @@ export default defineNuxtConfig({
               credentials: "include",
             },
           },
+          minaexplorer: {
+            host: "https://berkeley.graphql.minaexplorer.com",
+          },
         },
       },
     },

@@ -3,6 +3,24 @@
 
 <!--    {{ownershipProofStore.steps.signInEvm.isFinished ? `Connected to ${accountStore.address}` : ''}}-->
 <!--    Data: {{ownershipProofStore.oracleData}}-->
+    <div v-if="ownershipProofStore.currentStep === 6">
+      <n-result status="success" title="Success" description="You successfully proved your ownership">
+        <template #footer>
+
+          <n-button tag="a" :href="`https://berkeley.minaexplorer.com/transaction/${ownershipProofStore.transaction}`" target="_blank" icon-placement="right">
+            <template #icon>
+              <n-icon>
+                <exit />
+              </n-icon>
+            </template>
+            Check Transaction
+          </n-button>
+        </template>
+      </n-result>
+    </div>
+    <div v-else>
+
+
     <div v-if="ownershipProofStore.selectedTokenType === 'ERC721' && ownershipProofStore.currentStep  > 4">
       Collection on Open Sea: <nuxt-link :to="`https://opensea.io/assets?search[query]=${ownershipProofStore.selectedTokenAddress}`" target="_blank">
       <n-button >
@@ -147,12 +165,12 @@
 
 
     </n-steps>
-
+    </div>
   </n-space>
 
 </template>
 <script setup>
-import {NButton, NInput, NRadioButton, NRadioGroup, NSpace, NSteps, NStep, NButtonGroup , NSpin , NSelect, NIcon } from "naive-ui";
+import {NButton, NInput, NRadioButton, NRadioGroup, NSpace, NSteps, NStep, NButtonGroup , NSpin , NSelect, NIcon, NResult } from "naive-ui";
 //import { MdArrowRoundBack, MdArrowRoundForward } from '@vicons/ionicons4'
 
 import {
@@ -173,7 +191,7 @@ import {TokenOwnershipOracle , EvmAddress} from "zkapp-oracles";
 import MinaLogIn from "~/components/wallets/MinaLogIn";
 import {useNuxtApp} from "nuxt/app";
 
-import { MdArrowBack as ArrowBack } from '@vicons/ionicons4'
+import { MdArrowBack as ArrowBack , IosExit as Exit} from '@vicons/ionicons4'
 import { MdEasel } from '@vicons/ionicons4'
 
 const accountStore = useAccount()
@@ -267,39 +285,40 @@ const verify = async function() {
   let app = new TokenOwnershipOracle(PublicKey.fromBase58(ownershipProofStore.zkAppAddress));
   let contractAddress = new EvmAddress({ fields: addressToFields, chainId: chainId});
 
+
+  try {
+    const txn = await Mina.transaction(() => {
+      app.verify(
+          balance,
+          contractAddress,
+          signature ?? fail('something is wrong with the signature'),
+          PublicKey.fromBase58(accountStore.minaAccounts[0])
+      );
+    });
+    console.log(txn)
+
+      console.log("start proving")
+      //TODO: proving completeley
+      await txn.prove();
+
+
+      const { hash } = await window.mina.sendTransaction({
+      transaction: txn.toJSON(),
+      feePayer: {
+        fee: 0.1,
+        memo: "zk"
+      }
+      })
+      console.log("transaction hash", hash);//
+      accountStore.transaction = hash
+      ownershipProofStore.currentStep = 6
   //
-  // try {
-  //   const txn = await Mina.transaction(() => {
-  //     app.verify(
-  //         balance,
-  //         contractAddress,
-  //         signature ?? fail('something is wrong with the signature'),
-  //         PublicKey.fromBase58(accountStore.minaAccounts[0])
-  //     );
-  //   });
-  //   console.log(txn)
-  //
-  //     console.log("start proving")
-  //     //TODO: proving completeley
-  //     await txn.prove();
-  //
-  //
-  //     const { hash } = await window.mina.sendTransaction({
-  //     transaction: txn.toJSON(),
-  //     feePayer: {
-  //       fee: 0.1,
-  //       memo: "zk"
-  //     }
-  //     })
-  //     console.log("transaction hash", hash);//
-  //     accountStore.transaction = hash
-  // //
-  // } catch(err) {
-  //   console.log("error", err)
-  // }
+  } catch(err) {
+    console.log("error", err)
+  }
 
   ownershipProofStore.steps.proofTransaction.isLoading = false
   ownershipProofStore.steps.proofTransaction.isFinished = true
-  ownershipProofStore.currentStep = 6
+
 }
 </script>

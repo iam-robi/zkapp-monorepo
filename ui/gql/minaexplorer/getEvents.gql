@@ -1,0 +1,15 @@
+query getEvents($zkAppAddress: String!) {
+    zkapps(query: {zkappCommand: {accountUpdates: {body: {publicKey: $zkAppAddress}}}, canonical: true, failureReason_exists: false}, sortBy: BLOCKHEIGHT_DESC, limit: 1000) {
+        hash
+        blockHeight
+        zkappCommand {
+            accountUpdates {
+                body {
+                    events
+
+                    publicKey
+                }
+            }
+        }
+    }
+}

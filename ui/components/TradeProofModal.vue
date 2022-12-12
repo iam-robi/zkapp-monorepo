@@ -3,129 +3,147 @@
 
     <!--    {{tradeProofStore.steps.signInEvm.isFinished ? `Connected to ${accountStore.address}` : ''}}-->
     <!--    Data: {{accountStore.ownershipData}}-->
-    Proving for exchange: {{tradeProofStore.selectedExchange}}
-    Number of swap found: {{tradeProofStore.oracleData?.data?.swapCounts}}
-    Volume USD found: {{tradeProofStore.oracleData?.data?.amountUsd}}
 
 
-    <n-steps vertical :current="tradeProofStore.currentStep" >
-      <n-step
-          :status="tradeProofStore.isLoaded ? 'finish' : 'process'"
-          title="Load Snarky JS"
-      >
+    <div v-if="tradeProofStore.currentStep === 6">
+      <n-result status="success" title="Success" description="You successfully proved your trades">
+        <template #footer>
+
+            <n-button tag="a" :href="`https://berkeley.minaexplorer.com/transaction/${tradeProofStore.transaction}`" target="_blank" icon-placement="right">
+              <template #icon>
+                <n-icon>
+                  <exit />
+                </n-icon>
+              </template>
+              Check Transaction
+            </n-button>
+        </template>
+      </n-result>
+    </div>
+    <div v-else>
+      Proving for exchange: {{tradeProofStore.selectedExchange}}
+      Number of swap found: {{tradeProofStore.oracleData?.data?.swapCounts}}
+      Volume USD found: {{tradeProofStore.oracleData?.data?.amountUsd}}
+      <n-steps vertical :current="tradeProofStore.currentStep" >
+        <n-step
+            :status="tradeProofStore.isLoaded ? 'finish' : 'process'"
+            title="Load Snarky JS"
+        >
 
 
-      </n-step>
-      <n-step title="Compile Smart Contract" :status="tradeProofStore.steps.compilation.isFinished ? 'finish' : tradeProofStore.steps.snarkyLoad.isFinished ? 'process': 'wait'">
-        <div class="n-step-description">
-          <!--          <p>Al through the day, I me mine I me mine, I me mine</p>-->
+        </n-step>
+        <n-step title="Compile Smart Contract" :status="tradeProofStore.steps.compilation.isFinished ? 'finish' : tradeProofStore.steps.snarkyLoad.isFinished ? 'process': 'wait'">
+          <div class="n-step-description">
+            <!--          <p>Al through the day, I me mine I me mine, I me mine</p>-->
 
-          <n-button
-              :loading="tradeProofStore.steps.compilation.isLoading"
-              v-if="tradeProofStore.currentStep === 1 && !tradeProofStore.steps.compilation.isFinished"
-              size="small"
-              @click="compileZkApp"
-          >
-            {{ tradeProofStore.currentStep === 1 && !tradeProofStore.steps.compilation.isLoading ? 'Compile': ''}}
-          </n-button>
-
-
-        </div>
-      </n-step>
-      <n-step title="Get ZkApp Instance Info" :status="tradeProofStore.steps.instance.isFinished ? 'finish' : tradeProofStore.steps.compilation.isFinished ? 'process': 'wait'">
-        <div class="n-step-description">
-          <!--          <p>Al through the day, I me mine I me mine, I me mine</p>-->
-          <n-button
-              v-if="tradeProofStore.currentStep === 2 && !tradeProofStore.steps.instance.isFinished"
-              :loading="tradeProofStore.steps.instance.isLoading"
-              size="small"
-              @click="setZkApp"
-          >
-            {{ tradeProofStore.currentStep === 2 && !tradeProofStore.steps.instance.isLoading ? 'Set Instance': ''}}
-          </n-button>
-        </div>
-      </n-step>
-      <n-step title="Start Evm Session" :status="tradeProofStore.steps.signInEvm.isFinished ? 'finish' : tradeProofStore.steps.instance.isFinished ? 'process': 'wait'">
-        <div class="n-step-description">
-          Only Uniswap dex supported. Sign in to ethereum chain to prove trading.
-          <!--          <p>Al through the day, I me mine I me mine, I me mine</p>-->
-          <n-button
-              v-if="tradeProofStore.currentStep === 3"
-              :loading="tradeProofStore.steps.signInEvm.isLoading"
-              size="small"
-              @click="signInToEvm"
-          >
-            Sign In
-          </n-button>
-        </div>
-      </n-step>
-<!--      &lt;!&ndash;      <n-step title="Get Signed Data" :status="tradeProofStore.steps.dataFetch.isFinished ? 'finish' : tradeProofStore.steps.signInEvm.isFinished ? 'process': 'wait'">&ndash;&gt;-->
-      <n-step title="Get Signed Data" :status="tradeProofStore.steps.dataFetch.isFinished ? 'finish' : tradeProofStore.steps.signInEvm.isFinished ? 'process': 'wait'">
-        <!--        v-if="tradeProofStore.currentStep === 4"-->
-        <div class="n-step-description"  v-if="![1].includes(tradeProofStore.selectedChainId) && tradeProofStore.currentStep === 4" >
-          Current chain not supported please sign in again
-          <br>
-          <n-button @click="tradeProofStore.currentStep = 3" text style="font-size: 24px">
-            <n-icon>
-              <arrow-back />
-            </n-icon>
-          </n-button>
+            <n-button
+                :loading="tradeProofStore.steps.compilation.isLoading"
+                v-if="tradeProofStore.currentStep === 1 && !tradeProofStore.steps.compilation.isFinished"
+                size="small"
+                @click="compileZkApp"
+            >
+              {{ tradeProofStore.currentStep === 1 && !tradeProofStore.steps.compilation.isLoading ? 'Compile': ''}}
+            </n-button>
 
 
-        </div>
-        <div class="n-step-description"  v-if="[1].includes(tradeProofStore.selectedChainId) && tradeProofStore.currentStep === 4" >
-          Please indicate Exchange where you want to prove trading.
-          Only Uniswap supported for now.
-          <br><br>
-          You are connected to chain:
-          <n-select v-model:value="tradeProofStore.selectedChainId" disabled :show-arrow="false" size="large" :options="accountStore.chains" label-field="networkName" value-field="chainId" >
-          </n-select>
+          </div>
+        </n-step>
+        <n-step title="Get ZkApp Instance Info" :status="tradeProofStore.steps.instance.isFinished ? 'finish' : tradeProofStore.steps.compilation.isFinished ? 'process': 'wait'">
+          <div class="n-step-description">
+            <!--          <p>Al through the day, I me mine I me mine, I me mine</p>-->
+            <n-button
+                v-if="tradeProofStore.currentStep === 2 && !tradeProofStore.steps.instance.isFinished"
+                :loading="tradeProofStore.steps.instance.isLoading"
+                size="small"
+                @click="setZkApp"
+            >
+              {{ tradeProofStore.currentStep === 2 && !tradeProofStore.steps.instance.isLoading ? 'Set Instance': ''}}
+            </n-button>
+          </div>
+        </n-step>
+        <n-step title="Start Evm Session" :status="tradeProofStore.steps.signInEvm.isFinished ? 'finish' : tradeProofStore.steps.instance.isFinished ? 'process': 'wait'">
+          <div class="n-step-description">
+            Only Uniswap dex supported. Sign in to ethereum chain to prove trading.
+            <!--          <p>Al through the day, I me mine I me mine, I me mine</p>-->
+            <n-button
+                v-if="tradeProofStore.currentStep === 3"
+                :loading="tradeProofStore.steps.signInEvm.isLoading"
+                size="small"
+                @click="signInToEvm"
+            >
+              Sign In
+            </n-button>
+          </div>
+        </n-step>
+        <!--      &lt;!&ndash;      <n-step title="Get Signed Data" :status="tradeProofStore.steps.dataFetch.isFinished ? 'finish' : tradeProofStore.steps.signInEvm.isFinished ? 'process': 'wait'">&ndash;&gt;-->
+        <n-step title="Get Signed Data" :status="tradeProofStore.steps.dataFetch.isFinished ? 'finish' : tradeProofStore.steps.signInEvm.isFinished ? 'process': 'wait'">
+          <!--        v-if="tradeProofStore.currentStep === 4"-->
+          <div class="n-step-description"  v-if="![1].includes(tradeProofStore.selectedChainId) && tradeProofStore.currentStep === 4" >
+            Current chain not supported please sign in again
+            <br>
+            <n-button @click="tradeProofStore.currentStep = 3" text style="font-size: 24px">
+              <n-icon>
+                <arrow-back />
+              </n-icon>
+            </n-button>
 
 
-          <br>
-          <br>
-          <n-button
-              v-if="tradeProofStore.currentStep === 4"
-              :loading="tradeProofStore.steps.dataFetch.isLoading"
-              size="large"
-              @click="fetchCertifiedData"
-          >
-            Get oracle certified data
-          </n-button>
+          </div>
+          <div class="n-step-description"  v-if="[1].includes(tradeProofStore.selectedChainId) && tradeProofStore.currentStep === 4" >
+            Please indicate Exchange where you want to prove trading.
+            Only Uniswap supported for now.
+            <br><br>
+            You are connected to chain:
+            <n-select v-model:value="tradeProofStore.selectedChainId" disabled :show-arrow="false" size="large" :options="accountStore.chains" label-field="networkName" value-field="chainId" >
+            </n-select>
 
 
+            <br>
+            <br>
+            <n-button
+                v-if="tradeProofStore.currentStep === 4"
+                :loading="tradeProofStore.steps.dataFetch.isLoading"
+                size="large"
+                @click="fetchCertifiedData"
+            >
+              Get oracle certified data
+            </n-button>
 
 
 
-        </div>
-      </n-step>
-      <n-step title="Prove on Mina" :status="tradeProofStore.steps.proofTransaction.isFinished ? 'finish' : tradeProofStore.steps.dataFetch.isFinished ? 'process': 'wait'">
 
 
-        <div class="n-step-description" v-if="tradeProofStore.currentStep === 5">
-          <!--          v-if="tradeProofStore.currentStep === 5"   :loading="tradeProofStore.steps.proofTransaction.isLoading"   </p>-->
-          <MinaLogIn v-if="!accountStore.minaLoggedIn"></MinaLogIn>
-          <n-button
-              v-if="tradeProofStore.currentStep === 5 && accountStore.minaLoggedIn"
-              :loading="tradeProofStore.steps.proofTransaction.isLoading"
-              size="small"
-              @click="verify"
-          >
-            Prove on Mina
-          </n-button>
-        </div>
-      </n-step>
+          </div>
+        </n-step>
+        <n-step title="Prove on Mina" :status="tradeProofStore.steps.proofTransaction.isFinished ? 'finish' : tradeProofStore.steps.dataFetch.isFinished ? 'process': 'wait'">
 
 
-    </n-steps>
+          <div class="n-step-description" v-if="tradeProofStore.currentStep === 5">
+            <!--          v-if="tradeProofStore.currentStep === 5"   :loading="tradeProofStore.steps.proofTransaction.isLoading"   </p>-->
+            <MinaLogIn v-if="!accountStore.minaLoggedIn"></MinaLogIn>
+            <n-button
+                v-if="tradeProofStore.currentStep === 5 && accountStore.minaLoggedIn"
+                :loading="tradeProofStore.steps.proofTransaction.isLoading"
+                size="small"
+                @click="verify"
+            >
+              Prove on Mina
+            </n-button>
+          </div>
+        </n-step>
+
+
+      </n-steps>
+    </div>
 
   </n-space>
 
 </template>
 <script setup>
-import {NButton, NInput, NRadioButton, NRadioGroup, NSpace, NSteps, NStep, NButtonGroup , NSpin , NSelect, NIcon } from "naive-ui";
+import {NButton, NInput, NRadioButton, NRadioGroup, NSpace, NSteps, NStep, NButtonGroup , NSpin , NSelect, NIcon, NResult } from "naive-ui";
 //import { MdArrowRoundBack, MdArrowRoundForward } from '@vicons/ionicons4'
-
+import { useDialog } from 'naive-ui'
+const dialog = useDialog()
 import {
   Field,
   PrivateKey,
@@ -144,7 +162,7 @@ import {ProofOfTrade , EvmAddress} from "zkapp-oracles";
 import MinaLogIn from "~/components/wallets/MinaLogIn";
 import {useNuxtApp} from "nuxt/app";
 
-import { MdArrowBack as ArrowBack } from '@vicons/ionicons4'
+import { MdArrowBack as ArrowBack , IosExit as Exit} from '@vicons/ionicons4'
 import { MdEasel } from '@vicons/ionicons4'
 
 const accountStore = useAccount()
@@ -260,6 +278,7 @@ const verify = async function() {
     })
     console.log("transaction hash", hash);//
     tradeProofStore.transaction = hash
+    tradeProofStore.currentStep = 6
     //
   } catch(err) {
     console.log("error", err)
@@ -267,6 +286,6 @@ const verify = async function() {
 
   tradeProofStore.steps.proofTransaction.isLoading = false
   tradeProofStore.steps.proofTransaction.isFinished = true
-  tradeProofStore.currentStep = 6
+
 }
 </script>

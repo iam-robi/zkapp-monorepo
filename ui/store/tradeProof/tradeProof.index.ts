@@ -4,7 +4,7 @@ import {
   SupportedExchanges,
   TradeProofState,
 } from "~/store/tradeProof/tradeProof.types";
-import { GqlGetOwnershipSignedData, GqlGetTradingSignedData } from "#imports";
+import { GqlGetEvents, GqlGetTradingSignedData } from "#imports";
 import { ERCType } from "~/store/account/account.index";
 // import {Encoding, Field, isReady} from "snarkyjs";
 import {
@@ -90,10 +90,8 @@ export const useTradeProof = defineStore("tradeProof", {
       if (!this.zkApp) {
         console.log("setting instance from fetch events");
         await this.getZkAppInstance();
-      } else {
-        console.log("fetching event");
-        this.events = await this.zkApp.fetchEvents();
       }
+      this.events = await GqlGetEvents({ zkAppAddress: this.zkAppAddress });
     },
   },
   getters: {},

@@ -40,7 +40,8 @@
     </n-modal>
     </ClientOnly>
     <ClientOnly>
-      <n-modal v-model:show="showTradeModal" :mask-closable="false" preset="dialog" style="width:900px" :show-icon="false">
+
+      <n-modal v-model:show="showTradeModal" :mask-closable="false" preset="dialog" style="width:900px" :show-icon="false" >
 
         <TradeProofModal></TradeProofModal>
 

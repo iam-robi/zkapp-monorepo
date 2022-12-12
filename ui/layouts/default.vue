@@ -14,17 +14,17 @@
         <MinaLogIn></MinaLogIn>
       </n-layout-sider>
       <n-layout-content content-style="padding: 24px;">
-
+<n-dialog-provider>
             <slot />
 
-
+</n-dialog-provider>
       </n-layout-content>
     </n-layout>
   </n-space>
 </template>
 
 <script setup>
-import {NLayoutContent, NLayoutSider, NLayout , NSpace , NH2, NButton} from "naive-ui";
+import {NLayoutContent, NLayoutSider, NLayout , NSpace , NH2, NButton, NDialogProvider} from "naive-ui";
 import { useAccount } from "../store/account/account.index";
 import {onMounted, ref, computed} from "#imports";
 import MinaLogIn from "~/components/wallets/MinaLogIn";

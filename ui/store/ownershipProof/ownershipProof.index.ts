@@ -2,7 +2,7 @@
 import { defineStore } from "pinia";
 import { OwnershipProofState } from "~/store/ownershipProof/ownershipProof.types";
 import { ERCType } from "~/store/account/account.index";
-import { GqlGetOwnershipSignedData } from "#imports";
+import { GqlGetEvents, GqlGetOwnershipSignedData } from "#imports";
 import {
   fetchAccount,
   isReady,
@@ -16,7 +16,7 @@ import { TokenOwnershipOracle } from "zkapp-oracles";
 export const useOwnershipProof = defineStore("ownershipProof", {
   state: (): OwnershipProofState => ({
     isLoaded: false,
-    zkAppAddress: "B62qrYrpVQHev7f1jQ3EaM44nCSFsTYbxCMqqDCm8GCJEZQM8EAVbMG",
+    zkAppAddress: "B62qqDxT8d7dZ7kbToMBU94nwc3BQ2mMjU53JpUYouqP7bNVkopXNuj",
     oracleSignerPublicKey:
       "B62qqFGos8L5WD45YSAyaF5dkQagnrnUdY54F2rGXU5gcjKnHq84CkS",
     account: undefined,
@@ -92,10 +92,8 @@ export const useOwnershipProof = defineStore("ownershipProof", {
       if (!this.zkApp) {
         console.log("setting instance from fetch events");
         await this.getZkAppInstance();
-      } else {
-        console.log("fetching event");
-        this.events = await this.zkApp.fetchEvents();
       }
+      this.events = await GqlGetEvents({ zkAppAddress: this.zkAppAddress });
     },
   },
   getters: {},
