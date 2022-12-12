@@ -54,6 +54,32 @@ export const useTradeProof = defineStore("tradeProof", {
         isFinished: false,
       },
     },
+    defaultSteps: {
+      snarkyLoad: {
+        isLoading: false,
+        isFinished: false,
+      },
+      compilation: {
+        isLoading: false,
+        isFinished: false,
+      },
+      instance: {
+        isLoading: false,
+        isFinished: false,
+      },
+      signInEvm: {
+        isLoading: false,
+        isFinished: false,
+      },
+      dataFetch: {
+        isLoading: false,
+        isFinished: false,
+      },
+      proofTransaction: {
+        isLoading: false,
+        isFinished: false,
+      },
+    },
   }),
 
   actions: {

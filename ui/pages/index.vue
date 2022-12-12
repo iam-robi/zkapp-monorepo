@@ -33,7 +33,7 @@
     </n-grid>
 
     <ClientOnly>
-    <n-modal v-model:show="showOwnershipModal" :mask-closable="false" preset="dialog" style="width:900px" :show-icon="false">
+    <n-modal v-model:show="showOwnershipModal" :mask-closable="false" preset="dialog" style="width:900px" :show-icon="false" :on-after-leave="ownershipModalStatusClosed">
 
       <OwnershipProofModal></OwnershipProofModal>
 
@@ -41,7 +41,7 @@
     </ClientOnly>
     <ClientOnly>
 
-      <n-modal v-model:show="showTradeModal" :mask-closable="false" preset="dialog" style="width:900px" :show-icon="false" >
+      <n-modal v-model:show="showTradeModal" :mask-closable="false" preset="dialog" style="width:900px" :show-icon="false" :on-after-leave="tradeModalStatusClosed" >
 
         <TradeProofModal></TradeProofModal>
 
@@ -66,6 +66,15 @@ onMounted(async () => {
 })
 
 const showOwnershipModal = ref(false)
+const ownershipModalStatusClosed = async function () {
+  let events;
+  if(ownershipProofStore.currentStep === 6){
+    events = await ownershipProofStore.getEvents()
+  } else {
+    events = ownershipProofStore.events
+  }
+  ownershipProofStore.$reset()
+}
 const ownershipData = [
   { id: 1, address: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d', date: 'Sun Dec 11 2022',  link : 'https://opensea.io'},
   { id: 2, address: "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d", date: 'Sun Dec 11 2022', link : 'https://opensea.io'},
@@ -105,6 +114,15 @@ const ownershipColumns = [
 
 
 const showTradeModal = ref(false)
+const tradeModalStatusClosed = async function () {
+  let events;
+  if(tradeProofStore.currentStep === 6){
+    events = await tradeProofStore.getEvents()
+  } else {
+    events = tradeProofStore.events
+  }
+  tradeProofStore.$reset()
+}
 const tradeData = [
   { id: 1, exchange: 'UNISWAP', date: 'Sun Dec 11 2022' , threshold: '10000' },
   { id: 2, exchange: "UNISWAP", date: 'Sun Dec 11 2022' , threshold: '10000' },

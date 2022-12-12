@@ -29,6 +29,7 @@ export interface TradeProofState {
   account?: any;
   zkApp?: any;
   steps: TradeProofSteps;
+  defaultSteps: TradeProofSteps;
   oracleData: SignedTradingData | null;
   events: any;
 }
