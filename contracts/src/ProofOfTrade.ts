@@ -61,7 +61,7 @@ export class ProofOfTrade extends SmartContract {
     swapCounts.assertGte(Field(2));
     amountUsd.assertGte(Field(10000));
 
-    this.emitEvent('verified', publicKey);
+    this.emitEvent('verified', publicKey.toBase58());
   }
 
   @method updateOraclePublicKey(
