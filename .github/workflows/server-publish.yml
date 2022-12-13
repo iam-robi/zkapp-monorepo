@@ -25,6 +25,6 @@ jobs:
       registry_path: iam0robi/mina-oracle-server
     secrets:
       argo_template_path: ${{ secrets.ARGO_TEMPLATE_PATH }}
-      repo_auth_url: ${{ secrets.REPO_AUTH_URL }}
+      gitops_auth_url: ${{ secrets.REPO_AUTH_URL }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
