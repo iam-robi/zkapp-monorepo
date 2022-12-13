@@ -96,6 +96,7 @@ const ownershipModalStatusClosed = async function () {
     events = ownershipProofStore.events
   }
   ownershipProofStore.$reset()
+  ownershipProofStore.events = events
 }
 const ownershipColumns = [
   {
@@ -158,6 +159,7 @@ const tradeModalStatusClosed = async function () {
     events = tradeProofStore.events
   }
   tradeProofStore.$reset()
+  tradeProofStore.events = events
 }
 const tradeColumns = [
   {
