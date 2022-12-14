@@ -48,41 +48,51 @@
                 <div style="flex-grow: 3">            
                 <h3 class="mina_text" style="margin: 0">Step Four</h3>
                 <h2 class="mina_subtitle" style="margin: 0">Start Evm Session</h2>
-            </div>
-            <div>
+                </div>
+                <div>
 
-                <loader v-if="ownershipProofStore.steps.signInEvm.isLoading"/>
+                    <loader v-if="ownershipProofStore.steps.signInEvm.isLoading"/>
+                    <div class="mina_tag info" v-if="ownershipProofStore.steps.signInEvm.isFinished">{{`${$ssx?.address().slice(0,6)}...${$ssx?.address().slice(-4)}`}}</div>
+                </div>
             </div>
-            </div>
+          <div class="mina_item_description" v-if="ownershipProofStore.currentStep === 3">
             <p class="mina_text" style="opacity: 0.6;">Only Ethereum, Polygon, Avalanche supported. Sign in to chain and wallet where you want to prove ownership.</p>
             <n-button class="mina_new_proof_button" @click="signInToEvm">Sign in</n-button>
+          </div>
         </div>
 
         <div class="mina_item"  v-if="ownershipProofStore.currentStep >= 4">
             <div class="mina_flex gap-8" style="width: 100%; align-items: center">
                 <div style="flex-grow: 3">            
-                <h3 class="mina_text" style="margin: 0">Step Five</h3>
-                <h2 class="mina_subtitle" style="margin: 0">Get Signed Data</h2>
-            </div>
-            <div>
+                  <h3 class="mina_text" style="margin: 0">Step Five</h3>
+                  <h2 class="mina_subtitle" style="margin: 0">Get Signed Data</h2>
+                </div>
+              <div>
                 <div class="mina_tag alert" v-if="![1, 137,43114].includes(ownershipProofStore.selectedChainId) && ownershipProofStore.currentStep === 4">Chain not supported</div>
-                <loader v-if="ownershipProofStore.steps.instance.isLoading"/>
-            </div>
-            </div>
-            <div v-if="![1, 137,43114].includes(ownershipProofStore.selectedChainId) && ownershipProofStore.currentStep === 4">
-                <n-button class="mina_new_proof_button" @click="ownershipProofStore.currentStep = 3">Go Back</n-button>
-            </div>
-            <div  v-if="[1, 137,43114].includes(ownershipProofStore.selectedChainId) && ownershipProofStore.currentStep === 4">
-            <p class="mina_text" style="opacity: 0.6;">Please indicate on which contract on which chain you would like to prove ownership. ERC20, ERC721 are supported. Mina will emit an event under your mina address proving your own at least 1 asset from this address.</p>
-            <p class="mina_text">You are connected to chain:</p>
-            <n-select v-model:value="ownershipProofStore.selectedChainId" disabled :show-arrow="false" size="large" :options="accountStore.chains" label-field="networkName" value-field="chainId" >
-          </n-select>
-            <p class="mina_text">Indicate Contract Address</p>
-            <n-input  placeholder="Enter a valid address in chosen network" v-model:value="ownershipProofStore.selectedTokenAddress"/>
-            <p class="mina_text">Select Token Type</p>
-            <n-select v-model:value="ownershipProofStore.selectedTokenType" default-value="ERC721" size="large" :options="[{label: 'ERC20'},{label:'ERC721'}]" label-field="label" value-field="label" ></n-select>
+                  <loader v-if="ownershipProofStore.steps.dataFetch.isLoading"/>
+                  <n-tooltip v-if="ownershipProofStore.steps.dataFetch.isFinished" trigger="hover" :show-arrow="false">
+                    Token Balance
+                    <template #trigger>
+                      <div class="mina_tag info" v-if="ownershipProofStore.steps.dataFetch.isFinished">{{ownershipProofStore.oracleData?.data?.balance}}</div>
+                    </template>
 
-              <div class="mina_flex"  style="gap: 24px; margin-top:24px; align-items:center">
+                  </n-tooltip>
+                </div>
+              </div>
+              <div v-if="![1, 137,43114].includes(ownershipProofStore.selectedChainId) && ownershipProofStore.currentStep === 4">
+                  <n-button class="mina_new_proof_button" @click="ownershipProofStore.currentStep = 3">Go Back</n-button>
+              </div>
+              <div  v-if="[1, 137,43114].includes(ownershipProofStore.selectedChainId) && ownershipProofStore.currentStep === 4">
+                <p class="mina_text" style="opacity: 0.6;">Please indicate on which contract on which chain you would like to prove ownership. ERC20, ERC721 are supported. Mina will emit an event under your mina address proving your own at least 1 asset from this address.</p>
+                <p class="mina_text">You are connected to chain:</p>
+                <n-select v-model:value="ownershipProofStore.selectedChainId" disabled :show-arrow="false" size="large" :options="accountStore.chains" label-field="networkName" value-field="chainId" >
+              </n-select>
+                <p class="mina_text">Indicate Contract Address</p>
+                <n-input  placeholder="Enter a valid address in chosen network" v-model:value="ownershipProofStore.selectedTokenAddress"/>
+                <p class="mina_text">Select Token Type</p>
+                <n-select v-model:value="ownershipProofStore.selectedTokenType" default-value="ERC721" size="large" :options="[{label: 'ERC20'},{label:'ERC721'}]" label-field="label" value-field="label" ></n-select>
+
+                 <div class="mina_flex"  style="gap: 24px; margin-top:24px; align-items:center">
                   <a :href="`https://opensea.io/assets?search[query]=${ownershipProofStore.selectedTokenAddress}`" target="_blank">
                       <n-button class="mina_orange_outline">Check on Open Sea</n-button>
                   </a>
@@ -94,11 +104,11 @@
                 >
                   Get oracle certified data
                 </n-button>
+                </div>
               </div>
-            </div>
             
-        </div>
-        <div class="mina_item" v-if="ownershipProofStore.currentStep >= 5">
+            </div>
+      <div class="mina_item" v-if="ownershipProofStore.currentStep >= 5">
             <div class="mina_flex gap-8" style="width: 100%; align-items: center">
                 <div style="flex-grow: 3">            
                 <h3 class="mina_text" style="margin: 0">Step Six</h3>
@@ -121,12 +131,12 @@
         </div>
 
 
-    </div>
+        </div>
 </div>
     
 </template>
 <script setup>
-import {NButton, NInput, NRadioButton, NRadioGroup, NSpace, NSteps, NStep, NButtonGroup , NSpin , NSelect, NIcon, NResult } from "naive-ui";
+import {NButton, NInput, NRadioButton, NRadioGroup, NSpace, NSteps, NStep, NButtonGroup , NSpin , NSelect, NIcon, NResult , NTooltip } from "naive-ui";
 //import { MdArrowRoundBack, MdArrowRoundForward } from '@vicons/ionicons4'
 
 import {

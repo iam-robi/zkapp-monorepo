@@ -2,14 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0dfa547a-01a6-411a-ba84-25916c4a05fc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ui/store/display/display.index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/store/display/display.types.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/components/OwnershipProof.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/components/OwnershipProof.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/components/TradeProof.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/components/TradeProof.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/pages/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/pages/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/store/ownershipProof/ownershipProof.index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/store/ownershipProof/ownershipProof.index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/store/ownershipProof/ownershipProof.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/store/ownershipProof/ownershipProof.types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/store/tradeProof/tradeProof.index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/store/tradeProof/tradeProof.index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/store/tradeProof/tradeProof.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/store/tradeProof/tradeProof.types.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -222,7 +219,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/ui/components/OwnershipProof.vue</url>
-          <line>158</line>
+          <line>168</line>
           <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="21" />
         </line-breakpoint>

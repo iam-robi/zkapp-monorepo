@@ -1,9 +1,6 @@
 // following this example https://github.com/productdevbook/oku-nuxt3-template/tree/master/src
 import { defineStore } from "pinia";
-import {
-  SupportedExchanges,
-  TradeProofState,
-} from "~/store/tradeProof/tradeProof.types";
+import { TradeProofState } from "~/store/tradeProof/tradeProof.types";
 import { GqlGetEvents, GqlGetTradingSignedData } from "#imports";
 import { ERCType } from "~/store/account/account.index";
 // import {Encoding, Field, isReady} from "snarkyjs";
@@ -17,6 +14,7 @@ import {
   setGraphqlEndpoint,
 } from "snarkyjs";
 import { ProofOfTrade } from "zkapp-oracles";
+import { SupportedExchanges } from "~/types/oracle/graphql";
 
 export const useTradeProof = defineStore("tradeProof", {
   state: (): TradeProofState => ({
@@ -26,7 +24,7 @@ export const useTradeProof = defineStore("tradeProof", {
       "B62qqFGos8L5WD45YSAyaF5dkQagnrnUdY54F2rGXU5gcjKnHq84CkS",
     account: undefined,
     zkApp: undefined,
-    selectedExchange: SupportedExchanges.UNISWAP,
+    selectedExchange: SupportedExchanges.Uniswap,
     oracleData: null,
     currentStep: 0,
     events: [],
