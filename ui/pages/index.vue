@@ -9,12 +9,12 @@
       <MinaLogIn></MinaLogIn>
     </div>
    </div>
-    <n-grid x-gap="12" :cols="2" v-show="!showOwnershipModal">
+    <n-grid x-gap="12" :cols="2" v-show="displayStore.main[0] === MainDisplayOptions.POOEVENTS && displayStore.main[1] === MainDisplayOptions.POTEVENTS">
       <n-gi>
         <div class="mina_card">
           <div class="mina_card_header">
             <h1 class="mina_title" style="flex-grow: 2">Proof Of Ownership (NFTs) Events</h1>
-            <n-button class="mina_new_proof_button" @click="showOwnershipModal = true">+ New Proof</n-button>
+            <n-button class="mina_new_proof_button" @click="displayStore.main = [ MainDisplayOptions.NEWPOO ]">+ New Proof</n-button>
           </div>
           <div v-if="ownershipProofStore.eventsLoading">
             <n-skeleton height="117px" style="margin-bottom: 7px;" width="100%" :sharp="false" />
@@ -27,11 +27,12 @@
                 <img src="/placeholder_logo.png" width="34" height="34"/>
                 <div style="flex-grow: 4; overflow: hidden">
                   <h2 class="mina_subtitle token-address">{{m.tokenAddress}} </h2>
-                  <p class="mina_text" style="margin: 0">{{m.chainId}}</p>
+                  <nuxt-link> <a :href="`https://berkeley.minaexplorer.com/wallet/${m.minaAddress}`" target="_blank" class="mina_text" style="margin: 0">{{m.minaAddress}}</a></nuxt-link>
+
                 </div>
                 <div class="proved_at_least">
                   <p>At least </p>
-                  <p>x</p>
+                  <p>1</p>
                   <p> Proved</p>
                 </div>
                 <a :href="'https://opensea.io/assets?search[query]=' + m.tokenAddress">
@@ -42,10 +43,10 @@
         </div>
       </n-gi>
       <n-gi>
-              <div class="mina_card">
+        <div class="mina_card">
           <div class="mina_card_header">
             <h1 class="mina_title" style="flex-grow: 2">Proof Of Trade Events</h1>
-            <n-button class="mina_new_proof_button" @click="showTradeModal = true">+ New Proof</n-button>
+            <n-button class="mina_new_proof_button" @click="displayStore.main = [ MainDisplayOptions.NEWPOT ]">+ New Proof</n-button>
           </div>
           <div v-if="tradeProofStore.eventsLoading">
             <n-skeleton height="117px" style="margin-bottom: 7px;" width="100%" :sharp="false" />
@@ -61,11 +62,11 @@
                 <img v-if="m.exchange === 'BINANCE'" src="/binance.png" width="34" height="34"/>
                 <div style="flex-grow: 4; overflow: hidden">
                   <h2 class="mina_subtitle" style="margin: 0">{{m.exchange}} </h2>
-                  <p class="mina_text" style="margin: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{m.minaAddress}}</p>
+                  <nuxt-link> <a :href="`https://berkeley.minaexplorer.com/wallet/${m.minaAddress}`" target="_blank" class="mina_text" style="margin: 0">{{m.minaAddress}}</a></nuxt-link>
                 </div>
                 <div class="proved_at_least">
                   <p>Volume > </p>
-                  <p>{{m.tradeVolume}}</p>
+                  <p>{{m.tradeVolume}}$</p>
                   <p> Proved</p>
                 </div>
               </div>
@@ -76,18 +77,12 @@
 
 
 
-    <ClientOnly >
-      <ownership-proof v-show="showOwnershipModal" @modalState="onOwnershipModalState"/>
-    </ClientOnly>
-    <ClientOnly>
-       <!-- <trade-proof /> -->
 
-      <n-modal  :mask-closable="false" preset="dialog" style="width:560px" :show-icon="false" :on-after-leave="tradeModalStatusClosed" >
-        <TradeProofModal></TradeProofModal>
+    <ownership-proof v-show="displayStore.main[0] === MainDisplayOptions.NEWPOO" />
+
+    <TradeProof v-show="displayStore.main[0] === MainDisplayOptions.NEWPOT"></TradeProof>
 
 
-      </n-modal>
-    </ClientOnly>
 
   </div>
 </template>
@@ -99,9 +94,12 @@ const router = useRouter();
 import {useOwnershipProof} from "../store/ownershipProof/ownershipProof.index";
 const ownershipProofStore = useOwnershipProof()
 import {useTradeProof} from "../store/tradeProof/tradeProof.index";
+import {useDisplay} from "../store/display/display.index";
 import {Bool, Encoding, Field, PublicKey} from "snarkyjs";
 const tradeProofStore = useTradeProof()
+const displayStore = useDisplay()
 import MinaLogIn from "~/components/wallets/MinaLogIn";
+import {MainDisplayOptions} from "../store/display/display.types";
 onMounted(async () => {
   //await tradeProofStore.getZkAppInstance()
   tradeProofStore.eventsLoading = true
@@ -109,7 +107,7 @@ onMounted(async () => {
   await tradeProofStore.getEvents()
   tradeProofStore.eventsLoading = false
   await ownershipProofStore.getEvents()
-  ownershipProofStore.eventsLoading = false
+  // ownershipProofStore.eventsLoading = false
 })
 
 let showOwnershipModal = ref(false)

@@ -18,7 +18,6 @@ import { TokenOwnershipOracle } from "zkapp-oracles";
 
 export const useOwnershipProof = defineStore("ownershipProof", {
   state: (): OwnershipProofState => ({
-    isLoaded: false,
     zkAppAddress: "B62qqDxT8d7dZ7kbToMBU94nwc3BQ2mMjU53JpUYouqP7bNVkopXNuj",
     oracleSignerPublicKey:
       "B62qqFGos8L5WD45YSAyaF5dkQagnrnUdY54F2rGXU5gcjKnHq84CkS",
@@ -97,6 +96,7 @@ export const useOwnershipProof = defineStore("ownershipProof", {
         console.log("setting instance from fetch events");
         await this.getZkAppInstance();
       }
+      this.eventsLoading = true;
       const res = await GqlGetEvents({ zkAppAddress: this.zkAppAddress });
       await isReady;
       const eventDataList = res.zkapps.map((event, index) => {
@@ -119,6 +119,7 @@ export const useOwnershipProof = defineStore("ownershipProof", {
         };
       });
       this.events = eventDataList;
+      this.eventsLoading = false;
     },
   },
   getters: {},
