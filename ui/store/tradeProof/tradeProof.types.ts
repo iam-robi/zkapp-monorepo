@@ -5,10 +5,8 @@ import { ERCType } from "~/store/account/account.index";
 import { SignedTradingData } from "~/types/oracle/graphql";
 import { Maybe } from "@graphql-tools/utils";
 import { Zkapp } from "~/types/minaexplorer/graphql";
+import { SupportedExchanges } from "~/types/oracle/graphql";
 
-export enum SupportedExchanges {
-  UNISWAP = "UNI",
-}
 export interface StepInfo {
   isLoading: Boolean;
   isFinished: Boolean;

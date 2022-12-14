@@ -1,26 +1,9 @@
 <template>
-  <n-space vertical size="large">
-    <n-layout has-sider>
-      <n-layout-sider
-          collapse-mode="transform"
-          :collapsed-width="120"
-          :width="240"
-          show-trigger="arrow-circle"
-          content-style="padding: 24px;"
-          bordered
-      >
-        <nuxt-link class="_xs:hidden _lg:visible" to="/proofofownership" exact> <n-h2>Proof of Ownership</n-h2></nuxt-link>
-        <nuxt-link class="_xs:hidden _lg:visible" to="/proofoftrade" exact> <n-h2>Proof of Trade</n-h2></nuxt-link>
-        <MinaLogIn></MinaLogIn>
-      </n-layout-sider>
-      <n-layout-content content-style="padding: 24px;">
-<n-dialog-provider>
-            <slot />
-
-</n-dialog-provider>
-      </n-layout-content>
-    </n-layout>
-  </n-space>
+<div class="mina_body">
+  <div class="mina_container">
+    <slot />
+  </div>
+</div>
 </template>
 
 <script setup>
@@ -38,4 +21,7 @@ onMounted(async () => {
 })
 
 const accountStore = useAccount();
+useHead({
+  title: "ZK Dashboard",
+})
 </script>

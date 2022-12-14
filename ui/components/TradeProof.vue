@@ -1,0 +1,311 @@
+<template>
+  <div class="mina_proof_container">
+    <div class="mina_card">
+      <div class="mina_card_header">
+        <h1 class="mina_title" style="margin: 0; flex-grow: 2">New Proof of Trade</h1>
+        <n-button class="mina_login_button" @click="closeModal">Cancel</n-button>
+      </div>
+      <div class="mina_item">
+        <div class="mina_flex gap-8" style="width: 100%; align-items: center">
+          <div style="flex-grow: 3">
+            <h3 class="mina_text" style="margin: 0">Step One</h3>
+            <h2 class="mina_subtitle" style="margin: 0">Load SnarkyJS</h2>
+          </div>
+          <div>
+            <loader v-if="tradeProofStore.steps.snarkyLoad.isLoading"/>
+            <div class="mina_tag success" v-if="tradeProofStore.steps.snarkyLoad.isFinished">Loaded</div>
+          </div>
+        </div>
+      </div>
+      <div class="mina_item" v-if="tradeProofStore.currentStep >= 1 && !tradeProofStore.steps.compilation.isFinished">
+        <div class="mina_flex gap-8" style="width: 100%; align-items: center">
+          <div style="flex-grow: 3">
+            <h3 class="mina_text" style="margin: 0">Step Two</h3>
+            <h2 class="mina_subtitle" style="margin: 0">Compile Smart Contract</h2>
+          </div>
+          <div>
+            <div class="mina_tag success" v-if="tradeProofStore.currentStep >= 2 && !tradeProofStore.steps.instance.isFinished">Compiled</div>
+            <loader v-if="tradeProofStore.steps.compilation.isLoading"/>
+          </div>
+        </div>
+        <n-button class="mina_new_proof_button" :loading="tradeProofStore.steps.compilation.isLoading" @click="compileZkApp">Compile</n-button>
+      </div>
+      <div class="mina_item" v-if="tradeProofStore.currentStep >= 2 && !tradeProofStore.steps.instance.isFinished">
+        <div class="mina_flex gap-8" style="width: 100%; align-items: center">
+          <div style="flex-grow: 3">
+            <h3 class="mina_text" style="margin: 0">Step Three</h3>
+            <h2 class="mina_subtitle" style="margin: 0">Set SkApp Instance</h2>
+          </div>
+          <div>
+            <div class="mina_tag success" v-if="tradeProofStore.steps.instance.isFinished">Instance Set</div>
+            <loader v-if="tradeProofStore.steps.instance.isLoading"/>
+          </div>
+        </div>
+        <n-button class="mina_new_proof_button" @click="setZkApp">Set instance</n-button>
+      </div>
+      <div class="mina_item" v-if="tradeProofStore.currentStep >= 3">
+        <div class="mina_flex gap-8" style="width: 100%; align-items: center">
+          <div style="flex-grow: 3">
+            <h3 class="mina_text" style="margin: 0">Step Four</h3>
+            <h2 class="mina_subtitle" style="margin: 0">Start Evm Session</h2>
+          </div>
+          <div>
+
+            <loader v-if="tradeProofStore.steps.signInEvm.isLoading"/>
+            <div class="mina_tag info" v-if="tradeProofStore.steps.signInEvm.isFinished">{{`${$ssx?.address().slice(0,6)}...${$ssx?.address().slice(-4)}`}}</div>
+          </div>
+        </div>
+        <div class="mina_item__description" v-if="tradeProofStore.currentStep === 3">
+          <p class="mina_text" style="opacity: 0.6;">Only UNISWAP supported for now. Please sign in to Ethereum Mainnet.</p>
+          <n-button class="mina_new_proof_button" @click="signInToEvm">Sign in</n-button>
+        </div>
+      </div>
+
+
+      <div class="mina_item"  v-if="tradeProofStore.currentStep >= 4">
+        <div class="mina_flex gap-8" style="width: 100%; align-items: center">
+          <div style="flex-grow: 3">
+            <h3 class="mina_text" style="margin: 0">Step Five</h3>
+            <h2 class="mina_subtitle" style="margin: 0">Get Signed Data</h2>
+          </div>
+          <div>
+            <div class="mina_tag alert" v-if="![1].includes(tradeProofStore.selectedChainId) && tradeProofStore.currentStep === 4">Chain not supported</div>
+            <loader v-if="[1].includes(tradeProofStore.selectedChainId) && tradeProofStore.steps.dataFetch.isLoading"/>
+            <n-tooltip v-if="tradeProofStore.steps.dataFetch.isFinished" trigger="hover" :show-arrow="false">
+              Volume Traded
+              <template #trigger>
+                <div class="mina_tag info" v-if="tradeProofStore.steps.dataFetch.isFinished">{{tradeProofStore.oracleData?.data?.amountUsd}}</div>
+              </template>
+
+            </n-tooltip>
+
+          </div>
+        </div>
+
+
+        <div class="mina_item_description" v-if="![1].includes(tradeProofStore.selectedChainId) && tradeProofStore.currentStep === 4">
+          <n-button class="mina_new_proof_button" @click="tradeProofStore.currentStep = 3">Go Back</n-button>
+        </div>
+        <div class="mina_item_description" v-if="[1].includes(tradeProofStore.selectedChainId) && tradeProofStore.currentStep === 4">
+          <p class="mina_text" style="opacity: 0.6;">Please indicate on which contract on which chain you would like to prove ownership. ERC20, ERC721 are supported. Mina will emit an event under your mina address proving your own at least 1 asset from this address.</p>
+          <p class="mina_text">You are connected to chain:</p>
+          <n-select v-model:value="tradeProofStore.selectedChainId" disabled :show-arrow="false" size="large" :options="accountStore.chains" label-field="networkName" value-field="chainId" >
+
+          </n-select>
+          <div class="mina_flex"  style="gap: 24px; margin-top:24px; align-items:center">
+            <n-button
+                class="mina_new_proof_button"
+                v-if="tradeProofStore.currentStep === 4"
+                :loading="tradeProofStore.steps.dataFetch.isLoading"
+                @click="fetchCertifiedData"
+            >
+              Get oracle certified data
+            </n-button>
+          </div>
+        </div>
+
+        </div>
+
+
+      <div class="mina_item" v-if="tradeProofStore.currentStep >= 5">
+        <div class="mina_flex gap-8" style="width: 100%; align-items: center">
+          <div style="flex-grow: 3">
+            <h3 class="mina_text" style="margin: 0">Step Six</h3>
+            <h2 class="mina_subtitle" style="margin: 0">Prove on Mina</h2>
+          </div>
+          <div>
+          </div>
+        </div>
+        <MinaLogIn v-if="!accountStore.minaLoggedIn"></MinaLogIn>
+        <n-button
+            class="mina_new_proof_button"
+            v-if="tradeProofStore.currentStep === 5 && accountStore.minaLoggedIn"
+            :loading="tradeProofStore.steps.proofTransaction.isLoading"
+
+            @click="verify"
+        >
+          Prove on Mina
+        </n-button>
+
+      </div>
+
+
+
+    </div>
+  </div>
+
+</template>
+<script setup>
+import {NButton, NInput, NRadioButton, NRadioGroup, NSpace, NSteps, NStep, NButtonGroup , NSpin , NSelect, NIcon, NResult , NTooltip} from "naive-ui";
+//import { MdArrowRoundBack, MdArrowRoundForward } from '@vicons/ionicons4'
+
+import {
+  Field,
+  PrivateKey,
+  PublicKey,
+  Mina,
+  isReady,
+  shutdown,
+  fetchAccount,
+  setGraphqlEndpoint, Encoding, Signature,
+} from 'snarkyjs';
+
+import {onMounted, ref, computed} from "#imports";
+import { useAccount } from "../store/account/account.index";
+import {ProofOfTrade , EvmAddress} from "zkapp-oracles";
+import MinaLogIn from "~/components/wallets/MinaLogIn";
+import {useNuxtApp} from "nuxt/app";
+
+import {useDisplay} from "../store/display/display.index";
+import {MainDisplayOptions} from "../store/display/display.types";
+import {useTradeProof} from "../store/tradeProof/tradeProof.index";
+import {SupportedExchanges} from "../types/oracle/graphql";
+const displayStore = useDisplay();
+const accountStore = useAccount()
+
+
+const tradeProofStore = useTradeProof();
+const sleep = (ms) => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+onMounted(async () => {
+  tradeProofStore.steps.snarkyLoad.isLoading = true
+  if(!tradeProofStore.steps.snarkyLoad.isFinished) {
+    await isReady;
+  }
+
+  tradeProofStore.steps.snarkyLoad.isLoading = false
+  tradeProofStore.isLoaded = true
+  tradeProofStore.steps.snarkyLoad.isFinished = true
+  const graphqlEndpoint = 'https://proxy.berkeley.minaexplorer.com/graphql'
+  setGraphqlEndpoint(graphqlEndpoint)
+  let Berkeley = Mina.Network(graphqlEndpoint)
+  Mina.setActiveInstance(Berkeley)
+  tradeProofStore.currentStep = 1
+})
+
+const compileZkApp = async () => {
+  await sleep(500)
+  await isReady
+  tradeProofStore.steps.compilation.isLoading = true
+  await sleep(500)
+  await ProofOfTrade.compile()
+  console.log("compilation finished")
+  tradeProofStore.steps.compilation.isLoading = false
+  tradeProofStore.steps.compilation.isFinished = true
+  tradeProofStore.currentStep = 2
+  await sleep(500)
+}
+const setZkApp = async () => {
+  console.log('hey')
+  if(!tradeProofStore.zkApp){
+    console.log("hey")
+    tradeProofStore.steps.instance.isLoading = true;
+    await tradeProofStore.getZkAppInstance()
+    tradeProofStore.steps.instance.isLoading = false;
+  }
+  tradeProofStore.steps.instance.isFinished = true;
+  tradeProofStore.currentStep = 3
+}
+const signInToEvm = async function() {
+  tradeProofStore.steps.signInEvm.isLoading = true
+  await accountStore.signIn()
+  const {$ssx} = useNuxtApp();
+  tradeProofStore.selectedChainId = $ssx.chainId()
+  tradeProofStore.steps.signInEvm.isLoading = false
+  tradeProofStore.steps.signInEvm.isFinished = true
+  tradeProofStore.currentStep = 4
+}
+const useExampleValue = function() {
+  const {$ssx} = useNuxtApp()
+
+  const currentChain = $ssx.chainId()
+  if (currentChain === 43114) {
+    tradeProofStore.selectedTokenAddress = "0x0C3b29321611736341609022C23E981AC56E7f96"
+  } else if(currentChain === 1) {
+    tradeProofStore.selectedTokenAddress = "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d"
+  } else if(currentChain === 137) {
+    tradeProofStore.selectedTokenAddress = "0xB2435253C71FcA27bE41206EB2793E44e1Df6b6D"
+  }
+
+  tradeProofStore.selectedChainId = $ssx.chainId()
+  tradeProofStore.selectedTokenType = "ERC721"
+}
+const fetchCertifiedData = async function() {
+  tradeProofStore.steps.dataFetch.isLoading = true
+  await tradeProofStore.getSignedTradingData(SupportedExchanges.Uniswap)
+  tradeProofStore.steps.dataFetch.isLoading = false
+  tradeProofStore.steps.dataFetch.isFinished = true
+  tradeProofStore.currentStep = 5
+}
+const verify = async function() {
+  tradeProofStore.steps.proofTransaction.isLoading = true
+
+  let addressToFields =  Encoding.stringToFields(tradeProofStore.oracleData.data.address)
+  let balance = Field(tradeProofStore.oracleData.data.balance)
+  let chainId = Field(Number(tradeProofStore.oracleData.data.chainId))
+
+  const signature = Signature.fromJSON(tradeProofStore.oracleData.signature)
+  // for debugging: check signature
+  const validSignature = signature.verify(PublicKey.fromBase58(tradeProofStore.oracleSignerPublicKey), [balance,chainId,...addressToFields]);
+  console.log("validSignature", validSignature)
+
+
+  let app = new ProofOfTrade(PublicKey.fromBase58(tradeProofStore.zkAppAddress));
+  let contractAddress = new EvmAddress({ fields: addressToFields, chainId: chainId});
+
+
+  try {
+    const txn = await Mina.transaction(() => {
+      app.verify(
+          balance,
+          contractAddress,
+          signature ?? fail('something is wrong with the signature'),
+          PublicKey.fromBase58(accountStore.minaAccounts[0])
+      );
+    });
+    console.log(txn)
+
+    console.log("start proving")
+    //TODO: proving completeley
+    await txn.prove();
+
+
+    const { hash } = await window.mina.sendTransaction({
+      transaction: txn.toJSON(),
+      feePayer: {
+        fee: 0.1,
+        memo: "zk"
+      }
+    })
+    console.log("transaction hash", hash);//
+    accountStore.transaction = hash
+    tradeProofStore.currentStep = 6
+    //
+  } catch(err) {
+    console.log("error", err)
+  }
+
+  tradeProofStore.steps.proofTransaction.isLoading = false
+  tradeProofStore.steps.proofTransaction.isFinished = true
+
+}
+async function closeModal() {
+  let events;
+  if(tradeProofStore.currentStep === 6){
+    events = await tradeProofStore.getEvents()
+  } else {
+    events = tradeProofStore.events
+  }
+  tradeProofStore.$reset()
+  tradeProofStore.events = events
+  displayStore.main = [MainDisplayOptions.POOEVENTS, MainDisplayOptions.POTEVENTS]
+}
+</script>
+<style scoped>
+.mina_proof_container{
+  margin: 0 auto;
+  width: 560px;
+}
+</style>
