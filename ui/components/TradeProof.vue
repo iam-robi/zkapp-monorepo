@@ -9,40 +9,21 @@
         <div class="mina_flex gap-8" style="width: 100%; align-items: center">
           <div style="flex-grow: 3">
             <h3 class="mina_text" style="margin: 0">Step One</h3>
-            <h2 class="mina_subtitle" style="margin: 0">Load SnarkyJS</h2>
+            <h2 class="mina_subtitle" style="margin: 0">Set up Private Environment</h2>
           </div>
           <div>
-            <loader v-if="tradeProofStore.steps.snarkyLoad.isLoading"/>
-            <div class="mina_tag success" v-if="tradeProofStore.steps.snarkyLoad.isFinished">Loaded</div>
+            <!--                <loader v-if="ownershipProofStore.steps.snarkyLoad.isLoading"/>-->
+
+            <div class="mina_tag success" v-if="tradeProofStore.currentStep >= 3">Loaded</div>
+            <!--              <n-button text-color="black"  :loading="tradeProofStore.steps.snarkyLoad.isLoading || tradeProofStore.currentStep > 2"  @click="launchSetup"></n-button>-->
+
+            <n-button v-if="tradeProofStore.currentStep < 3" text-color="#F6603B"  :loading="tradeProofStore.steps.snarkyLoad.isLoading || (tradeProofStore.currentStep >= 1 && tradeProofStore.currentStep <= 4)"  :bordered="false" @click="launchSetup"></n-button>
           </div>
         </div>
+        <n-button v-if="!tradeProofStore.currentStep" class="mina_new_proof_button" @click="launchSetup">Launch Setup</n-button>
+        <!--s-->
       </div>
-      <div class="mina_item" v-if="tradeProofStore.currentStep >= 1 && !tradeProofStore.steps.compilation.isFinished">
-        <div class="mina_flex gap-8" style="width: 100%; align-items: center">
-          <div style="flex-grow: 3">
-            <h3 class="mina_text" style="margin: 0">Step Two</h3>
-            <h2 class="mina_subtitle" style="margin: 0">Compile Smart Contract</h2>
-          </div>
-          <div>
-            <div class="mina_tag success" v-if="tradeProofStore.currentStep >= 2 && !tradeProofStore.steps.instance.isFinished">Compiled</div>
-            <loader v-if="tradeProofStore.steps.compilation.isLoading"/>
-          </div>
-        </div>
-        <n-button class="mina_new_proof_button" :loading="tradeProofStore.steps.compilation.isLoading" @click="compileZkApp">Compile</n-button>
-      </div>
-      <div class="mina_item" v-if="tradeProofStore.currentStep >= 2 && !tradeProofStore.steps.instance.isFinished">
-        <div class="mina_flex gap-8" style="width: 100%; align-items: center">
-          <div style="flex-grow: 3">
-            <h3 class="mina_text" style="margin: 0">Step Three</h3>
-            <h2 class="mina_subtitle" style="margin: 0">Set SkApp Instance</h2>
-          </div>
-          <div>
-            <div class="mina_tag success" v-if="tradeProofStore.steps.instance.isFinished">Instance Set</div>
-            <loader v-if="tradeProofStore.steps.instance.isLoading"/>
-          </div>
-        </div>
-        <n-button class="mina_new_proof_button" @click="setZkApp">Set instance</n-button>
-      </div>
+
       <div class="mina_item" v-if="tradeProofStore.currentStep >= 3">
         <div class="mina_flex gap-8" style="width: 100%; align-items: center">
           <div style="flex-grow: 3">
@@ -170,21 +151,19 @@ const sleep = (ms) => {
 }
 
 onMounted(async () => {
-  tradeProofStore.steps.snarkyLoad.isLoading = true
-  if(!tradeProofStore.steps.snarkyLoad.isFinished) {
-    await isReady;
-  }
 
-  tradeProofStore.steps.snarkyLoad.isLoading = false
-  tradeProofStore.isLoaded = true
-  tradeProofStore.steps.snarkyLoad.isFinished = true
-  const graphqlEndpoint = 'https://proxy.berkeley.minaexplorer.com/graphql'
-  setGraphqlEndpoint(graphqlEndpoint)
-  let Berkeley = Mina.Network(graphqlEndpoint)
-  Mina.setActiveInstance(Berkeley)
-  tradeProofStore.currentStep = 1
 })
-
+const launchSetup = async () => {
+  tradeProofStore.currentStep = 0
+  tradeProofStore.steps.snarkyLoad.isLoading = true
+  await isReady
+  tradeProofStore.steps.snarkyLoad.isLoading = false
+  tradeProofStore.steps.snarkyLoad.isFinished = true
+  tradeProofStore.currentStep = 1
+  sleep(500)
+  await compileZkApp()
+  await setZkApp()
+}
 const compileZkApp = async () => {
   await sleep(500)
   await isReady

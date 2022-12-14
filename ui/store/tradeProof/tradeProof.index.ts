@@ -31,8 +31,10 @@ export const useTradeProof = defineStore("tradeProof", {
     eventsLoading: false,
     steps: {
       snarkyLoad: {
+        //1
         isLoading: false,
         isFinished: false,
+
       },
       compilation: {
         isLoading: false,

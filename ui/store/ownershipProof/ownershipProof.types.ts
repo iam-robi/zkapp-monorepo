@@ -22,7 +22,7 @@ export interface OwnershipProofState {
   selectedChainId?: number;
   selectedTokenType: ERCType;
   oracleData: SignedOwnershipData | null;
-  currentStep: Number;
+  currentStep: Number | null;
   account?: any;
   zkApp?: any;
   steps: OwnershipOracleSteps;
