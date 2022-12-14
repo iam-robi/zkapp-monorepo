@@ -149,7 +149,9 @@ import {useNuxtApp} from "nuxt/app";
 
 import { MdArrowBack as ArrowBack , IosExit as Exit} from '@vicons/ionicons4'
 import { MdEasel } from '@vicons/ionicons4'
-
+import {useDisplay} from "../store/display/display.index";
+import {MainDisplayOptions} from "../store/display/display.types";
+const displayStore = useDisplay();
 const accountStore = useAccount()
 
 
@@ -278,9 +280,17 @@ const verify = async function() {
 
 }
 const emit= defineEmits(["modalState"])
-function closeModal() {
-    
-      emit("modalState", false);
+
+async function closeModal() {
+    let events;
+    if(ownershipProofStore.currentStep === 6){
+      events = await ownershipProofStore.getEvents()
+    } else {
+      events = ownershipProofStore.events
+    }
+    ownershipProofStore.$reset()
+    ownershipProofStore.events = events
+    displayStore.main = [MainDisplayOptions.POOEVENTS, MainDisplayOptions.POTEVENTS]
     }
 </script>
 <style scoped>

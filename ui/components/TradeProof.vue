@@ -1,6 +1,7 @@
 <template>
 <div>
     Hello trade proof
+  <n-button class="mina_login_button" @click="closeModal()">Cancel</n-button>
 </div>
 </template>
 <script setup>
@@ -26,7 +27,9 @@ import {useNuxtApp} from "nuxt/app";
 
 import { MdArrowBack as ArrowBack , IosExit as Exit} from '@vicons/ionicons4'
 import { MdEasel } from '@vicons/ionicons4'
-
+import {MainDisplayOptions} from "../store/display/display.types";
+import {useDisplay} from "../store/display/display.index";
+const displayStore = useDisplay()
 const accountStore = useAccount()
 
 
@@ -149,5 +152,16 @@ const verify = async function() {
   tradeProofStore.steps.proofTransaction.isLoading = false
   tradeProofStore.steps.proofTransaction.isFinished = true
 
+}
+async function closeModal() {
+  let events;
+  if(tradeProofStore.currentStep === 6){
+    events = await tradeProofStore.getEvents()
+  } else {
+    events = tradeProofStore.events
+  }
+  tradeProofStore.$reset()
+  tradeProofStore.events = events
+  displayStore.main = [MainDisplayOptions.POOEVENTS, MainDisplayOptions.POTEVENTS]
 }
 </script>
