@@ -86,4 +86,5 @@ export default defineNuxtConfig({
     preferGETQueries: false,
   },
   partytown: {},
+  css: ["@/assets/style.css"]
 });

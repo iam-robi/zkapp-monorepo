@@ -50,6 +50,7 @@
               size="small"
               @click="compileZkApp"
           >
+          hello step 1?
             {{ ownershipProofStore.currentStep === 1 && !ownershipProofStore.steps.compilation.isLoading ? 'Compile': ''}}
           </n-button>
 

@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+:root{
+    --rich-black: #2D2D2D;
+    --dark-black: #020202;
+
+}
+.mina_container{
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+  .mina_body{
+    background: url('/background.png');
+    min-height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 33px 64px;
+  }
+.mina_big_title{
+    font-style: normal;
+font-weight: 700;
+font-size: 24px;
+line-height: 31px;
+font-family: 'IBM Plex Sans', sans-serif;
+color: var(--rich-black);
+}
+.mina_title{
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-style: normal;
+font-weight: 700;
+font-size: 20px;
+line-height: 26px;
+color: var(--rich-black);
+}
+.mina_subtitle{
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: var(--rich-black);
+    font-style: normal;
+font-weight: 700;
+font-size: 16px;
+line-height: 21px;
+}
+.mina_text{
+    font-style: normal;
+font-weight: 400;
+font-size: 10px;
+line-height: 13px;
+font-family: 'IBM Plex Mono', monospace;
+color: var(--dark-black);
+}
+.mina_card{
+    border-radius: 6px 0px;
+    filter: drop-shadow(0px 0px 40px rgba(94, 92, 154, 0.12));
+    overflow: hidden;
+    }
+    .mina_card_header{
+      background: #FFFFFF;
+      display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 16px 24px;
+    gap: 32px;
+    }
+    .mina_item{
+        background: #F9F9FA;
+        display: flex;
+        flex: auto;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 24px;
+      gap: 12px;
+      flex: none;
+      order: 2;
+      align-self: stretch;
+      flex-grow: 0;
+      margin: 1px 0;
+      }
+
+.mina_flex{
+    display: flex;
+}
+.mina_flex.gap-4 {
+    gap: 4px;
+  }
+  .mina_flex.gap-8 {
+    gap: 8px;
+  }
+  .mina_flex.gap-10 {
+    gap: 10px;
+  }
+  .mina_flex.gap-12 {
+    gap: 12px;
+  }
+  .mina_flex.gap-16 {
+    gap: 16px;
+  }
+.mina_column{
+    display: block;
+  flex-basis: 0;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+a{
+    text-decoration: none;
+}
+.mina_tag{
+    display: flex;
+flex-direction: row;
+align-items: flex-start;
+padding: 4px 12px;
+gap: 10px;
+background: #FFFFFF;
+border: 1px solid rgba(45, 45, 45, 0.1);
+border-radius: 5px;
+font-style: normal;
+font-weight: 500;
+font-size: 10px;
+line-height: 13px;
+font-family: 'IBM Plex Mono', monospace;
+}
+.mina_tag.alert{
+    color: #FB4654;
+}
+.mina_tag.success{
+    color: #45CA47;
+}
+/* Override module styles */
+.n-modal-mask{
+    background: url('/background.png');
+    min-height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 33px 64px;
+}
+.n-dialog{
+    filter: drop-shadow(0px 0px 40px rgba(94, 92, 154, 0.12));
+border-radius: 6px 0px;
+padding: 0px;
+margin: 0 auto;
+overflow: hidden;
+}
+.mina_new_proof_button, .mina_new_proof_button:hover, .mina_new_proof_button:focus{
+    font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: #ffffff !important;
+  text-transform: uppercase;
+  background: #FF603B !important;
+  border-radius: 4px 0px;
+  padding: 6px 12px;
+  font-family: 'IBM Plex Mono', monospace;
+  outline: none !important;
+  outline-color: transparent !important;
+  border-color: #FF603B !important;
+  }
