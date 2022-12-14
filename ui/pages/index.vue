@@ -95,7 +95,6 @@ import {useOwnershipProof} from "../store/ownershipProof/ownershipProof.index";
 const ownershipProofStore = useOwnershipProof()
 import {useTradeProof} from "../store/tradeProof/tradeProof.index";
 import {useDisplay} from "../store/display/display.index";
-import {Bool, Encoding, Field, PublicKey} from "snarkyjs";
 const tradeProofStore = useTradeProof()
 const displayStore = useDisplay()
 import MinaLogIn from "~/components/wallets/MinaLogIn";

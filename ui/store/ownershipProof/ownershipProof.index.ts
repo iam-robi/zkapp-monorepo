@@ -18,6 +18,7 @@ import { TokenOwnershipOracle } from "zkapp-oracles";
 
 export const useOwnershipProof = defineStore("ownershipProof", {
   state: (): OwnershipProofState => ({
+    privateMode: true,
     zkAppAddress: "B62qqDxT8d7dZ7kbToMBU94nwc3BQ2mMjU53JpUYouqP7bNVkopXNuj",
     oracleSignerPublicKey:
       "B62qqFGos8L5WD45YSAyaF5dkQagnrnUdY54F2rGXU5gcjKnHq84CkS",

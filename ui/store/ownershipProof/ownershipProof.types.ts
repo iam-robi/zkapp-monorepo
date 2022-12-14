@@ -16,6 +16,7 @@ export interface OwnershipOracleSteps {
 }
 
 export interface OwnershipProofState {
+  privateMode: Boolean;
   zkAppAddress: string;
   oracleSignerPublicKey: string;
   selectedTokenAddress: string | null;
