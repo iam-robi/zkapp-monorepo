@@ -2,7 +2,8 @@
 <div class="mina_proof_container">
     <div class="mina_card">
         <div class="mina_card_header">
-            <h1 class="mina_title" style="margin: 0">New Proof of Ownership</h1>
+            <h1 class="mina_title" style="margin: 0; flex-grow: 2">New Proof of Ownership</h1>
+            <n-button class="mina_login_button" @click="closeModal()">Cancel</n-button>
         </div>
         <div class="mina_item">
             <div class="mina_flex gap-8" style="width: 100%; align-items: center">
@@ -56,7 +57,8 @@
             <p class="mina_text" style="opacity: 0.6;">Only Ethereum, Polygon, Avalanche supported. Sign in to chain and wallet where you want to prove ownership.</p>
             <n-button class="mina_new_proof_button" @click="signInToEvm">Sign in</n-button>
         </div>
-        <div class="mina_item" >
+
+        <div class="mina_item"  v-if="ownershipProofStore.currentStep >= 4">
             <div class="mina_flex gap-8" style="width: 100%; align-items: center">
                 <div style="flex-grow: 3">            
                 <h3 class="mina_text" style="margin: 0">Step Five</h3>
@@ -72,10 +74,53 @@
             </div>
             <div  v-if="[1, 137,43114].includes(ownershipProofStore.selectedChainId) && ownershipProofStore.currentStep === 4">
             <p class="mina_text" style="opacity: 0.6;">Please indicate on which contract on which chain you would like to prove ownership. ERC20, ERC721 are supported. Mina will emit an event under your mina address proving your own at least 1 asset from this address.</p>
-            <n-button class="mina_new_proof_button" @click="setZkApp">Set instance</n-button>
+            <p class="mina_text">You are connected to chain:</p>
+            <n-select v-model:value="ownershipProofStore.selectedChainId" disabled :show-arrow="false" size="large" :options="accountStore.chains" label-field="networkName" value-field="chainId" >
+          </n-select>
+            <p class="mina_text">Indicate Contract Address</p>
+            <n-input  placeholder="Enter a valid address in chosen network" v-model:value="ownershipProofStore.selectedTokenAddress"/>
+            <p class="mina_text">Select Token Type</p>
+            <n-select v-model:value="ownershipProofStore.selectedTokenType" default-value="ERC721" size="large" :options="[{label: 'ERC20'},{label:'ERC721'}]" label-field="label" value-field="label" ></n-select>
+
+              <div class="mina_flex"  style="gap: 24px; margin-top:24px; align-items:center">
+                  <a :href="`https://opensea.io/assets?search[query]=${ownershipProofStore.selectedTokenAddress}`" target="_blank">
+                      <n-button class="mina_orange_outline">Check on Open Sea</n-button>
+                  </a>
+                  <n-button
+                  class="mina_new_proof_button"
+                  v-if="ownershipProofStore.currentStep === 4"
+                  :loading="ownershipProofStore.steps.dataFetch.isLoading"
+                  @click="fetchCertifiedData"
+                >
+                  Get oracle certified data
+                </n-button>
+              </div>
             </div>
             
         </div>
+        <div class="mina_item" v-if="ownershipProofStore.currentStep >= 5">
+            <div class="mina_flex gap-8" style="width: 100%; align-items: center">
+                <div style="flex-grow: 3">            
+                <h3 class="mina_text" style="margin: 0">Step Six</h3>
+                <h2 class="mina_subtitle" style="margin: 0">Prove on Mina</h2>
+            </div>
+            <div>
+            </div>
+            </div>
+            <MinaLogIn v-if="!accountStore.minaLoggedIn"></MinaLogIn>
+            <n-button
+            class="mina_new_proof_button"
+              v-if="ownershipProofStore.currentStep === 5 && accountStore.minaLoggedIn"
+              :loading="ownershipProofStore.steps.proofTransaction.isLoading"
+              
+              @click="verify"
+          >
+            Prove on Mina
+          </n-button>
+
+        </div>
+
+
     </div>
 </div>
     
@@ -232,6 +277,11 @@ const verify = async function() {
   ownershipProofStore.steps.proofTransaction.isFinished = true
 
 }
+const emit= defineEmits(["modalState"])
+function closeModal() {
+    
+      emit("modalState", false);
+    }
 </script>
 <style scoped>
 .mina_proof_container{

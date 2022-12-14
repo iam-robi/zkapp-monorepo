@@ -9,7 +9,7 @@
       <MinaLogIn></MinaLogIn>
     </div>
    </div>
-    <n-grid x-gap="12" :cols="2">
+    <n-grid x-gap="12" :cols="2" v-show="!showOwnershipModal">
       <n-gi>
         <div class="mina_card">
           <div class="mina_card_header">
@@ -25,7 +25,7 @@
               <p class="mina_text" style="margin-top: 0px">{{m.dateTime}}</p>
               <div class="mina_item_body">
                 <img src="/placeholder_logo.png" width="34" height="34"/>
-                <div style="flex-grow: 4">
+                <div style="flex-grow: 4; overflow: hidden">
                   <h2 class="mina_subtitle token-address">{{m.tokenAddress}} </h2>
                   <p class="mina_text" style="margin: 0">{{m.chainId}}</p>
                 </div>
@@ -59,9 +59,9 @@
                 <img v-if="m.exchange === 'UNISWAP'" src="/uniswap.png" width="34" height="34"/>
                 <img v-if="m.exchange === 'PANGOLIN'" src="/pangolin.png" width="34" height="34"/>
                 <img v-if="m.exchange === 'BINANCE'" src="/binance.png" width="34" height="34"/>
-                <div style="flex-grow: 4">
+                <div style="flex-grow: 4; overflow: hidden">
                   <h2 class="mina_subtitle" style="margin: 0">{{m.exchange}} </h2>
-                  <p class="mina_text" style="margin: 0">{{m.minaAddress}}</p>
+                  <p class="mina_text" style="margin: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{m.minaAddress}}</p>
                 </div>
                 <div class="proved_at_least">
                   <p>Volume > </p>
@@ -73,19 +73,18 @@
         </div>
       </n-gi>
     </n-grid>
-    <ownership-proof />
-    <ClientOnly>
-    <n-modal v-model:show="showOwnershipModal" :mask-closable="false" preset="dialog" style="width:560px" :show-icon="false" :on-after-leave="ownershipModalStatusClosed">
 
-      <OwnershipProofModal></OwnershipProofModal>
 
-    </n-modal>
+
+    <ClientOnly >
+      <ownership-proof v-show="showOwnershipModal" @modalState="onOwnershipModalState"/>
     </ClientOnly>
     <ClientOnly>
+       <!-- <trade-proof /> -->
 
-      <n-modal v-model:show="showTradeModal" :mask-closable="false" preset="dialog" style="width:560px" :show-icon="false" :on-after-leave="tradeModalStatusClosed" >
-
+      <n-modal  :mask-closable="false" preset="dialog" style="width:560px" :show-icon="false" :on-after-leave="tradeModalStatusClosed" >
         <TradeProofModal></TradeProofModal>
+
 
       </n-modal>
     </ClientOnly>
@@ -113,7 +112,7 @@ onMounted(async () => {
   ownershipProofStore.eventsLoading = false
 })
 
-const showOwnershipModal = ref(false)
+let showOwnershipModal = ref(false)
 const ownershipModalStatusClosed = async function () {
   let events;
   if(ownershipProofStore.currentStep === 6){
@@ -221,23 +220,13 @@ const tradeColumns = [
   ]
 
 const pagination =  false
+function onOwnershipModalState(){
+  showOwnershipModal.value = false
+}
 
 </script>
 <style scoped>
-.mina_new_proof_button, .mina_new_proof_button:hover, .mina_new_proof_button:focus{
-  font-style: normal;
-font-weight: 500;
-font-size: 12px;
-line-height: 16px;
-color: #ffffff;
-text-transform: uppercase;
-background: #FF603B;
-border-radius: 4px 0px;
-padding: 6px 12px;
-font-family: 'IBM Plex Mono', monospace;
-outline: none;
-border-color: #FF603B;
-}
+
 
 
 .mina_item_body{
@@ -247,15 +236,15 @@ border-color: #FF603B;
   width: 100%;
 }
 .token-address{
-   /* white-space: nowrap;
+   white-space: nowrap;
     text-overflow: ellipsis;
-    overflow: hidden; */
+    overflow: hidden;
     margin: 0px;
 }
-/* .token-address::before{
+.token-address::before{
   float: right;
     content: attr(data-tail);
-} */
+}
 .proved_at_least{
   display: flex;
   padding: 4px 12px;

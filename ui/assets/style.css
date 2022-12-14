@@ -154,3 +154,58 @@ overflow: hidden;
   outline-color: transparent !important;
   border-color: #FF603B !important;
   }
+  .n-select .n-base-selection, .n-select .n-base-selection:hover, .n-select:hover .n-base-selection{
+    font-family: 'IBM Plex Mono', monospace;
+    background: #FFFFFF !important;
+border: 0.5px solid rgba(45, 45, 45, 0.1) !important;
+border-radius: 4px 0px !important;
+outline: none !important;
+--n-border-hover: 0.5px solid rgba(45, 45, 45, 0.1) !important;
+--n-border-focus: 0.5px solid rgba(45, 45, 45, 0.1) !important;
+  }
+  .n-input{
+    font-family: 'IBM Plex Mono', monospace;
+    background: #FFFFFF !important;
+border: 0.5px solid rgba(45, 45, 45, 0.1) !important;
+border-radius: 4px 0px !important;
+outline: none !important;
+--n-border-hover: 0.5px solid rgba(45, 45, 45, 0.1) !important;
+--n-border-focus: 0.5px solid rgba(45, 45, 45, 0.1) !important;
+  }
+
+  .mina_orange_outline, .mina_orange_outline:hover, .mina_orange_outline:focus{
+    border: 1px solid #FF603B;
+border-radius: 4px 0px;
+background-color: transparent;
+--n-border-hover: 1px solid #FF603B !important;
+--n-border-focus: 1px solid #FF603B !important;
+padding: 6px 12px;
+  font-family: 'IBM Plex Mono', monospace;
+  outline: none !important;
+  outline-color: transparent !important;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: #FF603B !important;
+  text-transform: uppercase;
+  }
+
+  .mina_login_button, .mina_login_button:hover{
+    background: #FFFFFF;
+  border: 0.5px solid #2D2D2D;
+  border-radius: 4px 0px;
+  text-transform: uppercase;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  font-family: 'IBM Plex Mono', monospace;
+  text-decoration: none;
+  color: var(--rich-black) !important; 
+  outline: none;
+  --n-border-hover: 0.5px solid #2D2D2D !important;
+--n-border-focus: 0.5px solid #2D2D2D !important;
+--n-text-color-hover: var(--rich-black);
+--n-border-radius: 4px 0px !important;
+  }
