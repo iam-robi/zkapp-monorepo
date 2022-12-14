@@ -66,7 +66,7 @@
                 </div>
                 <div class="proved_at_least">
                   <p>Volume > </p>
-                  <p>{{m.tradeVolume}}</p>
+                  <p>{{m.tradeVolume}}$</p>
                   <p> Proved</p>
                 </div>
               </div>
