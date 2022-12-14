@@ -3,13 +3,20 @@
     <div class="mina_card">
       <div class="mina_card_header">
         <h1 class="mina_title" style="margin: 0; flex-grow: 2">New Proof of Trade</h1>
+        <n-button :focusable="false" quaternary circle type="primary">
+        <template #icon>
+          <n-icon @click="tradeProofStore.privateMode = false" ghost :focusable="false"  v-if="tradeProofStore.privateMode" color="#2D2D2D"><eye-off/></n-icon>
+          <n-icon v-else @click="tradeProofStore.privateMode = true" color="#D6EAF7"><eye/></n-icon>
+        </template>
+      </n-button>
         <n-button class="mina_login_button" @click="closeModal">Cancel</n-button>
       </div>
       <div class="mina_item">
         <div class="mina_flex gap-8" style="width: 100%; align-items: center">
           <div style="flex-grow: 3">
             <h3 class="mina_text" style="margin: 0">Step One</h3>
-            <h2 class="mina_subtitle" style="margin: 0">Set up Private Environment</h2>
+            <h2 class="mina_subtitle" style="margin: 0">Set up Private Environment </h2>
+
           </div>
           <div>
             <!--                <loader v-if="ownershipProofStore.steps.snarkyLoad.isLoading"/>-->
@@ -33,7 +40,7 @@
           <div>
 
             <loader v-if="tradeProofStore.steps.signInEvm.isLoading"/>
-            <div class="mina_tag info" v-if="tradeProofStore.steps.signInEvm.isFinished">{{`${$ssx?.address().slice(0,6)}...${$ssx?.address().slice(-4)}`}}</div>
+            <div class="mina_tag info" v-if="tradeProofStore.steps.signInEvm.isFinished">{{tradeProofStore.privateMode ?  '0x**' : `${$ssx?.address().slice(0,6)}...${$ssx?.address().slice(-4)}`}}</div>
           </div>
         </div>
         <div class="mina_item__description" v-if="tradeProofStore.currentStep === 3">
@@ -55,7 +62,7 @@
             <n-tooltip v-if="tradeProofStore.steps.dataFetch.isFinished" trigger="hover" :show-arrow="false">
               Volume Traded
               <template #trigger>
-                <div class="mina_tag info" v-if="tradeProofStore.steps.dataFetch.isFinished">{{tradeProofStore.oracleData?.data?.amountUsd}}</div>
+                <div class="mina_tag info" v-if="tradeProofStore.steps.dataFetch.isFinished">{{tradeProofStore.privateMode ? '**' : tradeProofStore.oracleData?.data?.amountUsd}}</div>
               </template>
 
             </n-tooltip>
@@ -118,7 +125,7 @@
 </template>
 <script setup>
 import {NButton, NInput, NRadioButton, NRadioGroup, NSpace, NSteps, NStep, NButtonGroup , NSpin , NSelect, NIcon, NResult , NTooltip} from "naive-ui";
-//import { MdArrowRoundBack, MdArrowRoundForward } from '@vicons/ionicons4'
+import { MdArrowRoundBack, MdArrowRoundForward , MdEye as Eye , MdEyeOff as EyeOff} from '@vicons/ionicons4'
 
 import {
   Field,

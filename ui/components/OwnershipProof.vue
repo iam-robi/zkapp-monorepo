@@ -3,7 +3,14 @@
     <div class="mina_card">
         <div class="mina_card_header">
             <h1 class="mina_title" style="margin: 0; flex-grow: 2">New Proof of Ownership</h1>
+          <n-button :focusable="false" quaternary circle type="primary">
+            <template #icon>
+              <n-icon @click="ownershipProofStore.privateMode = false" ghost :focusable="false"  v-if="ownershipProofStore.privateMode" color="#2D2D2D"><eye-off/></n-icon>
+              <n-icon v-else @click="ownershipProofStore.privateMode = true" color="#D6EAF7"><eye/></n-icon>
+            </template>
+          </n-button>
             <n-button class="mina_login_button" @click="closeModal()">Cancel</n-button>
+
         </div>
         <div class="mina_item">
             <div class="mina_flex gap-8" style="width: 100%; align-items: center">
@@ -33,7 +40,7 @@
                 <div>
 
                     <loader v-if="ownershipProofStore.steps.signInEvm.isLoading"/>
-                    <div class="mina_tag info" v-if="ownershipProofStore.steps.signInEvm.isFinished">{{`${$ssx?.address().slice(0,6)}...${$ssx?.address().slice(-4)}`}}</div>
+                    <div class="mina_tag info" v-if="ownershipProofStore.steps.signInEvm.isFinished">{{ownershipProofStore.privateMode ? '0x**' : `${$ssx?.address().slice(0,6)}...${$ssx?.address().slice(-4)}`}}</div>
                 </div>
             </div>
           <div class="mina_item_description" v-if="ownershipProofStore.currentStep === 3">
@@ -51,13 +58,24 @@
               <div>
                 <div class="mina_tag alert" v-if="![1, 137,43114].includes(ownershipProofStore.selectedChainId) && ownershipProofStore.currentStep === 4">Chain not supported</div>
                   <loader v-if="ownershipProofStore.steps.dataFetch.isLoading"/>
+                <n-space align="center">
                   <n-tooltip v-if="ownershipProofStore.steps.dataFetch.isFinished" trigger="hover" :show-arrow="false">
                     Token Balance
                     <template #trigger>
-                      <div class="mina_tag info" v-if="ownershipProofStore.steps.dataFetch.isFinished">{{ownershipProofStore.oracleData?.data?.balance}}</div>
+                      <div class="mina_tag info" v-if="ownershipProofStore.steps.dataFetch.isFinished">{{ ownershipProofStore.privateMode ? '**' : ownershipProofStore.oracleData?.data?.balance}}</div>
+
                     </template>
 
                   </n-tooltip>
+
+                  <nuxt-link :href="`https://opensea.io/assets?search[query]=${ownershipProofStore.selectedTokenAddress}`" target="_blank">
+                <n-button :focusable="false"  quaternary circle type="primary">
+                  <template #icon>
+                    <n-icon  ghost :focusable="false"   color="#2D2D2D"><exit/></n-icon>
+                  </template>
+                </n-button>
+                  </nuxt-link>
+                </n-space>
                 </div>
               </div>
               <div v-if="![1, 137,43114].includes(ownershipProofStore.selectedChainId) && ownershipProofStore.currentStep === 4">
@@ -118,7 +136,7 @@
 </template>
 <script setup>
 import {NButton, NInput, NRadioButton, NRadioGroup, NSpace, NSteps, NStep, NButtonGroup , NSpin , NSelect, NIcon, NResult , NTooltip , NProgress , NTimeline, NTimelineItem} from "naive-ui";
-//import { MdArrowRoundBack, MdArrowRoundForward } from '@vicons/ionicons4'
+import { MdEye as Eye , MdEyeOff as EyeOff , MdExit as Exit } from '@vicons/ionicons4'
 
 import {
   Field,
@@ -138,8 +156,6 @@ import {TokenOwnershipOracle , EvmAddress} from "zkapp-oracles";
 import MinaLogIn from "~/components/wallets/MinaLogIn";
 import {useNuxtApp} from "nuxt/app";
 
-import { MdArrowBack as ArrowBack , IosExit as Exit} from '@vicons/ionicons4'
-import { MdEasel } from '@vicons/ionicons4'
 import {useDisplay} from "../store/display/display.index";
 import {MainDisplayOptions} from "../store/display/display.types";
 
