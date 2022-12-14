@@ -3,10 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="0dfa547a-01a6-411a-ba84-25916c4a05fc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/components/OwnershipProof.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/components/OwnershipProof.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/components/TradeProof.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/components/TradeProof.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/store/tradeProof/tradeProof.index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/store/tradeProof/tradeProof.index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/store/tradeProof/tradeProof.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/store/tradeProof/tradeProof.types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/components/OwnershipProofModal.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/components/TradeProofModal.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/pages/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/pages/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/pages/proofofownership.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/pages/proofoftrade.vue" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -188,34 +189,9 @@
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/ui/components/OwnershipProofModal.vue</url>
-          <line>270</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/ui/components/OwnershipProofModal.vue</url>
-          <line>216</line>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/contracts/src/TokenOwnershipOracle.test.ts</url>
           <line>141</line>
           <option name="timeStamp" value="16" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/ui/components/OwnershipProofModal.vue</url>
-          <line>133</line>
-          <option name="timeStamp" value="17" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/ui/components/OwnershipProofModal.vue</url>
-          <line>206</line>
-          <option name="timeStamp" value="18" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/ui/components/OwnershipProofModal.vue</url>
-          <line>271</line>
-          <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/ui/components/OwnershipProof.vue</url>

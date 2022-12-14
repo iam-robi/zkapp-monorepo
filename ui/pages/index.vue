@@ -27,11 +27,12 @@
                 <img src="/placeholder_logo.png" width="34" height="34"/>
                 <div style="flex-grow: 4; overflow: hidden">
                   <h2 class="mina_subtitle token-address">{{m.tokenAddress}} </h2>
-                  <p class="mina_text" style="margin: 0">{{m.chainId}}</p>
+                  <nuxt-link> <a :href="`https://berkeley.minaexplorer.com/wallet/${m.minaAddress}`" target="_blank" class="mina_text" style="margin: 0">{{m.minaAddress}}</a></nuxt-link>
+
                 </div>
                 <div class="proved_at_least">
                   <p>At least </p>
-                  <p>x</p>
+                  <p>1</p>
                   <p> Proved</p>
                 </div>
                 <a :href="'https://opensea.io/assets?search[query]=' + m.tokenAddress">
@@ -61,7 +62,7 @@
                 <img v-if="m.exchange === 'BINANCE'" src="/binance.png" width="34" height="34"/>
                 <div style="flex-grow: 4; overflow: hidden">
                   <h2 class="mina_subtitle" style="margin: 0">{{m.exchange}} </h2>
-                  <p class="mina_text" style="margin: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{m.minaAddress}}</p>
+                  <nuxt-link> <a :href="`https://berkeley.minaexplorer.com/wallet/${m.minaAddress}`" target="_blank" class="mina_text" style="margin: 0">{{m.minaAddress}}</a></nuxt-link>
                 </div>
                 <div class="proved_at_least">
                   <p>Volume > </p>
