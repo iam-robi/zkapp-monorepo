@@ -9,44 +9,25 @@
             <div class="mina_flex gap-8" style="width: 100%; align-items: center">
                 <div style="flex-grow: 3">            
                 <h3 class="mina_text" style="margin: 0">Step One</h3>
-                <h2 class="mina_subtitle" style="margin: 0">Load SnarkyJS</h2>
+                <h2 class="mina_subtitle" style="margin: 0">Set up Private Environment</h2>
             </div>
             <div>
-                <loader v-if="ownershipProofStore.steps.snarkyLoad.isLoading"/>
-                <div class="mina_tag success" v-if="ownershipProofStore.steps.snarkyLoad.isFinished">Loaded</div>
+<!--                <loader v-if="ownershipProofStore.steps.snarkyLoad.isLoading"/>-->
+
+                <div class="mina_tag success" v-if="ownershipProofStore.currentStep >= 3">Loaded</div>
+<!--              <n-button text-color="black"  :loading="ownershipProofStore.steps.snarkyLoad.isLoading || ownershipProofStore.currentStep > 2"  @click="launchSetup"></n-button>-->
+
+              <n-button v-if="ownershipProofStore.currentStep < 3" text-color="#F6603B"  :loading="ownershipProofStore.steps.snarkyLoad.isLoading || (ownershipProofStore.currentStep >= 1 && ownershipProofStore.currentStep <= 4)"  :bordered="false" @click="launchSetup"></n-button>
             </div>
             </div>
+          <n-button v-if="!ownershipProofStore.currentStep" class="mina_new_proof_button" @click="launchSetup">Launch Setup</n-button>
+<!--s-->
         </div>
-        <div class="mina_item" v-if="ownershipProofStore.currentStep >= 1 && !ownershipProofStore.steps.compilation.isFinished">
-            <div class="mina_flex gap-8" style="width: 100%; align-items: center">
-                <div style="flex-grow: 3">            
-                <h3 class="mina_text" style="margin: 0">Step Two</h3>
-                <h2 class="mina_subtitle" style="margin: 0">Compile Smart Contract</h2>
-            </div>
-            <div>
-                <div class="mina_tag success" v-if="ownershipProofStore.currentStep >= 2 && !ownershipProofStore.steps.instance.isFinished">Compiled</div>
-                <loader v-if="ownershipProofStore.steps.compilation.isLoading"/>
-            </div>
-            </div>
-            <n-button class="mina_new_proof_button" @click="compileZkApp">Compile</n-button>
-        </div>
-        <div class="mina_item" v-if="ownershipProofStore.currentStep >= 2 && !ownershipProofStore.steps.instance.isFinished">
-            <div class="mina_flex gap-8" style="width: 100%; align-items: center">
-                <div style="flex-grow: 3">            
-                <h3 class="mina_text" style="margin: 0">Step Three</h3>
-                <h2 class="mina_subtitle" style="margin: 0">Set SkApp Instance</h2>
-            </div>
-            <div>
-                <div class="mina_tag success" v-if="ownershipProofStore.steps.instance.isFinished">Instance Set</div>
-                <loader v-if="ownershipProofStore.steps.instance.isLoading"/>
-            </div>
-            </div>
-            <n-button class="mina_new_proof_button" @click="setZkApp">Set instance</n-button>
-        </div>
+
         <div class="mina_item" v-if="ownershipProofStore.currentStep >= 3">
             <div class="mina_flex gap-8" style="width: 100%; align-items: center">
                 <div style="flex-grow: 3">            
-                <h3 class="mina_text" style="margin: 0">Step Four</h3>
+                <h3 class="mina_text" style="margin: 0">Step Two</h3>
                 <h2 class="mina_subtitle" style="margin: 0">Start Evm Session</h2>
                 </div>
                 <div>
@@ -64,7 +45,7 @@
         <div class="mina_item"  v-if="ownershipProofStore.currentStep >= 4">
             <div class="mina_flex gap-8" style="width: 100%; align-items: center">
                 <div style="flex-grow: 3">            
-                  <h3 class="mina_text" style="margin: 0">Step Five</h3>
+                  <h3 class="mina_text" style="margin: 0">Step Three</h3>
                   <h2 class="mina_subtitle" style="margin: 0">Get Signed Data</h2>
                 </div>
               <div>
@@ -111,7 +92,7 @@
       <div class="mina_item" v-if="ownershipProofStore.currentStep >= 5">
             <div class="mina_flex gap-8" style="width: 100%; align-items: center">
                 <div style="flex-grow: 3">            
-                <h3 class="mina_text" style="margin: 0">Step Six</h3>
+                <h3 class="mina_text" style="margin: 0">Step Four</h3>
                 <h2 class="mina_subtitle" style="margin: 0">Prove on Mina</h2>
             </div>
             <div>
@@ -136,7 +117,7 @@
     
 </template>
 <script setup>
-import {NButton, NInput, NRadioButton, NRadioGroup, NSpace, NSteps, NStep, NButtonGroup , NSpin , NSelect, NIcon, NResult , NTooltip } from "naive-ui";
+import {NButton, NInput, NRadioButton, NRadioGroup, NSpace, NSteps, NStep, NButtonGroup , NSpin , NSelect, NIcon, NResult , NTooltip , NProgress , NTimeline, NTimelineItem} from "naive-ui";
 //import { MdArrowRoundBack, MdArrowRoundForward } from '@vicons/ionicons4'
 
 import {
@@ -161,6 +142,7 @@ import { MdArrowBack as ArrowBack , IosExit as Exit} from '@vicons/ionicons4'
 import { MdEasel } from '@vicons/ionicons4'
 import {useDisplay} from "../store/display/display.index";
 import {MainDisplayOptions} from "../store/display/display.types";
+
 const displayStore = useDisplay();
 const accountStore = useAccount()
 
@@ -171,22 +153,33 @@ const sleep = (ms) => {
 }
 
 onMounted(async () => {
-  ownershipProofStore.steps.snarkyLoad.isLoading = true
-  if(!ownershipProofStore.steps.snarkyLoad.isFinished) {
-    await isReady;
-  }
-
-  ownershipProofStore.steps.snarkyLoad.isLoading = false
-  ownershipProofStore.isLoaded = true
-  ownershipProofStore.steps.snarkyLoad.isFinished = true
-  const graphqlEndpoint = 'https://proxy.berkeley.minaexplorer.com/graphql'
-  setGraphqlEndpoint(graphqlEndpoint)
-  let Berkeley = Mina.Network(graphqlEndpoint)
-  Mina.setActiveInstance(Berkeley)
-  ownershipProofStore.currentStep = 1
+  // ownershipProofStore.steps.snarkyLoad.isLoading = true
+  // if(!ownershipProofStore.steps.snarkyLoad.isFinished) {
+  //   await isReady;
+  // }
+  //
+  // ownershipProofStore.steps.snarkyLoad.isLoading = false
+  // ownershipProofStore.isLoaded = true
+  // ownershipProofStore.steps.snarkyLoad.isFinished = true
+  // const graphqlEndpoint = 'https://proxy.berkeley.minaexplorer.com/graphql'
+  // setGraphqlEndpoint(graphqlEndpoint)
+  // let Berkeley = Mina.Network(graphqlEndpoint)
+  // Mina.setActiveInstance(Berkeley)
+  // ownershipProofStore.currentStep = 1
 
 })
 
+const launchSetup = async () => {
+  ownershipProofStore.currentStep = 0
+  ownershipProofStore.steps.snarkyLoad.isLoading = true
+  await isReady
+  ownershipProofStore.steps.snarkyLoad.isLoading = false
+  ownershipProofStore.steps.snarkyLoad.isFinished = true
+  ownershipProofStore.currentStep = 1
+  sleep(500)
+  await compileZkApp()
+  await setZkApp()
+}
 const compileZkApp = async (zkAppAddress) => {
   ownershipProofStore.steps.compilation.isLoading = true
   await sleep(500)
@@ -205,6 +198,7 @@ const setZkApp = async () => {
   }
   ownershipProofStore.steps.instance.isFinished = true;
   ownershipProofStore.currentStep = 3
+  sleep(500)
 }
 const signInToEvm = async function() {
   ownershipProofStore.steps.signInEvm.isLoading = true
