@@ -41,7 +41,7 @@ export class SignService {
     const signature = Signature.create(privateKey, [
       Field(tradingData.swapCounts),
       Field(tradingData.amountUsd),
-      ...exchange,
+      exchange[0],
     ]);
 
     const result = {
