@@ -34,7 +34,7 @@
       <div class="mina_item" v-if="tradeProofStore.currentStep >= 3">
         <div class="mina_flex gap-8" style="width: 100%; align-items: center">
           <div style="flex-grow: 3">
-            <h3 class="mina_text" style="margin: 0">Step Four</h3>
+            <h3 class="mina_text" style="margin: 0">Step Two</h3>
             <h2 class="mina_subtitle" style="margin: 0">Start Evm Session</h2>
           </div>
           <div>
@@ -53,7 +53,7 @@
       <div class="mina_item"  v-if="tradeProofStore.currentStep >= 4">
         <div class="mina_flex gap-8" style="width: 100%; align-items: center">
           <div style="flex-grow: 3">
-            <h3 class="mina_text" style="margin: 0">Step Five</h3>
+            <h3 class="mina_text" style="margin: 0">Step Three</h3>
             <h2 class="mina_subtitle" style="margin: 0">Get Signed Data</h2>
           </div>
           <div>

@@ -3,7 +3,7 @@
    <div class="mina_flex gap-16" style="align-items: baseline;">
     <div style="flex-grow: 2">
        <h1 class="mina_big_title">ZK Dashboard</h1>
-      <p class="mina_text">ZK Dashboard gathers every proofs you want to make publicly available under your Mina Account. with zk dashboard you can prove ownership of specific nft in a collection, or trading volume under specific exchange, without revealing your address.</p>
+      <p class="mina_text_large">ZK Dashboard gathers every proofs you want to make publicly available under your Mina Account. With zk dashboard you can prove ownership of specific nft in a collection, or trading volume under a specific exchange, without revealing your address.<br> <br> Please make sure to have auro wallet and metamask installed for this beta app. Please note zkapps are not yet M1 compatible. Reasonable usage also is appreciated as the application is not yet optimized for large volumes. </p>
     </div>
     <div>
       <MinaLogIn></MinaLogIn>
