@@ -19,10 +19,8 @@
 
           </div>
           <div>
-            <!--                <loader v-if="ownershipProofStore.steps.snarkyLoad.isLoading"/>-->
 
             <div class="mina_tag success" v-if="tradeProofStore.currentStep >= 3">Loaded</div>
-            <!--              <n-button text-color="black"  :loading="tradeProofStore.steps.snarkyLoad.isLoading || tradeProofStore.currentStep > 2"  @click="launchSetup"></n-button>-->
 
             <n-button v-if="tradeProofStore.currentStep < 3" text-color="#F6603B"  :loading="tradeProofStore.steps.snarkyLoad.isLoading || (tradeProofStore.currentStep >= 1 && tradeProofStore.currentStep <= 4)"  :bordered="false" @click="launchSetup"></n-button>
           </div>
@@ -98,8 +96,15 @@
       <div class="mina_item" v-if="tradeProofStore.currentStep >= 5">
         <div class="mina_flex gap-8" style="width: 100%; align-items: center">
           <div style="flex-grow: 3">
-            <h3 class="mina_text" style="margin: 0">Step Six</h3>
+            <h3 class="mina_text" style="margin: 0">Step Four</h3>
             <h2 class="mina_subtitle" style="margin: 0">Prove on Mina</h2>
+          </div>
+          <div>
+
+            <div class="mina_tag success" v-if="tradeProofStore.currentStep >= 6 && tradeProofStore.steps.proofTransaction.isFinished">Proved</div>
+            <!--              <n-button text-color="black"  :loading="tradeProofStore.steps.snarkyLoad.isLoading || tradeProofStore.currentStep > 2"  @click="launchSetup"></n-button>-->
+
+            <n-button v-if="tradeProofStore.steps.proofTransaction.isLoading" text-color="#F6603B"  :loading="tradeProofStore.steps.proofTransaction.isLoading"  :bordered="false" @click="launchSetup"></n-button>
           </div>
           <div>
           </div>
@@ -107,7 +112,7 @@
         <MinaLogIn v-if="!accountStore.minaLoggedIn"></MinaLogIn>
         <n-button
             class="mina_new_proof_button"
-            v-if="tradeProofStore.currentStep === 5 && accountStore.minaLoggedIn"
+            v-if="tradeProofStore.currentStep === 5 && accountStore.minaLoggedIn && !tradeProofStore.steps.proofTransaction.isLoading"
             :loading="tradeProofStore.steps.proofTransaction.isLoading"
 
             @click="verify"
@@ -117,6 +122,25 @@
 
       </div>
 
+      <div class="mina_item" v-if="tradeProofStore.currentStep >= 6">
+        <div class="mina_flex gap-8" style="width: 100%; align-items: center">
+          <div style="flex-grow: 3">
+
+            <h2 class="mina_subtitle" style="margin: 0">Congratulations !!!</h2>
+          </div>
+
+          <div>
+          </div>
+        </div>
+        <p class="mina_text_large">You successfully created a proof on Mina</p>
+        <n-button
+            class="mina_new_proof_button"
+            @click="closeModal"
+        >
+          Back to Dashboard
+        </n-button>
+
+      </div>
 
 
     </div>
@@ -203,21 +227,7 @@ const signInToEvm = async function() {
   tradeProofStore.steps.signInEvm.isFinished = true
   tradeProofStore.currentStep = 4
 }
-const useExampleValue = function() {
-  const {$ssx} = useNuxtApp()
 
-  const currentChain = $ssx.chainId()
-  if (currentChain === 43114) {
-    tradeProofStore.selectedTokenAddress = "0x0C3b29321611736341609022C23E981AC56E7f96"
-  } else if(currentChain === 1) {
-    tradeProofStore.selectedTokenAddress = "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d"
-  } else if(currentChain === 137) {
-    tradeProofStore.selectedTokenAddress = "0xB2435253C71FcA27bE41206EB2793E44e1Df6b6D"
-  }
-
-  tradeProofStore.selectedChainId = $ssx.chainId()
-  tradeProofStore.selectedTokenType = "ERC721"
-}
 const fetchCertifiedData = async function() {
   tradeProofStore.steps.dataFetch.isLoading = true
   await tradeProofStore.getSignedTradingData(SupportedExchanges.Uniswap)
@@ -279,14 +289,16 @@ const verify = async function() {
 }
 async function closeModal() {
   let events;
+  displayStore.main = [MainDisplayOptions.POOEVENTS, MainDisplayOptions.POTEVENTS]
   if(tradeProofStore.currentStep === 6){
-    events = await tradeProofStore.getEvents()
+    await tradeProofStore.getEvents()
+    events = tradeProofStore.events
   } else {
     events = tradeProofStore.events
   }
   tradeProofStore.$reset()
   tradeProofStore.events = events
-  displayStore.main = [MainDisplayOptions.POOEVENTS, MainDisplayOptions.POTEVENTS]
+
 }
 </script>
 <style scoped>

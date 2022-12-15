@@ -120,6 +120,7 @@ export const useTradeProof = defineStore("tradeProof", {
         console.log("setting instance from fetch events");
         await this.getZkAppInstance();
       }
+      this.eventsLoading = true;
       const res = await GqlGetEvents({ zkAppAddress: this.zkAppAddress });
       await isReady;
 
@@ -139,9 +140,7 @@ export const useTradeProof = defineStore("tradeProof", {
           }).toBase58(),
         };
       });
-      // console.log("res", res);
-      // this.events = res.zkapps;
-      // this.events = await GqlGetEvents({ zkAppAddress: this.zkAppAddress });
+      this.eventsLoading = false;
     },
   },
   getters: {},

@@ -120,7 +120,9 @@ export const useOwnershipProof = defineStore("ownershipProof", {
         };
       });
       this.events = eventDataList;
+      console.log("events", eventDataList)
       this.eventsLoading = false;
+
     },
   },
   getters: {},
