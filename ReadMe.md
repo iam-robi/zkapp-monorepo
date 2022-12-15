@@ -18,6 +18,7 @@ The application is built on top of 3 building blocks inside a monorepo. Optimize
 Right now features are limited but showcase the possibilities of zkapps.
 - Prove on MINA you own at least 1 NFT from the collection of your choice (Proof Of Ownership)
 - Prove on MINA you traded for a volume > 10,000$ on UNISWAP without revealing your wallet address
+- Private mode - proofs can be generated live in front of other users, without revealing the data
 
 Many more features are planned for the zk dashboard to build qualitative zkprofiles with a modular approach.
 
