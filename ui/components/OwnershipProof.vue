@@ -123,7 +123,7 @@
             <MinaLogIn v-if="!accountStore.minaLoggedIn"></MinaLogIn>
             <n-button
             class="mina_new_proof_button"
-              v-if="ownershipProofStore.currentStep === 5 && accountStore.minaLoggedIn"
+              v-if="ownershipProofStore.currentStep === 5 && accountStore.minaLoggedIn && !ownershipProofStore.steps.proofTransaction.isLoading"
               :loading="ownershipProofStore.steps.proofTransaction.isLoading"
               
               @click="verify"
@@ -139,7 +139,7 @@
             <h2 class="mina_subtitle" style="margin: 0">Congratulations !!!</h2>
           </div>
           <div>
-            <div class="mina_tag success" v-if="ownershipProofStore.currentStep >= 6 && ownershipProofStore.steps.proofTransaction.isFinished">Proved</div>
+
             <n-button v-if="ownershipProofStore.steps.proofTransaction.isLoading" text-color="#F6603B"  :loading="ownershipProofStore.steps.proofTransaction.isLoading"  :bordered="false" @click="launchSetup"></n-button>
           </div>
           <div>

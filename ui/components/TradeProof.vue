@@ -201,16 +201,13 @@ const compileZkApp = async () => {
   tradeProofStore.steps.compilation.isLoading = true
   await sleep(500)
   await ProofOfTrade.compile()
-  console.log("compilation finished")
   tradeProofStore.steps.compilation.isLoading = false
   tradeProofStore.steps.compilation.isFinished = true
   tradeProofStore.currentStep = 2
   await sleep(500)
 }
 const setZkApp = async () => {
-  console.log('hey')
   if(!tradeProofStore.zkApp){
-    console.log("hey")
     tradeProofStore.steps.instance.isLoading = true;
     await tradeProofStore.getZkAppInstance()
     tradeProofStore.steps.instance.isLoading = false;
