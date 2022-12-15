@@ -258,6 +258,7 @@ const fetchCertifiedData = async function() {
 }
 const verify = async function() {
   ownershipProofStore.steps.proofTransaction.isLoading = true
+  await sleep(500)
 
   let addressToFields =  Encoding.stringToFields(ownershipProofStore.oracleData.data.address)
   let balance = Field(ownershipProofStore.oracleData.data.balance)

@@ -234,7 +234,7 @@ const fetchCertifiedData = async function() {
 }
 const verify = async function() {
   tradeProofStore.steps.proofTransaction.isLoading = true
-
+  await sleep(500)
   let addressToFields =  Encoding.stringToFields(tradeProofStore.oracleData.data.address)
   let balance = Field(tradeProofStore.oracleData.data.balance)
   let chainId = Field(Number(tradeProofStore.oracleData.data.chainId))
