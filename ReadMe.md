@@ -27,4 +27,5 @@ Some of limitations to notice are:
 - Not optimized for large volume of queries. There are already tools available on MINA like [actions & reducers](https://docs.minaprotocol.com/zkapps/advanced-snarkyjs/actions-and-reducer) , API queries for events can be optimized. Many more optimization will come as well as the ecosystem matures.
 - Many hardcoded variables for proofs. Right now for example zkdashboard only allows to prove over 10K$ of volume on Uniswap for proof of trade. Many more use cases will be supported in the long term, also by creating new data points.
 - snarkyjs does not support M1 yet , attempt to generate proof on Mac M1 will likely freeze your computer ! 
+- app is not tested on all browsers and conditions 
 

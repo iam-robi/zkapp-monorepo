@@ -113,13 +113,17 @@
                 <h3 class="mina_text" style="margin: 0">Step Four</h3>
                 <h2 class="mina_subtitle" style="margin: 0">Prove on Mina</h2>
             </div>
+              <div>
+                <div class="mina_tag success" v-if="ownershipProofStore.currentStep >= 6 && ownershipProofStore.steps.proofTransaction.isFinished">Proved</div>
+                <n-button v-if="ownershipProofStore.steps.proofTransaction.isLoading" text-color="#F6603B"  :loading="ownershipProofStore.steps.proofTransaction.isLoading"  :bordered="false" @click="launchSetup"></n-button>
+              </div>
             <div>
             </div>
             </div>
             <MinaLogIn v-if="!accountStore.minaLoggedIn"></MinaLogIn>
             <n-button
             class="mina_new_proof_button"
-              v-if="ownershipProofStore.currentStep === 5 && accountStore.minaLoggedIn"
+              v-if="ownershipProofStore.currentStep === 5 && accountStore.minaLoggedIn && !ownershipProofStore.steps.proofTransaction.isLoading"
               :loading="ownershipProofStore.steps.proofTransaction.isLoading"
               
               @click="verify"
@@ -128,6 +132,29 @@
           </n-button>
 
         </div>
+      <div class="mina_item" v-if="ownershipProofStore.currentStep >= 6">
+        <div class="mina_flex gap-8" style="width: 100%; align-items: center">
+          <div style="flex-grow: 3">
+
+            <h2 class="mina_subtitle" style="margin: 0">Congratulations !!!</h2>
+          </div>
+          <div>
+
+            <n-button v-if="ownershipProofStore.steps.proofTransaction.isLoading" text-color="#F6603B"  :loading="ownershipProofStore.steps.proofTransaction.isLoading"  :bordered="false" @click="launchSetup"></n-button>
+          </div>
+          <div>
+          </div>
+        </div>
+        <p class="mina_text_large">You successfully created a proof on Mina</p>
+        <n-button
+            :loading="ownershipProofStore.eventsLoading"
+            class="mina_new_proof_button"
+            @click="closeModal"
+        >
+          Back to Dashboard
+        </n-button>
+
+      </div>
 
 
         </div>
@@ -162,28 +189,10 @@ import {MainDisplayOptions} from "../store/display/display.types";
 const displayStore = useDisplay();
 const accountStore = useAccount()
 
-
 const ownershipProofStore = useOwnershipProof();
 const sleep = (ms) => {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-
-onMounted(async () => {
-  // ownershipProofStore.steps.snarkyLoad.isLoading = true
-  // if(!ownershipProofStore.steps.snarkyLoad.isFinished) {
-  //   await isReady;
-  // }
-  //
-  // ownershipProofStore.steps.snarkyLoad.isLoading = false
-  // ownershipProofStore.isLoaded = true
-  // ownershipProofStore.steps.snarkyLoad.isFinished = true
-  // const graphqlEndpoint = 'https://proxy.berkeley.minaexplorer.com/graphql'
-  // setGraphqlEndpoint(graphqlEndpoint)
-  // let Berkeley = Mina.Network(graphqlEndpoint)
-  // Mina.setActiveInstance(Berkeley)
-  // ownershipProofStore.currentStep = 1
-
-})
 
 const launchSetup = async () => {
   ownershipProofStore.currentStep = 0
@@ -303,14 +312,17 @@ const emit= defineEmits(["modalState"])
 
 async function closeModal() {
     let events;
+    displayStore.main = [MainDisplayOptions.POOEVENTS, MainDisplayOptions.POTEVENTS]
     if(ownershipProofStore.currentStep === 6){
-      events = await ownershipProofStore.getEvents()
+      await ownershipProofStore.getEvents()
+      events = ownershipProofStore.events
     } else {
       events = ownershipProofStore.events
     }
+    console.log(events)
     ownershipProofStore.$reset()
     ownershipProofStore.events = events
-    displayStore.main = [MainDisplayOptions.POOEVENTS, MainDisplayOptions.POTEVENTS]
+
     }
 </script>
 <style scoped>

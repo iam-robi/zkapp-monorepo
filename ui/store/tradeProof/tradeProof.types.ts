@@ -22,7 +22,6 @@ export interface TradeProofSteps {
 
 export interface TradeProofState {
   privateMode: Boolean;
-  isLoaded: Boolean;
   zkAppAddress: string;
   oracleSignerPublicKey: string;
   selectedExchange: SupportedExchanges;
