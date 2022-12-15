@@ -235,35 +235,33 @@ const fetchCertifiedData = async function() {
 const verify = async function() {
   tradeProofStore.steps.proofTransaction.isLoading = true
   await sleep(500)
-  let addressToFields =  Encoding.stringToFields(tradeProofStore.oracleData.data.address)
-  let balance = Field(tradeProofStore.oracleData.data.balance)
-  let chainId = Field(Number(tradeProofStore.oracleData.data.chainId))
+  let swapCounts = Field(tradeProofStore.oracleData.data.swapCounts)
+  let amountUsd = Field(Number(tradeProofStore.oracleData.data.amountUsd))
+  const exchangeFields = Encoding.stringToFields(
+      tradeProofStore.oracleData.data.exchange
+  );
 
   const signature = Signature.fromJSON(tradeProofStore.oracleData.signature)
   // for debugging: check signature
-  const validSignature = signature.verify(PublicKey.fromBase58(tradeProofStore.oracleSignerPublicKey), [balance,chainId,...addressToFields]);
+  const validSignature = signature.verify(PublicKey.fromBase58(tradeProofStore.oracleSignerPublicKey), [swapCounts,amountUsd,exchangeFields[0]]);
   console.log("validSignature", validSignature)
 
 
   let app = new ProofOfTrade(PublicKey.fromBase58(tradeProofStore.zkAppAddress));
-  let contractAddress = new EvmAddress({ fields: addressToFields, chainId: chainId});
-
 
   try {
     const txn = await Mina.transaction(() => {
       app.verify(
-          balance,
-          contractAddress,
+          swapCounts,
+          amountUsd,
+          exchangeFields[0],
           signature ?? fail('something is wrong with the signature'),
           PublicKey.fromBase58(accountStore.minaAccounts[0])
       );
     });
-    console.log(txn)
 
-    console.log("start proving")
     //TODO: proving completeley
     await txn.prove();
-
 
     const { hash } = await window.mina.sendTransaction({
       transaction: txn.toJSON(),
