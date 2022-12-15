@@ -145,7 +145,7 @@
           <div>
           </div>
         </div>
-        <p class="mina_text_large">You successfully created a proof on Mina</p>
+        <p class="mina_text_large">You successfully created a proof on Mina. <nuxt-link :href="`https://berkeley.minaexplorer.com/transaction/${accountStore.transaction}`" target="_blank">See transaction</nuxt-link></p>
         <n-button
             :loading="ownershipProofStore.eventsLoading"
             class="mina_new_proof_button"
@@ -258,6 +258,7 @@ const fetchCertifiedData = async function() {
 }
 const verify = async function() {
   ownershipProofStore.steps.proofTransaction.isLoading = true
+  await sleep(500)
 
   let addressToFields =  Encoding.stringToFields(ownershipProofStore.oracleData.data.address)
   let balance = Field(ownershipProofStore.oracleData.data.balance)

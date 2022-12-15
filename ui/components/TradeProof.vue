@@ -132,7 +132,7 @@
           <div>
           </div>
         </div>
-        <p class="mina_text_large">You successfully created a proof on Mina</p>
+        <p class="mina_text_large">You successfully created a proof on Mina. <nuxt-link :href="`https://berkeley.minaexplorer.com/transaction/${accountStore.transaction}`" target="_blank">See transaction</nuxt-link></p>
         <n-button
             class="mina_new_proof_button"
             @click="closeModal"
@@ -234,7 +234,7 @@ const fetchCertifiedData = async function() {
 }
 const verify = async function() {
   tradeProofStore.steps.proofTransaction.isLoading = true
-
+  await sleep(500)
   let addressToFields =  Encoding.stringToFields(tradeProofStore.oracleData.data.address)
   let balance = Field(tradeProofStore.oracleData.data.balance)
   let chainId = Field(Number(tradeProofStore.oracleData.data.chainId))
