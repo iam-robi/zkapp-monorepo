@@ -1,7 +1,7 @@
 # Zk Dashboard
 ## Build your zero knowledge profile with Mina ZKapps
 
-Zk Dashboard allow users, DAOs, to publish zero knowledge proofs about their activity under a public MINA Account, without revealing their blockchain wallets or other sensitive.
+Zk Dashboard allow users, DAOs, to publish zero knowledge proofs about their activity under a public MINA Account, without revealing their blockchain wallets or other sensitive data.
 
 The very first version is available at https://app.beta.zkdashboard.com
 
