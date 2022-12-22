@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="28fa8ebf-8df2-43e0-aa15-d0a5705197ab" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ReadMe.md" beforeDir="false" afterPath="$PROJECT_DIR$/ReadMe.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/pages/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/pages/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/store/ownershipProof/ownershipProof.index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/store/ownershipProof/ownershipProof.index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/store/tradeProof/tradeProof.index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/store/tradeProof/tradeProof.index.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +46,8 @@
       <option name="presentableId" value="Default" />
       <updated>1671282512652</updated>
       <workItem from="1671282513905" duration="3237000" />
-      <workItem from="1671361909459" duration="8645000" />
+      <workItem from="1671361909459" duration="9315000" />
+      <workItem from="1671701979949" duration="428000" />
     </task>
     <servers />
   </component>
@@ -72,7 +70,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/ui/pages/index.vue</url>
-          <line>191</line>
+          <line>187</line>
           <option name="timeStamp" value="23" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -84,6 +82,12 @@
           <url>file://$PROJECT_DIR$/ui/components/TradeProof.vue</url>
           <line>234</line>
           <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/ui/pages/index.vue</url>
+          <line>100</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="26" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
