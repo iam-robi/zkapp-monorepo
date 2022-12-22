@@ -7,7 +7,7 @@ import {
   AccountUpdate,
 } from 'snarkyjs';
 
-import { TokenOwnershipOracle } from '../TokenOwnershipOracle.js';
+import { ProofOfTrade } from '../ProofOfTrade.js';
 
 import green from 'chalk';
 import * as dotenv from 'dotenv';
@@ -37,10 +37,10 @@ let transactionFee = 100_000_000;
 // compile the SmartContract to get the verification key (if deploying) or cache the provers (if updating)
 // this can take a while...
 console.log('Compiling smart contract...');
-let { verificationKey } = await TokenOwnershipOracle.compile();
+let { verificationKey } = await ProofOfTrade.compile();
 // check if the zkapp is already deployed, based on whether the account exists and its first zkapp state is != 0
 
-let zkapp = new TokenOwnershipOracle(zkappAddress);
+let zkapp = new ProofOfTrade(zkappAddress);
 console.log(`Deploying zkapp for public key ${zkappAddress.toBase58()}.`);
 // the `transaction()` interface is the same as when testing with a local blockchain
 let transaction = await Mina.transaction(

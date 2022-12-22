@@ -15,7 +15,9 @@ import {
 } from 'snarkyjs';
 
 const ORACLE_PUBLIC_KEY =
-  'B62qqFGos8L5WD45YSAyaF5dkQagnrnUdY54F2rGXU5gcjKnHq84CkS';
+  'B62qqRNpzrmgdzte55XNWQz2Yj9vtXdib1QSYJzNab6Tc8mcxESHMZ7';
+
+
 export class ProofOfTrade extends SmartContract {
   @state(PublicKey) oraclePublicKey = State<PublicKey>();
   @state(Field) dex = State<Field>();
@@ -61,7 +63,7 @@ export class ProofOfTrade extends SmartContract {
     swapCounts.assertGte(Field(2));
     amountUsd.assertGte(Field(10000));
 
-    this.emitEvent('verified', publicKey.toBase58());
+    this.emitEvent('verified', publicKey);
   }
 
   @method updateOraclePublicKey(

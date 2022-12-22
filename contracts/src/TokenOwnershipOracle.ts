@@ -27,7 +27,7 @@ export class VerifiedOwnership extends Struct({
 }) {}
 
 export const ORACLE_PUBLIC_KEY =
-  'B62qqFGos8L5WD45YSAyaF5dkQagnrnUdY54F2rGXU5gcjKnHq84CkS';
+  'B62qqRNpzrmgdzte55XNWQz2Yj9vtXdib1QSYJzNab6Tc8mcxESHMZ7';
 
 export class TokenOwnershipOracle extends SmartContract {
   @state(PublicKey) oraclePublicKey = State<PublicKey>();

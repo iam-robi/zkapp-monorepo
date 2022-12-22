@@ -15,7 +15,7 @@ import { tokenOwnershipDataSample } from './utils/data_samples';
 import { EvmAddress } from './TokenOwnershipOracle';
 // The public key of our trusted data provider
 const ORACLE_PUBLIC_KEY =
-  'B62qqFGos8L5WD45YSAyaF5dkQagnrnUdY54F2rGXU5gcjKnHq84CkS';
+  'B62qqRNpzrmgdzte55XNWQz2Yj9vtXdib1QSYJzNab6Tc8mcxESHMZ7';
 
 let proofsEnabled = false;
 function createLocalBlockchain() {

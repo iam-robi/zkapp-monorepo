@@ -8,6 +8,10 @@
     <div>
       <MinaLogIn></MinaLogIn>
     </div>
+
+    <n-button @click="test">LOGOUT</n-button>
+     <n-button @click="login">LOGIN</n-button>
+     <n-button @click="getSession">SESSION</n-button>
    </div>
     <n-grid x-gap="12" :cols="2" v-show="displayStore.main[0] === MainDisplayOptions.POOEVENTS && displayStore.main[1] === MainDisplayOptions.POTEVENTS">
       <n-gi>
@@ -99,6 +103,8 @@ const tradeProofStore = useTradeProof()
 const displayStore = useDisplay()
 import MinaLogIn from "~/components/wallets/MinaLogIn";
 import {MainDisplayOptions} from "../store/display/display.types";
+import {useNuxtApp} from "nuxt/app";
+const {$ssx} = useNuxtApp()
 onMounted(async () => {
   //await tradeProofStore.getZkAppInstance()
   tradeProofStore.eventsLoading = true
@@ -222,7 +228,20 @@ const pagination =  false
 function onOwnershipModalState(){
   showOwnershipModal.value = false
 }
+import {useAccount} from "../store/account/account.index";
+const accountStore = useAccount()
+function login(){
+  accountStore.signIn()
 
+}
+function test(){
+
+  $ssx.signOut()
+}
+function getSession() {
+  console.log($ssx.chainId())
+  console.log($ssx)
+}
 </script>
 <style scoped>
 

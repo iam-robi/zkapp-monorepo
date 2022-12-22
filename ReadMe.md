@@ -11,7 +11,6 @@ The application is built on top of 3 building blocks inside a monorepo. Optimize
 - **oracle** is the typescript server (nest js) deployed on a private kubernetes cluster using a specifically made helm chart. The oracl takes care of 2 tasks:
     -  certifying the data is requested from the owner of the EVM address.
     -  formatting the data in an open standard for multiple usages inside zkapps
-       or
 - **ui** is the interface of the zkapp built with nuxt3 deployed with vercel. the whole front end import and uses types from the smart contracts, the oracle, and the MINA public API.
 
 ## Features
