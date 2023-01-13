@@ -17,19 +17,20 @@ export const tokenOwnershipDataSample = {
 };
 
 export const proofOfTradeDataSample = {
-  data: {
-    getTradingSignedData: {
-      data: {
-        swapCounts: 4,
-        amountUsd: 11878,
-        exchange: 'UNI',
-      },
-      signature: {
-        r: '3027363732111562368082797793133606645791599509446774769918804689575585042676',
-        s: '23212990216868312744785700201366713009544431278283641012924721324521997270674',
-      },
-      publicKey: 'B62qqFGos8L5WD45YSAyaF5dkQagnrnUdY54F2rGXU5gcjKnHq84CkS',
-    },
-  },
+  "data": {
+      "getTradingSignedData": {
+          "data": {
+              "swapCounts": 4,
+              "amountUsd": 11878,
+              "exchange": "UNI",
+              "createdAt": "2023-01-13T16:42:45.808Z"
+          },
+          "signature": {
+              "r": "7810889766551090898632468065844233965340020606266228206962706729740479847253",
+              "s": "14366920768108845609481583729276053957031459300018972599919014122944388941933"
+          },
+          "publicKey": "B62qqRNpzrmgdzte55XNWQz2Yj9vtXdib1QSYJzNab6Tc8mcxESHMZ7"
+      }
+  }
 };
 //TODO remove address from data returned
