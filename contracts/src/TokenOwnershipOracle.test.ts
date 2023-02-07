@@ -7,75 +7,83 @@ import {
   PrivateKey,
   PublicKey,
   AccountUpdate,
-  Signature,
   Encoding,
+  Signature
 } from 'snarkyjs';
-
 import { tokenOwnershipDataSample } from './utils/data_samples';
 import { EvmAddress } from './TokenOwnershipOracle';
-// The public key of our trusted data provider
+
+/*
+ * This file specifies how to test the `TokenOwnershipOracle` example smart contract. It is safe to delete this file and replace
+ * with your own tests.
+ *
+ * See https://docs.minaprotocol.com/zkapps for more info.
+ */
+
+let proofsEnabled = false;
 const ORACLE_PUBLIC_KEY =
   'B62qqRNpzrmgdzte55XNWQz2Yj9vtXdib1QSYJzNab6Tc8mcxESHMZ7';
 
-let proofsEnabled = false;
-function createLocalBlockchain() {
-  const Local = Mina.LocalBlockchain({ proofsEnabled });
-  Mina.setActiveInstance(Local);
-  return Local.testAccounts[0].privateKey;
-}
 
-async function localDeploy(
-  zkAppInstance: TokenOwnershipOracle,
-  zkAppPrivatekey: PrivateKey,
-  deployerAccount: PrivateKey
-) {
-  const txn = await Mina.transaction(deployerAccount, () => {
-    AccountUpdate.fundNewAccount(deployerAccount);
-    zkAppInstance.deploy({ zkappKey: zkAppPrivatekey });
-    zkAppInstance.init(zkAppPrivatekey);
-  });
-  await txn.prove();
-  txn.sign([zkAppPrivatekey]);
-  await txn.send();
-}
 
 describe('TokenOwnershipOracle', () => {
-  let deployerAccount: PrivateKey,
-    zkAppAddress: PublicKey,
-    zkAppPrivateKey: PrivateKey;
+  let deployerAccount: PublicKey,
+    deployerKey: PrivateKey,
+    senderAccount: PublicKey,
+    senderKey: PrivateKey,
+    zkAppTokenOwnershipAddress: PublicKey,
+    zkAppPrivateKey: PrivateKey,
+    zkApp: TokenOwnershipOracle;
 
   beforeAll(async () => {
     await isReady;
     if (proofsEnabled) TokenOwnershipOracle.compile();
-    let contractAddress =
-      tokenOwnershipDataSample.data.getOwnershipSignedData.data.address;
-    let userPrivateKey = PrivateKey.random();
   });
 
-  beforeEach(async () => {
-    deployerAccount = createLocalBlockchain();
+  beforeEach(() => {
+    const Local = Mina.LocalBlockchain({ proofsEnabled });
+    Mina.setActiveInstance(Local);
+    ({ privateKey: deployerKey, publicKey: deployerAccount } =
+      Local.testAccounts[0]);
+    ({ privateKey: senderKey, publicKey: senderAccount } =
+      Local.testAccounts[1]);
+      ({ privateKey: senderKey, publicKey: senderAccount } =
+        Local.testAccounts[2]);
     zkAppPrivateKey = PrivateKey.random();
-    zkAppAddress = zkAppPrivateKey.toPublicKey();
+    zkAppTokenOwnershipAddress = zkAppPrivateKey.toPublicKey();
+    zkApp = new TokenOwnershipOracle(zkAppTokenOwnershipAddress);
   });
 
-  afterAll(async () => {
+  afterAll(() => {
     // `shutdown()` internally calls `process.exit()` which will exit the running Jest process early.
     // Specifying a timeout of 0 is a workaround to defer `shutdown()` until Jest is done running all tests.
     // This should be fixed with https://github.com/MinaProtocol/mina/issues/10943
     setTimeout(shutdown, 0);
   });
 
-  it('generates and deploys the `TokenOwnershipOracle` smart contract with a predefined smart contract', async () => {
-    const zkAppInstance = new TokenOwnershipOracle(zkAppAddress);
-    await localDeploy(zkAppInstance, zkAppPrivateKey, deployerAccount);
+  async function localDeploy() {
+    const txn = await Mina.transaction(deployerAccount, () => {
+      AccountUpdate.fundNewAccount(deployerAccount);
+      zkApp.deploy({ zkappKey: zkAppPrivateKey });
+      zkApp.init(zkAppPrivateKey);
+    });
+    await txn.prove();
+    // this tx needs .sign(), because `deploy()` TokenOwnershipOracles an account update that requires signature authorization
+    await txn.sign([deployerKey, zkAppPrivateKey]).send();
+  }
+
+  it('generates and deploys the `TokenOwnershipOracle` smart contract', async () => {
+    await localDeploy();
+    const zkAppInstance = new TokenOwnershipOracle(zkAppTokenOwnershipAddress);
     const oraclePublicKey = zkAppInstance.oraclePublicKey.get();
     expect(oraclePublicKey).toEqual(PublicKey.fromBase58(ORACLE_PUBLIC_KEY));
+    
   });
 
   describe('deploys a verifier contract for token balance', () => {
     it('emits an `verified` event containing the user mina address if their token balance is at least 1', async () => {
-      const zkAppInstance = new TokenOwnershipOracle(zkAppAddress);
-      await localDeploy(zkAppInstance, zkAppPrivateKey, deployerAccount);
+      const zkAppInstance = new TokenOwnershipOracle(zkAppTokenOwnershipAddress);
+      await localDeploy();
 
       const balance = Field(
         tokenOwnershipDataSample.data.getOwnershipSignedData.data.balance
@@ -102,20 +110,18 @@ describe('TokenOwnershipOracle', () => {
         chainId: chainId,
       });
 
-      const pvKey = PrivateKey.random();
 
-      const txn = await Mina.transaction(deployerAccount, () => {
-        //AccountUpdate.fundNewAccount(pvKey);
+      const txn = await Mina.transaction(senderAccount, () => {
         zkAppInstance.verify(
           balance,
           contractAddress,
           signature ?? fail('something is wrong with the signature'),
-          pvKey.toPublicKey()
+          senderKey.toPublicKey()
         );
       });
       await txn.prove();
-      await txn.sign();
-      await txn.send();
+      await txn.sign([senderKey]).send();
+      
       //
       const events = await zkAppInstance.fetchEvents();
 
@@ -123,7 +129,7 @@ describe('TokenOwnershipOracle', () => {
 
       // @ts-ignore
       expect(verifiedEvent.event.minaAddress.toBase58()).toEqual(
-        pvKey.toPublicKey().toBase58()
+        senderKey.toPublicKey().toBase58()
       );
       // @ts-ignore
       expect(verifiedEvent.event.evmContractAddress.chainId.toString()).toEqual(
@@ -140,8 +146,8 @@ describe('TokenOwnershipOracle', () => {
       // );
     });
     it('errors if wrong chain Id is provided', async () => {
-      const zkAppInstance = new TokenOwnershipOracle(zkAppAddress);
-      await localDeploy(zkAppInstance, zkAppPrivateKey, deployerAccount);
+      const zkAppInstance = new TokenOwnershipOracle(zkAppTokenOwnershipAddress);
+      await localDeploy();
       const balance = Field(
         tokenOwnershipDataSample.data.getOwnershipSignedData.data.balance
       );
@@ -161,12 +167,12 @@ describe('TokenOwnershipOracle', () => {
       });
       const randomUser = PrivateKey.random();
       await Mina.transaction(deployerAccount, () => {
-        AccountUpdate.fundNewAccount(randomUser);
+        AccountUpdate.fundNewAccount(randomUser.toPublicKey());
       });
 
       //@ts-ignore
       expect(async () => {
-        await Mina.transaction(randomUser, () => {
+        await Mina.transaction(randomUser.toPublicKey(), () => {
           zkAppInstance.verify(
             balance,
             snarkyAddress,
@@ -187,4 +193,18 @@ describe('TokenOwnershipOracle', () => {
     it.todo('changes oracle public key');
     it.todo('errors if non admin tries to change oracle public key');
   });
+
+  // it('correctly updates the num state on the `TokenOwnershipOracle` smart contract', async () => {
+  //   await localDeploy();
+
+  //   // update transaction
+  //   const txn = await Mina.transaction(senderAccount, () => {
+  //     zkApp.update();
+  //   });
+  //   await txn.prove();
+  //   await txn.sign([senderKey]).send();
+
+  //   const updatedNum = zkApp.num.get();
+  //   expect(updatedNum).toEqual(Field(3));
+  // });
 });

@@ -10,46 +10,41 @@ import {
   Signature,
   Encoding,
 } from 'snarkyjs';
-import { ORACLE_PUBLIC_KEY } from './utils/constants';
+
 import { proofOfTradeDataSample } from './utils/data_samples';
+const ORACLE_PUBLIC_KEY =
+  'B62qqRNpzrmgdzte55XNWQz2Yj9vtXdib1QSYJzNab6Tc8mcxESHMZ7';
 
 let proofsEnabled = false;
-function createLocalBlockchain() {
-  const Local = Mina.LocalBlockchain({ proofsEnabled });
-  Mina.setActiveInstance(Local);
-  return Local.testAccounts[0].privateKey;
-}
 
-async function localDeploy(
-  zkAppInstance: ProofOfTrade,
-  zkAppPrivatekey: PrivateKey,
-  deployerAccount: PrivateKey
-) {
-  const txn = await Mina.transaction(deployerAccount, () => {
-    AccountUpdate.fundNewAccount(deployerAccount);
-    zkAppInstance.deploy({ zkappKey: zkAppPrivatekey });
-    zkAppInstance.init(zkAppPrivatekey);
-  });
-  await txn.prove();
-  txn.sign([zkAppPrivatekey]);
-  await txn.send();
-}
 
 describe('ProofOfTrade', () => {
-  let deployerAccount: PrivateKey,
+  let deployerAccount: PublicKey,
+    deployerKey: PrivateKey,
+    senderAccount: PublicKey,
+    senderKey: PrivateKey,
     zkAppAddress: PublicKey,
-    zkAppPrivateKey: PrivateKey;
+    zkAppPrivateKey: PrivateKey,
+    zkApp: ProofOfTrade;
+
 
   beforeAll(async () => {
     await isReady;
     if (proofsEnabled) ProofOfTrade.compile();
-    let userPrivateKey = PrivateKey.random();
   });
 
-  beforeEach(async () => {
-    deployerAccount = createLocalBlockchain();
+  beforeEach(() => {
+    const Local = Mina.LocalBlockchain({ proofsEnabled });
+    Mina.setActiveInstance(Local);
+    ({ privateKey: deployerKey, publicKey: deployerAccount } =
+      Local.testAccounts[0]);
+    ({ privateKey: senderKey, publicKey: senderAccount } =
+      Local.testAccounts[1]);
+      ({ privateKey: senderKey, publicKey: senderAccount } =
+        Local.testAccounts[2]);
     zkAppPrivateKey = PrivateKey.random();
     zkAppAddress = zkAppPrivateKey.toPublicKey();
+    zkApp = new ProofOfTrade(zkAppAddress);
   });
 
   afterAll(async () => {
@@ -58,10 +53,19 @@ describe('ProofOfTrade', () => {
     // This should be fixed with https://github.com/MinaProtocol/mina/issues/10943
     setTimeout(shutdown, 0);
   });
-
+  async function localDeploy() {
+    const txn = await Mina.transaction(deployerAccount, () => {
+      AccountUpdate.fundNewAccount(deployerAccount);
+      zkApp.deploy({ zkappKey: zkAppPrivateKey });
+      zkApp.init(zkAppPrivateKey);
+    });
+    await txn.prove();
+    // this tx needs .sign(), because `deploy()` TokenOwnershipOracles an account update that requires signature authorization
+    await txn.sign([deployerKey, zkAppPrivateKey]).send();
+  }
   it('generates and deploys the `ProofOfTrade` smart contract with a predefined smart contract', async () => {
     const zkAppInstance = new ProofOfTrade(zkAppAddress);
-    await localDeploy(zkAppInstance, zkAppPrivateKey, deployerAccount);
+    await localDeploy();
     const oraclePublicKey = zkAppInstance.oraclePublicKey.get();
     expect(oraclePublicKey).toEqual(PublicKey.fromBase58(ORACLE_PUBLIC_KEY));
   });
@@ -69,7 +73,7 @@ describe('ProofOfTrade', () => {
   describe('deploys a verifier contract for token balance', () => {
     it('emits an `verified` event containing the user mina address if their token balance is at least 1', async () => {
       const zkAppInstance = new ProofOfTrade(zkAppAddress);
-      await localDeploy(zkAppInstance, zkAppPrivateKey, deployerAccount);
+      await localDeploy();
 
       const swapCounts = Field(
         proofOfTradeDataSample.data.getTradingSignedData.data.swapCounts
@@ -95,29 +99,26 @@ describe('ProofOfTrade', () => {
       // );
       // validSignature.assertTrue();
 
-      const pvKey = PrivateKey.random();
-      //
       const exchange = Encoding.stringToFields('UNI');
-      const txn = await Mina.transaction(deployerAccount, () => {
+      const txn = await Mina.transaction(senderAccount, () => {
         //AccountUpdate.fundNewAccount(pvKey);
         zkAppInstance.verify(
           swapCounts,
           amountUsd,
           exchange[0],
           signature ?? fail('something is wrong with the signature'),
-          pvKey.toPublicKey()
+          senderKey.toPublicKey()
         );
       });
       await txn.prove();
-      await txn.sign();
-      await txn.send();
+      await txn.sign([senderKey]).send();
       // //
       const events = await zkAppInstance.fetchEvents();
       //
       let verifiedEvent = events[0];
 
       // // @ts-ignore
-      expect(events[0].event).toEqual(pvKey.toPublicKey());
+      expect(events[0].event).toEqual(senderKey.toPublicKey());
       // // @ts-ignore
     });
   });
