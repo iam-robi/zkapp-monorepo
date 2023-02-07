@@ -255,8 +255,7 @@ const verify = async function() {
           swapCounts,
           amountUsd,
           exchangeFields[0],
-          signature ?? fail('something is wrong with the signature'),
-          PublicKey.fromBase58(accountStore.minaAccounts[0])
+          signature ?? fail('something is wrong with the signature')
       );
     });
 
