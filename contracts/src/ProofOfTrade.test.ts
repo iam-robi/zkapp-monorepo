@@ -106,8 +106,7 @@ describe('ProofOfTrade', () => {
           swapCounts,
           amountUsd,
           exchange[0],
-          signature ?? fail('something is wrong with the signature'),
-          senderKey.toPublicKey()
+          signature ?? fail('something is wrong with the signature')
         );
       });
       await txn.prove();

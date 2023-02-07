@@ -54,8 +54,8 @@ export class TokenOwnershipOracle extends SmartContract {
   @method verify(
     balance: Field,
     contractAddress: EvmAddress,
-    signature: Signature,
-    publicKey: PublicKey
+    signature: Signature
+    
   ) {
     const oraclePublicKey = this.oraclePublicKey.get();
     this.oraclePublicKey.assertEquals(oraclePublicKey);
@@ -71,7 +71,7 @@ export class TokenOwnershipOracle extends SmartContract {
 
     const verifiedOwnership = new VerifiedOwnership({
       evmContractAddress: contractAddress,
-      minaAddress: publicKey,
+      minaAddress: this.sender,
     });
     this.emitEvent('verified', verifiedOwnership);
   }

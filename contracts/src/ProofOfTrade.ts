@@ -47,8 +47,7 @@ export class ProofOfTrade extends SmartContract {
     swapCounts: Field,
     amountUsd: Field,
     dex: Field,
-    signature: Signature,
-    publicKey: PublicKey
+    signature: Signature
   ) {
     const oraclePublicKey = this.oraclePublicKey.get();
     this.oraclePublicKey.assertEquals(oraclePublicKey);
@@ -63,7 +62,7 @@ export class ProofOfTrade extends SmartContract {
     swapCounts.assertGte(Field(2));
     amountUsd.assertGte(Field(10000));
 
-    this.emitEvent('verified', publicKey);
+    this.emitEvent('verified', this.sender);
   }
 
   @method updateOraclePublicKey(

@@ -115,8 +115,7 @@ describe('TokenOwnershipOracle', () => {
         zkAppInstance.verify(
           balance,
           contractAddress,
-          signature ?? fail('something is wrong with the signature'),
-          senderKey.toPublicKey()
+          signature ?? fail('something is wrong with the signature')
         );
       });
       await txn.prove();
@@ -176,8 +175,7 @@ describe('TokenOwnershipOracle', () => {
           zkAppInstance.verify(
             balance,
             snarkyAddress,
-            signature ?? fail('something is wrong with the signature'),
-            randomUser.toPublicKey()
+            signature ?? fail('something is wrong with the signature')
           );
         });
       }).rejects;
