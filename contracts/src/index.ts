@@ -6,4 +6,5 @@ import {
 } from './TokenOwnershipOracle';
 
 import { ProofOfTrade } from './ProofOfTrade';
+import { ProofOfPosition } from './ProofOfPosition';
 export { TokenOwnershipOracle, EvmAddress, VerifiedOwnership, ProofOfTrade };
