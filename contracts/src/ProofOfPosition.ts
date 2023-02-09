@@ -13,7 +13,8 @@ import {
     MerkleMap,
     MerkleMapWitness,
     Struct,
-    Poseidon
+    Poseidon,
+    CircuitString,
   } from 'snarkyjs';
   
   const ORACLE_PUBLIC_KEY =
@@ -22,9 +23,8 @@ import {
 
     export class PublicPosition extends Struct({
         atLeast: Field,
-        tokenAddress: Field,
-        targetUsdPrice: Field,
-        account: PublicKey,
+        tokenAddress: CircuitString,
+        targetUsdPrice: Field
     }) {}
 
 
@@ -40,7 +40,7 @@ import {
       super.deploy(args);
       this.account.permissions.set({
         ...Permissions.default(),
-        editState: Permissions.signature(),
+        editState: Permissions.none(),
       });
     }
   
@@ -53,8 +53,8 @@ import {
     }
   
     //position data will be a struct that can be hashed to a field in the zkapp
-    @method verify(
-      tokenAddress: Field,
+    @method commitPosition(
+      tokenAddress: CircuitString,
       tokenAmount: Field,
       atLeast: Field,
       targetUsdPrice: Field,
@@ -67,33 +67,34 @@ import {
       const commitment = this.commitment.get();
       this.commitment.assertEquals(commitment);
 
-        //validate position data is verified by an oracle and validate conditions 
-      const validSignature = signature.verify(oraclePublicKey, [
-            tokenAmount,
-            tokenAddress
-       ]);
-      validSignature.assertTrue();
-      
+    //TODO: validate position data is verified by an oracle and validate conditions 
+    //   const validSignature = signature.verify(oraclePublicKey, [
+    //         tokenAmount,
+    //         ...tokenAddress.toFields(),
+    //    ]);
+    //   validSignature.assertTrue();
+
       tokenAmount.assertGte(atLeast);
         
       //for now user can only commit to one position per token, a key in the merkle corresponds to a token address and a mina address
         
-      const positionKey = Poseidon.hash([tokenAddress, ...this.sender.toFields()]);
+      const positionKey = Poseidon.hash([...tokenAddress.toFields(), ...this.sender.toFields()]);
+
       // by doing so , we validate no position has been committed before
       const [ rootBefore , key ] = merkleWitness.computeRootAndKey(Field(0))
+
       key.assertEquals(positionKey);
       rootBefore.assertEquals(commitment);
 
       //commit with the new position data for user account
-      const positionDataHash = Poseidon.hash([tokenAddress, atLeast , targetUsdPrice , ...this.sender.toFields()]);
+      const positionDataHash = Poseidon.hash([...tokenAddress.toFields(), atLeast , targetUsdPrice ]);
       const [ newRoot , _ ] = merkleWitness.computeRootAndKey(positionDataHash)
       this.commitment.set(newRoot);
                                                                                                                                                                                                                                                                                                                                                                                                                                       
       const publicPosition = new PublicPosition({
         atLeast,
         tokenAddress,
-        targetUsdPrice,
-        account: this.sender,
+        targetUsdPrice
       })
 
       this.emitEvent('verified', publicPosition);
