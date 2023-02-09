@@ -22,7 +22,9 @@
     "testw": "node --experimental-vm-modules --experimental-wasm-modules --experimental-wasm-threads node_modules/jest/bin/jest.js --watch",
     "lint": "npx eslint src/* --fix",
     "deploy": "npm run build && node --experimental-vm-modules --experimental-wasm-modules --experimental-wasm-threads build/src/utils/deploy.js",
-    "keygen": "npm run build && node --experimental-vm-modules --experimental-wasm-modules --experimental-wasm-threads build/src/utils/keygen.js"
+    "keygen": "npm run build && node --experimental-vm-modules --experimental-wasm-modules --experimental-wasm-threads build/src/utils/keygen.js",
+    "play:merklemap": "npm run build && node --experimental-vm-modules --experimental-wasm-modules --experimental-wasm-threads build/src/playground/merklemap.js",
+    "play:struct": "npm run build && node --experimental-vm-modules --experimental-wasm-modules --experimental-wasm-threads build/src/playground/struct.js"
   },
   "lint-staged": {
     "**/*": [
