@@ -46,25 +46,23 @@ export class ContractResolver extends BaseResolver(
     return result;
   }
 
-// // query in dev mode 
-// @Query(() => SignedOwnershipData, { name: 'getOwnershipSignedData' })
-
-// async getOwnershipSignedData(
-//   @Args() args: SignedOwnershipDataInput,
-//   @Siwe() siwe: any,
-// ) {
-//   const balanceData = await this.contractService.getBalanceData(
-//     '0x0C3b29321611736341609022C23E981AC56E7f96',
-//     43114,
-//     ERCType.ERC721,
-//     '0x04cB6fd7e278096A8eAB5CcE44a821ea1D43D476',
-//   );
-//   const result = await this.signService.signTokenBalance(
-//     balanceData.balance,
-//     '0x0C3b29321611736341609022C23E981AC56E7f96',
-//     43114,
-//   );
-//   return result;
-// }
-
+  // // query in dev mode
+  // @Query(() => SignedOwnershipData, { name: 'getOwnershipSignedData' })
+  // async getOwnershipSignedData(
+  //   @Args() args: SignedOwnershipDataInput,
+  //   @Siwe() siwe: any,
+  // ) {
+  //   const balanceData = await this.contractService.getBalanceData(
+  //     '0x0C3b29321611736341609022C23E981AC56E7f96',
+  //     43114,
+  //     ERCType.ERC721,
+  //     '0x04cB6fd7e278096A8eAB5CcE44a821ea1D43D476',
+  //   );
+  //   const result = await this.signService.signTokenBalance(
+  //     balanceData.balance,
+  //     '0x0C3b29321611736341609022C23E981AC56E7f96',
+  //     43114,
+  //   );
+  //   return result;
+  // }
 }

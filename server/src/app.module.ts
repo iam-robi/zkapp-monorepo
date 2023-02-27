@@ -11,6 +11,7 @@ import { SignModule } from './sign/sign.module';
 import GraphQLJSON from "graphql-type-json";
 import { ContractModule } from './contract/contract.module';
 import { ExchangeModule } from './exchange/exchange.module';
+import { StorageModule } from './storage/storage.module';
 @Module({
   imports: [
     MikroOrmModule.forRoot(),
@@ -31,7 +32,8 @@ import { ExchangeModule } from './exchange/exchange.module';
     AuthModule,
     SignModule,
     ContractModule,
-    ExchangeModule
+    ExchangeModule,
+    StorageModule
   ],
   providers: [],
 })

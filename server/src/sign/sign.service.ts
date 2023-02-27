@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrivateKey, Signature, Field, isReady, Encoding } from 'snarkyjs';
+import { PrivateKey, Signature, Field, isReady, Encoding , MerkleMap } from 'snarkyjs';
 import { TradingData } from '../exchange/dto/trading-data.response';
 
 @Injectable()
@@ -28,6 +28,7 @@ export class SignService {
       signature: signature.toJSON(),
       publicKey: publicKey.toBase58(),
     };
+
 
     return result;
   }

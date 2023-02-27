@@ -1,10 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 //TODO: scale up https://docs.ssx.id/scaling-ssx-server
-import { SSXServer, SSXExpressMiddleware } from "@spruceid/ssx-server";
+import { SSXServer ,SSXExpressMiddleware } from "@spruceid/ssx-server";
 import * as cookieParser from 'cookie-parser';
-
 let cors = require('cors')
+
 const ssx = new SSXServer({
   signingKey: process.env.APP_SECRET,
   providers: {

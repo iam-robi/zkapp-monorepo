@@ -1601,22 +1601,56 @@
     uri-js "^4.4.1"
     valid-url "^1.0.9"
 
-"@spruceid/ssx-gnosis-extension@*":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@spruceid/ssx-gnosis-extension/-/ssx-gnosis-extension-1.0.0.tgz#bad134781a0102f7d76df3578e71e4e9c2b54867"
-  integrity sha512-Gp9/Q9leJZTermqT4909vR1wMQse0JlL6fSSTt+mkuWyoXtdDJ3KnVSjEK2OhS8AuIAPP5LkJqrKclIzAoBCKQ==
+"@spruceid/ssx-core@1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@spruceid/ssx-core/-/ssx-core-1.1.1.tgz#1c08b7d69f4085d79c2d98ace5f4159b3fc65946"
+  integrity sha512-n1XlG/VLe95J8ToV/GPGG7cidnyqR6s5cafhZ/w6J3ZCXh4qLKoJ3HCJ8TtZxNWZRNM/L8Prf1zS58GSdK7HTA==
+  dependencies:
+    axios "^0.27.2"
+    express "^4.18.1"
+    express-session "^1.17.3"
+    siwe "^2.1.2"
+
+"@spruceid/ssx-gnosis-extension@1.1.3":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@spruceid/ssx-gnosis-extension/-/ssx-gnosis-extension-1.1.3.tgz#5f075f674be3ae4e2adb8b36c8f3763e5e6f5029"
+  integrity sha512-wbxv1B2PdX0LIK3eZLmTndwIxUEEm9RV77qO8h6mh1ifmqaccTv/fWOdFC2Ao503Cp+EYFSmwldrE/0fGQdw8Q==
+  dependencies:
+    "@spruceid/ssx-core" "1.1.1"
+
+"@spruceid/ssx-gnosis-extension@1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@spruceid/ssx-gnosis-extension/-/ssx-gnosis-extension-1.1.4.tgz#cf63c5c12edfb9346a58e766fd709c710276eedb"
+  integrity sha512-HTg61SsKHV18JBO0cXgha0Y3SCS8qxVvTWiIFFf05PPDDWmjdrooUxU87sVWez3F5mkh3MHxmKnTIrPB5byKAg==
+  dependencies:
+    "@spruceid/ssx-core" "1.1.1"
 
 "@spruceid/ssx-sdk-wasm@0.1.2":
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/@spruceid/ssx-sdk-wasm/-/ssx-sdk-wasm-0.1.2.tgz#d28301d83b4b008247fef774a082c4c50bd3c4ee"
   integrity sha512-PuxRlyTlycXrTU11B22XcCz1PUU7p5krXxnb+ztPkgR3fAMP3ubENgoUyLllUJXxx2O/Jpne+0P9HIro+vilPg==
 
-"@spruceid/ssx-server@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@spruceid/ssx-server/-/ssx-server-1.0.0.tgz#71164cd6b97497f23d76697d82fecf6d3a18bcf6"
-  integrity sha512-n4Fv9aYC273edabUP7+bLsT4qFJsh9xG6xBJWxetN358GUfSzVXYHcXTM4nZPLWRxM/oa+IlIsOaUokdxSugrQ==
+"@spruceid/ssx-server-middleware@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@spruceid/ssx-server-middleware/-/ssx-server-middleware-1.0.2.tgz#dabcc44fabcfd104ebd0a789e0ff89e0dc9e8d8e"
+  integrity sha512-FLyVYNIzwGnEZ1y10NBrKCvK0UTwpVzkK13VRSVPm6Kux0IEHWq2yYKw2mMtCBHgNr80iKApc/PsoyJBD7oaHQ==
   dependencies:
-    "@spruceid/ssx-gnosis-extension" "*"
+    "@spruceid/ssx-core" "1.1.1"
+    "@spruceid/ssx-gnosis-extension" "1.1.4"
+    body-parser "^1.20.0"
+    cookie-parser "^1.4.6"
+    cors "^2.8.5"
+    express "^4.18.1"
+    express-session "^1.17.3"
+
+"@spruceid/ssx-server@^1.2.1":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@spruceid/ssx-server/-/ssx-server-1.2.2.tgz#d5daadc84c790c8015273fe0f8a179520e7815b0"
+  integrity sha512-4ja2r8ANKuduMae1qOIKM3Pn28z3+qdRMzxMd4EQYLAwGaSS1Vl6io1jafXlhTGmnUlVswenp7ilavaG7Xm6TA==
+  dependencies:
+    "@spruceid/ssx-core" "1.1.1"
+    "@spruceid/ssx-gnosis-extension" "1.1.4"
+    "@spruceid/ssx-server-middleware" "1.0.2"
     axios "^0.27.2"
     body-parser "^1.20.0"
     cookie-parser "^1.4.6"
@@ -1627,13 +1661,14 @@
     rc "^1.2.8"
     siwe "^2.1.2"
 
-"@spruceid/ssx@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@spruceid/ssx/-/ssx-1.0.0.tgz#57ab0f59570864307060d0e34f0e6cfcaa6cc568"
-  integrity sha512-1scmdr7nqjI/jAg/7gyklBAaOVtkvTtL6sSyFL2/mSp4FTlFVYEA7WUDXYoRyGBgAHLwlW7YOk4oPOCUm+zn5Q==
+"@spruceid/ssx@1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@spruceid/ssx/-/ssx-1.2.1.tgz#3054bd6ce55fb0d4f90fd7b160eef9e30a16bbc5"
+  integrity sha512-ZHLHHI0eV18vIr91GPu61DjmmHRllbLRnf7I5MGABjQEaqTTFqECRjZ58l/pLybBXunVfNUa5QyxZHxEjOOEDg==
   dependencies:
     "@metamask/detect-provider" "^1.2.0"
-    "@spruceid/ssx-gnosis-extension" "*"
+    "@spruceid/ssx-core" "1.1.1"
+    "@spruceid/ssx-gnosis-extension" "1.1.3"
     "@spruceid/ssx-sdk-wasm" "0.1.2"
     "@types/lodash.merge" "^4.6.7"
     assert "^2.0.0"
@@ -2639,6 +2674,11 @@ bl@^4.1.0:
     inherits "^2.0.4"
     readable-stream "^3.4.0"
 
+blakejs@1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/blakejs/-/blakejs-1.2.1.tgz#5057e4206eadb4a97f7c0b6e197a505042fc3814"
+  integrity sha512-QXUSXI3QVc/gJME0dBpXrag1kbzOqCjCX8/b54ntNyW6sjtoqxqRk3LTmXzaJoh71zMsDCjM+47jS7XiwN/+fQ==
+
 bn.js@^4.11.9:
   version "4.12.0"
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.12.0.tgz#775b3f278efbb9718eec7361f483fb36fbbfea88"
@@ -3281,6 +3321,13 @@ detect-browser@^5.1.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/detect-browser/-/detect-browser-5.3.0.tgz#9705ef2bddf46072d0f7265a1fe300e36fe7ceca"
   integrity sha512-53rsFbGdwMwlF7qvCt0ypLM5V5/Mbl0szB7GPN8y9NCcbknYOeVVXdrXEq+90IwAfrrzt6Hd+u2E2ntakICU8w==
+
+detect-gpu@^5.0.5:
+  version "5.0.11"
+  resolved "https://registry.yarnpkg.com/detect-gpu/-/detect-gpu-5.0.11.tgz#43bac2bcc62e1420cb6c1c59d11fa18ce3a291fe"
+  integrity sha512-lJDxdgXSyeB9qZbrz4mNp9QvqA8zbM/PbJiCr80g/YVAUdy0bzlbDpW+5OeiGs7fHO7os9EWUzBnIVPBu9oDlw==
+  dependencies:
+    webgl-constants "^1.1.1"
 
 detect-newline@^3.0.0:
   version "3.1.0"
@@ -4969,6 +5016,11 @@ js-sdsl@^4.1.4:
   resolved "https://registry.npmjs.org/js-sdsl/-/js-sdsl-4.1.5.tgz"
   integrity sha512-08bOAKweV2NUC1wqTtf3qZlnpOX/R2DU9ikpjOHs0H+ibQv3zpncVQg6um4uYtRtrwIX8M4Nh3ytK4HGlYAq7Q==
 
+js-sha256@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/js-sha256/-/js-sha256-0.9.0.tgz#0b89ac166583e91ef9123644bd3c5334ce9d0966"
+  integrity sha512-sga3MHh9sgQN2+pJ9VYZ+1LPwXOxuBJBA5nrR5/ofPfuiJBE2hnjsaN8se8JznOmGLN2p49Pe5U/ttafcs/apA==
+
 js-sha3@0.8.0:
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/js-sha3/-/js-sha3-0.8.0.tgz#b9b7a5da73afad7dedd0f8c463954cbde6818840"
@@ -6441,13 +6493,16 @@ slash@^3.0.0:
   resolved "https://registry.npmjs.org/slash/-/slash-3.0.0.tgz"
   integrity sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==
 
-snarkyjs@^0.7.1:
-  version "0.7.1"
-  resolved "https://registry.npmjs.org/snarkyjs/-/snarkyjs-0.7.1.tgz"
-  integrity sha512-aZeSoa12HhymEx4w7nu+d22bs8PMaKASJKSoKoz+di/QkX2fxbAlt/e9pJJk1nVnoTtq3muB0kojChTzFPUt8Q==
+snarkyjs@^0.9.0:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/snarkyjs/-/snarkyjs-0.9.1.tgz#b821b129588e0749907b0f7678fe30eb82773322"
+  integrity sha512-BBceHYay79blD6TbdaMpkI/IHTS04CB/EZCjrphtLSE6tLYHIYGbWCZSxN6EggIzoOpbQJXu0iMlpwS4qaHNmg==
   dependencies:
+    blakejs "1.2.1"
+    detect-gpu "^5.0.5"
     env "^0.0.2"
     isomorphic-fetch "^3.0.0"
+    js-sha256 "^0.9.0"
     reflect-metadata "^0.1.13"
     tslib "^2.3.0"
 
@@ -7087,6 +7142,11 @@ web3modal@^1.9.7:
     react-dom "^16.8.6"
     styled-components "^5.3.3"
     tslib "^1.10.0"
+
+webgl-constants@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/webgl-constants/-/webgl-constants-1.1.1.tgz#f9633ee87fea56647a60b9ce735cbdfb891c6855"
+  integrity sha512-LkBXKjU5r9vAW7Gcu3T5u+5cvSvh5WwINdr0C+9jpzVB41cjQAP5ePArDtk/WHYdVj0GefCgM73BA7FlIiNtdg==
 
 webidl-conversions@^3.0.0:
   version "3.0.1"

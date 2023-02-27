@@ -106,4 +106,16 @@ type Mutation {
   removeExchange(id: ID!): Boolean!
   softRemoveExchange(id: ID!): Boolean!
   restoreExchange(id: ID!): Exchange!
+  store(args: CreateStoreInput!): Boolean!
+}
+
+input CreateStoreInput {
+  """Example field (placeholder)"""
+  height: Int!
+
+  """Example field (placeholder)"""
+  items: [[String!]!]!
+
+  """Example field (placeholder)"""
+  zkAppAddress58: String!
 }
