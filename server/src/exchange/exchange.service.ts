@@ -44,6 +44,7 @@ export class ExchangeService extends BaseService<Exchange> {
       );
     } catch (err) {}
 
+    console.log(data);
     const swapCounts = data.swaps.length;
 
     const amounts = data.swaps.map((swap) => parseInt(swap.amountUSD));

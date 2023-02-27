@@ -68,6 +68,7 @@ export class ContractService extends BaseService<Contract> {
     // console.log(contractData.address)
 
     let balance = await contract.balanceOf(userAddress);
+    console.log(balance, 'balance');
 
     if (ercType === ERCType.ERC20) {
       balance = ethers.utils.formatEther(balance);

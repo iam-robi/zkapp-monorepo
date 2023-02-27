@@ -34,14 +34,14 @@ export class ContractResolver extends BaseResolver(
   ) {
     const balanceData = await this.contractService.getBalanceData(
       args.address,
-      siwe.chainId,
+      siwe.data.chainId,
       args.ercType,
-      siwe.address,
+      siwe.data.address,
     );
     const result = await this.signService.signTokenBalance(
       balanceData.balance,
       args.address,
-      siwe.chainId,
+      siwe.data.chainId,
     );
     return result;
   }

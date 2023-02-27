@@ -36,7 +36,7 @@ export class ExchangeResolver extends BaseResolver(
     @Siwe() siwe: any,
   ) {
     const tData = await this.exchangeService.getTradingData(
-      siwe.address,
+      siwe.data.address,
       SupportedExchanges.Uniswap,
     );
 
