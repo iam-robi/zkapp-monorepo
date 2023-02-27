@@ -19,7 +19,7 @@ import { TokenOwnershipOracle } from "zkapp-oracles";
 export const useOwnershipProof = defineStore("ownershipProof", {
   state: (): OwnershipProofState => ({
     privateMode: true,
-    zkAppAddress: "B62qpnkpfmNvvweixN9h5U41CbXpuHWjsUAbiTeQQF5rdKph6vRY12V",
+    zkAppAddress: "B62qjpF1C5j2zTqiAewk5JnsibUBSvjTcKEFH4vU7wKf9yJf9rpopU6",
     oracleSignerPublicKey:
       "B62qqRNpzrmgdzte55XNWQz2Yj9vtXdib1QSYJzNab6Tc8mcxESHMZ7",
     account: undefined,
@@ -120,9 +120,8 @@ export const useOwnershipProof = defineStore("ownershipProof", {
         };
       });
       this.events = eventDataList;
-      console.log("events", eventDataList)
+      console.log("events", eventDataList);
       this.eventsLoading = false;
-
     },
   },
   getters: {},

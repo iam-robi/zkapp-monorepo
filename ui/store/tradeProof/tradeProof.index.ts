@@ -19,7 +19,7 @@ import { SupportedExchanges } from "~/types/oracle/graphql";
 export const useTradeProof = defineStore("tradeProof", {
   state: (): TradeProofState => ({
     privateMode: true,
-    zkAppAddress: "B62qrToYLmfpx7wSerFsRyP8qqw8bZ4BwsmwrybjTTLJBpmSTedmNpe",
+    zkAppAddress: "B62qih91s6caFHvb8kftsjYNQWKvdmU2xTRXoEauKDGHGZH1QucZBq4",
     oracleSignerPublicKey:
       "B62qqRNpzrmgdzte55XNWQz2Yj9vtXdib1QSYJzNab6Tc8mcxESHMZ7",
     account: undefined,
@@ -34,7 +34,6 @@ export const useTradeProof = defineStore("tradeProof", {
         //1
         isLoading: false,
         isFinished: false,
-
       },
       compilation: {
         isLoading: false,
