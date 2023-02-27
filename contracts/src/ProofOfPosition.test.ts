@@ -12,7 +12,7 @@ import {
   MerkleMap,
   MerkleMapWitness,
   CircuitString,
-  Poseidon
+  Poseidon,
 } from 'snarkyjs';
 import { PublicPosition } from './ProofOfPosition';
 let proofsEnabled = false;
@@ -21,10 +21,9 @@ const ORACLE_PUBLIC_KEY =
   'B62qqRNpzrmgdzte55XNWQz2Yj9vtXdib1QSYJzNab6Tc8mcxESHMZ7';
 
 await isReady;
-const grtToken = CircuitString.fromString("0xc944e90c64b2c07662a292be6244bdf05cda44a7")
-
-
-
+const grtToken = CircuitString.fromString(
+  '0xc944e90c64b2c07662a292be6244bdf05cda44a7'
+);
 
 describe('ProofOfPosition.js', () => {
   let deployerAccount: PublicKey,
@@ -36,39 +35,39 @@ describe('ProofOfPosition.js', () => {
     zkApp: ProofOfPosition;
 
   beforeAll(async () => {
-      await isReady;
-      if (proofsEnabled) ProofOfPosition.compile();
+    await isReady;
+    if (proofsEnabled) ProofOfPosition.compile();
   });
 
   beforeEach(() => {
-      const Local = Mina.LocalBlockchain({ proofsEnabled });
-      Mina.setActiveInstance(Local);
-      ({ privateKey: deployerKey, publicKey: deployerAccount } =
-        Local.testAccounts[0]);
-      ({ privateKey: senderKey, publicKey: senderAccount } =
-        Local.testAccounts[1]);
-        ({ privateKey: senderKey, publicKey: senderAccount } =
-          Local.testAccounts[2]);
-      zkAppPrivateKey = PrivateKey.random();
-      zkAppAddress = zkAppPrivateKey.toPublicKey();
-      zkApp = new ProofOfPosition(zkAppAddress);
+    const Local = Mina.LocalBlockchain({ proofsEnabled });
+    Mina.setActiveInstance(Local);
+    ({ privateKey: deployerKey, publicKey: deployerAccount } =
+      Local.testAccounts[0]);
+    ({ privateKey: senderKey, publicKey: senderAccount } =
+      Local.testAccounts[1]);
+    ({ privateKey: senderKey, publicKey: senderAccount } =
+      Local.testAccounts[2]);
+    zkAppPrivateKey = PrivateKey.random();
+    zkAppAddress = zkAppPrivateKey.toPublicKey();
+    zkApp = new ProofOfPosition(zkAppAddress);
+  });
+  afterAll(async () => {
+    // `shutdown()` internally calls `process.exit()` which will exit the running Jest process early.
+    // Specifying a timeout of 0 is a workaround to defer `shutdown()` until Jest is done running all tests.
+    // This should be fixed with https://github.com/MinaProtocol/mina/issues/10943
+    setTimeout(shutdown, 0);
+  });
+  async function localDeploy() {
+    const txn = await Mina.transaction(deployerAccount, () => {
+      AccountUpdate.fundNewAccount(deployerAccount);
+      zkApp.deploy({ zkappKey: zkAppPrivateKey });
+      zkApp.init(zkAppPrivateKey);
     });
-    afterAll(async () => {
-      // `shutdown()` internally calls `process.exit()` which will exit the running Jest process early.
-      // Specifying a timeout of 0 is a workaround to defer `shutdown()` until Jest is done running all tests.
-      // This should be fixed with https://github.com/MinaProtocol/mina/issues/10943
-      setTimeout(shutdown, 0);
-    });
-    async function localDeploy() {
-      const txn = await Mina.transaction(deployerAccount, () => {
-        AccountUpdate.fundNewAccount(deployerAccount);
-        zkApp.deploy({ zkappKey: zkAppPrivateKey });
-        zkApp.init(zkAppPrivateKey);
-      });
-      await txn.prove();
-      // this tx needs .sign(), because `deploy()` TokenOwnershipOracles an account update that requires signature authorization
-      await txn.sign([deployerKey, zkAppPrivateKey]).send();
-    }
+    await txn.prove();
+    // this tx needs .sign(), because `deploy()` TokenOwnershipOracles an account update that requires signature authorization
+    await txn.sign([deployerKey, zkAppPrivateKey]).send();
+  }
   describe('Deployment', () => {
     it('generates and deploys the `ProofOfPosition` smart contract with correct predefined state', async () => {
       const zkAppInstance = new ProofOfPosition(zkAppAddress);
@@ -84,13 +83,23 @@ describe('ProofOfPosition.js', () => {
       const zkAppInstance = new ProofOfPosition(zkAppAddress);
       await localDeploy();
       let merkleTree = new MerkleMap();
-      const positionMerkleKey = Poseidon.hash([...grtToken.toFields(), ...senderAccount.toFields()]);
+      const positionMerkleKey = Poseidon.hash([
+        ...grtToken.toFields(),
+        ...senderAccount.toFields(),
+      ]);
       const positionData = new PublicPosition({
         tokenAddress: grtToken,
         atLeast: Field(100),
-        targetUsdPrice: Field(1)
-      })
-      merkleTree.set(positionMerkleKey, Poseidon.hash([...positionData.tokenAddress.toFields(), positionData.atLeast, positionData.targetUsdPrice]));
+        targetUsdPrice: Field(1),
+      });
+      merkleTree.set(
+        positionMerkleKey,
+        Poseidon.hash([
+          ...positionData.tokenAddress.toFields(),
+          positionData.atLeast,
+          positionData.targetUsdPrice,
+        ])
+      );
 
       const targetMerkleRoot = merkleTree.getRoot();
 
@@ -115,15 +124,8 @@ describe('ProofOfPosition.js', () => {
       const events = await zkAppInstance.fetchEvents();
       console.log(events);
 
-
       const newMerkleRoot = zkAppInstance.commitment.get();
       expect(newMerkleRoot).toEqual(targetMerkleRoot);
-
-
-
-
-
-
     });
     it.todo('fails if a position was already committed');
 

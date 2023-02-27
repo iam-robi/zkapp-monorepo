@@ -31,11 +31,19 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;/Users/robin.sarfati/.asdf/shims/node&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/robin.sarfati/mina/zkapp-monorepo/server/node_modules/typescript/lib&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/robin.sarfati/mina/zkapp-monorepo/server/node_modules/prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/robin.sarfati/mina/zkapp-monorepo/contracts/node_modules/typescript/lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RunManager">
+    <configuration name="proof" type="NodeJSConfigurationType" path-to-js-file="build/src/playground/zkprogram.js" working-dir="$PROJECT_DIR$/contracts">
+      <method v="2" />
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -48,6 +56,12 @@
       <workItem from="1671361909459" duration="9315000" />
       <workItem from="1671701979949" duration="4190000" />
       <workItem from="1672258692356" duration="1419000" />
+      <workItem from="1676664822067" duration="13189000" />
+      <workItem from="1676902516245" duration="7346000" />
+      <workItem from="1676927633298" duration="7925000" />
+      <workItem from="1677082520081" duration="1203000" />
+      <workItem from="1677192448250" duration="1366000" />
+      <workItem from="1677236211837" duration="24110000" />
     </task>
     <servers />
   </component>
@@ -68,25 +82,36 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
+        <line-breakpoint type="javascript">
           <url>file://$PROJECT_DIR$/ui/pages/index.vue</url>
           <line>187</line>
           <option name="timeStamp" value="23" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
+        <line-breakpoint type="javascript">
           <url>file://$PROJECT_DIR$/ui/components/TradeProof.vue</url>
           <line>208</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
+        <line-breakpoint type="javascript">
           <url>file://$PROJECT_DIR$/ui/components/TradeProof.vue</url>
           <line>234</line>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
+        <line-breakpoint type="javascript">
           <url>file://$PROJECT_DIR$/ui/pages/index.vue</url>
           <line>100</line>
           <option name="timeStamp" value="26" />
+        </line-breakpoint>
+        <line-breakpoint type="javascript">
+          <url>file://$PROJECT_DIR$/server/src/main.ts</url>
+          <line>3</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/contracts/src/playground/writeproof.ts</url>
+          <line>18</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="30" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

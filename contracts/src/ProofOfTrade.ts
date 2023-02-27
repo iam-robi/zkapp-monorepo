@@ -17,7 +17,6 @@ import {
 const ORACLE_PUBLIC_KEY =
   'B62qqRNpzrmgdzte55XNWQz2Yj9vtXdib1QSYJzNab6Tc8mcxESHMZ7';
 
-
 export class ProofOfTrade extends SmartContract {
   @state(PublicKey) oraclePublicKey = State<PublicKey>();
   @state(Field) dex = State<Field>();
@@ -59,8 +58,8 @@ export class ProofOfTrade extends SmartContract {
     ]);
     validSignature.assertTrue();
 
-    swapCounts.assertGte(Field(2));
-    amountUsd.assertGte(Field(10000));
+    swapCounts.assertGreaterThanOrEqual(Field(2));
+    amountUsd.assertGreaterThanOrEqual(Field(10000));
 
     this.emitEvent('verified', this.sender);
   }

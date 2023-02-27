@@ -8,7 +8,7 @@ import {
   PublicKey,
   AccountUpdate,
   Encoding,
-  Signature
+  Signature,
 } from 'snarkyjs';
 import { tokenOwnershipDataSample } from './utils/data_samples';
 import { EvmAddress } from './TokenOwnershipOracle';
@@ -23,8 +23,6 @@ import { EvmAddress } from './TokenOwnershipOracle';
 let proofsEnabled = false;
 const ORACLE_PUBLIC_KEY =
   'B62qqRNpzrmgdzte55XNWQz2Yj9vtXdib1QSYJzNab6Tc8mcxESHMZ7';
-
-
 
 describe('TokenOwnershipOracle', () => {
   let deployerAccount: PublicKey,
@@ -47,8 +45,8 @@ describe('TokenOwnershipOracle', () => {
       Local.testAccounts[0]);
     ({ privateKey: senderKey, publicKey: senderAccount } =
       Local.testAccounts[1]);
-      ({ privateKey: senderKey, publicKey: senderAccount } =
-        Local.testAccounts[2]);
+    ({ privateKey: senderKey, publicKey: senderAccount } =
+      Local.testAccounts[2]);
     zkAppPrivateKey = PrivateKey.random();
     zkAppTokenOwnershipAddress = zkAppPrivateKey.toPublicKey();
     zkApp = new TokenOwnershipOracle(zkAppTokenOwnershipAddress);
@@ -77,12 +75,13 @@ describe('TokenOwnershipOracle', () => {
     const zkAppInstance = new TokenOwnershipOracle(zkAppTokenOwnershipAddress);
     const oraclePublicKey = zkAppInstance.oraclePublicKey.get();
     expect(oraclePublicKey).toEqual(PublicKey.fromBase58(ORACLE_PUBLIC_KEY));
-    
   });
 
   describe('deploys a verifier contract for token balance', () => {
     it('emits an `verified` event containing the user mina address if their token balance is at least 1', async () => {
-      const zkAppInstance = new TokenOwnershipOracle(zkAppTokenOwnershipAddress);
+      const zkAppInstance = new TokenOwnershipOracle(
+        zkAppTokenOwnershipAddress
+      );
       await localDeploy();
 
       const balance = Field(
@@ -99,6 +98,7 @@ describe('TokenOwnershipOracle', () => {
       const signature = Signature.fromJSON(
         tokenOwnershipDataSample.data.getOwnershipSignedData.signature
       );
+
       const validSignature = signature.verify(
         PublicKey.fromBase58(ORACLE_PUBLIC_KEY),
         [balance, chainId, ...addressToFields]
@@ -110,7 +110,6 @@ describe('TokenOwnershipOracle', () => {
         chainId: chainId,
       });
 
-
       const txn = await Mina.transaction(senderAccount, () => {
         zkAppInstance.verify(
           balance,
@@ -120,7 +119,7 @@ describe('TokenOwnershipOracle', () => {
       });
       await txn.prove();
       await txn.sign([senderKey]).send();
-      
+
       //
       const events = await zkAppInstance.fetchEvents();
 
@@ -145,7 +144,9 @@ describe('TokenOwnershipOracle', () => {
       // );
     });
     it('errors if wrong chain Id is provided', async () => {
-      const zkAppInstance = new TokenOwnershipOracle(zkAppTokenOwnershipAddress);
+      const zkAppInstance = new TokenOwnershipOracle(
+        zkAppTokenOwnershipAddress
+      );
       await localDeploy();
       const balance = Field(
         tokenOwnershipDataSample.data.getOwnershipSignedData.data.balance
