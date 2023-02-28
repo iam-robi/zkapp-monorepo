@@ -16,14 +16,6 @@ const SimpleProgram = Experimental.ZkProgram({
   },
 });
 const { verificationKey } = await SimpleProgram.compile();
-async function main() {
-  await fs.writeFile('proof.json', 'Hey there!', function (err) {
-    if (err) {
-      return console.log(err);
-    }
-    console.log('The file was saved!');
-  });
-}
 
 const start = Date.now();
 const proof = await SimpleProgram.run(Field(0));
