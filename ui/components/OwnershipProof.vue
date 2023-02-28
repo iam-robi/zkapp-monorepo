@@ -273,9 +273,10 @@ const verify = async function() {
   let app = new TokenOwnershipOracle(PublicKey.fromBase58(ownershipProofStore.zkAppAddress));
   let contractAddress = new EvmAddress({ fields: addressToFields, chainId: chainId});
 
-
+  const accounts = await window.mina.requestAccounts();
+  const senderAccount = PublicKey.fromBase58(accounts[0]);
   try {
-    const txn = await Mina.transaction(() => {
+    const txn = await Mina.transaction(senderAccount, () => {
       app.verify(
           balance,
           contractAddress,

@@ -248,9 +248,10 @@ const verify = async function() {
 
 
   let app = new ProofOfTrade(PublicKey.fromBase58(tradeProofStore.zkAppAddress));
-
+  const accounts = await window.mina.requestAccounts();
+  const senderAccount = PublicKey.fromBase58(accounts[0]);
   try {
-    const txn = await Mina.transaction(() => {
+    const txn = await Mina.transaction( senderAccount, () => {
       app.verify(
           swapCounts,
           amountUsd,
@@ -262,13 +263,14 @@ const verify = async function() {
     //TODO: proving completeley
     await txn.prove();
 
-    const { hash } = await window.mina.sendTransaction({
+    const { hash } = await  window.mina.sendTransaction({
       transaction: txn.toJSON(),
       feePayer: {
         fee: 0.1,
         memo: "zk"
       }
     })
+
     console.log("transaction hash", hash);//
     accountStore.transaction = hash
     tradeProofStore.currentStep = 6
