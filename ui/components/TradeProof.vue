@@ -259,10 +259,10 @@ const verify = async function() {
           signature ?? fail('something is wrong with the signature')
       );
     });
-
+    console.log("txn", txn.toJSON());
     //TODO: proving completeley
     await txn.prove();
-
+    console.log("txn", txn.toJSON());
     const { hash } = await  window.mina.sendTransaction({
       transaction: txn.toJSON(),
       feePayer: {
@@ -270,7 +270,7 @@ const verify = async function() {
         memo: "zk"
       }
     })
-
+    console.log("txn", txn.toJSON());
     console.log("transaction hash", hash);//
     accountStore.transaction = hash
     tradeProofStore.currentStep = 6

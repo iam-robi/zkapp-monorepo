@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="28fa8ebf-8df2-43e0-aa15-d0a5705197ab" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/components/OwnershipProof.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/components/OwnershipProof.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/components/TradeProof.vue" beforeDir="false" afterPath="$PROJECT_DIR$/ui/components/TradeProof.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,6 +64,7 @@
       <workItem from="1677082520081" duration="1203000" />
       <workItem from="1677192448250" duration="1366000" />
       <workItem from="1677236211837" duration="24597000" />
+      <workItem from="1677579303713" duration="11571000" />
     </task>
     <servers />
   </component>
@@ -118,11 +121,6 @@
           <url>file://$PROJECT_DIR$/server/src/main.ts</url>
           <line>3</line>
           <option name="timeStamp" value="27" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/contracts/src/playground/writeproof.ts</url>
-          <line>18</line>
-          <option name="timeStamp" value="30" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

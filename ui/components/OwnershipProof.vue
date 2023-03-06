@@ -283,20 +283,19 @@ const verify = async function() {
           signature ?? fail('something is wrong with the signature')
       );
     });
-    console.log(txn)
-
-      console.log("start proving")
-      //TODO: proving completeley
-      await txn.prove();
 
 
-      const { hash } = await window.mina.sendTransaction({
+    await txn.prove();
+
+
+    const { hash } = await window.mina.sendTransaction({
       transaction: txn.toJSON(),
       feePayer: {
         fee: 0.1,
         memo: "zk"
       }
-      })
+    })
+      console.log("txn", txn.toJSON());
       console.log("transaction hash", hash);//
       accountStore.transaction = hash
       ownershipProofStore.currentStep = 6

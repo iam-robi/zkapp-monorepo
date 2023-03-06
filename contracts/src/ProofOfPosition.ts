@@ -15,6 +15,7 @@ import {
     Struct,
     Poseidon,
     CircuitString,
+    UInt64,
   } from 'snarkyjs';
   
   const ORACLE_PUBLIC_KEY =
@@ -24,7 +25,8 @@ import {
     export class PublicPosition extends Struct({
         atLeast: Field,
         tokenAddress: CircuitString,
-        targetUsdPrice: Field
+        targetUsdPrice: Field,
+        timestamp: UInt64,
     }) {}
 
 
@@ -33,7 +35,7 @@ import {
     @state(Field) commitment = State<Field>();
   
     events = {
-      verified: PublicPosition,
+      documentPublished: Field,
     };
   
     deploy(args: DeployArgs) {
@@ -74,7 +76,7 @@ import {
     //    ]);
     //   validSignature.assertTrue();
 
-      tokenAmount.assertGte(atLeast);
+      tokenAmount.assertGreaterThanOrEqual(atLeast);
         
       //for now user can only commit to one position per token, a key in the merkle corresponds to a token address and a mina address
         
@@ -85,19 +87,26 @@ import {
 
       key.assertEquals(positionKey);
       rootBefore.assertEquals(commitment);
-
+      
+      this.network.timestamp.assertEquals(this.network.timestamp.get());
+      const epoch = this.network.timestamp.get()
       //commit with the new position data for user account
-      const positionDataHash = Poseidon.hash([...tokenAddress.toFields(), atLeast , targetUsdPrice ]);
+      const positionDataHash = Poseidon.hash([...tokenAddress.toFields(), atLeast , targetUsdPrice , ...epoch.toFields() ]);
       const [ newRoot , _ ] = merkleWitness.computeRootAndKey(positionDataHash)
       this.commitment.set(newRoot);
-                                                                                                                                                                                                                                                                                                                                                                                                                                      
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                    
       const publicPosition = new PublicPosition({
         atLeast,
         tokenAddress,
-        targetUsdPrice
+        targetUsdPrice,
+        timestamp: epoch,
       })
+      // TODO: just public position fails with error)
+      ///this.emitEvent('verified', publicPosition);
+      const documentID =  positionDataHash
 
-      this.emitEvent('verified', publicPosition);
+      this.emitEvent( 'documentPublished' , documentID );
     }
   
     @method updateOraclePublicKey(
