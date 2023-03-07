@@ -91,7 +91,6 @@ import {
 
       tokenAmount.assertGreaterThanOrEqual(atLeast);
 
-      
     //TODO: validate position data is verified by an oracle and validate conditions 
     //   const validSignature = signature.verify(oraclePublicKey, [
     //         tokenAmount,
@@ -99,24 +98,6 @@ import {
     //    ]);
     //   validSignature.assertTrue();
 
-      
-        
-      //for now user can only commit to one position per token, a key in the merkle corresponds to a token address and a mina address
-        
-      // const positionKey = Poseidon.hash([...tokenAddress.toFields(), ...this.sender.toFields()]);
-
-      // // by doing so , we validate no position has been committed before
-      // const [ rootBefore , key ] = merkleWitness.computeRootAndKey(Field(0))
-
-      // key.assertEquals(positionKey);
-      // rootBefore.assertEquals(commitment);
-      
-      // this.network.timestamp.assertEquals(this.network.timestamp.get());
-      
-      // //commit with the new position data for user account
-      // const positionDataHash = Poseidon.hash([...tokenAddress.toFields(), atLeast , targetUsdPrice , ...epoch.toFields() ]);
-      // const [ newRoot , _ ] = merkleWitness.computeRootAndKey(positionDataHash)
-      // this.commitment.set(newRoot);
 
       const epoch = this.network.timestamp.get()                                                                                                                                                                                                                                                                                                                                                                                                                            
       const publicPositionData = new PublicPositionData({
@@ -127,11 +108,7 @@ import {
       })
 
       this.commitments.set<PublicPositionKey, PublicPositionData>(PublicPositionData, storagekey, publicPositionData);
-      // TODO: just public position fails with error)
-      ///this.emitEvent('verified', publicPositionData);
-      // const documentID =  positionDataHash
 
-      // this.emitEvent( 'documentPublished' , documentID );
     }
   
     @method updateOraclePublicKey(
