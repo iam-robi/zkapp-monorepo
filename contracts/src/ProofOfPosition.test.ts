@@ -15,7 +15,7 @@ import {
   Poseidon,
   UInt64,
 } from 'snarkyjs';
-import { PublicPosition } from './ProofOfPosition';
+import { PublicPositionData , PublicPositionKey } from './ProofOfPosition';
 let proofsEnabled = false;
 
 const ORACLE_PUBLIC_KEY =
@@ -77,8 +77,8 @@ describe('ProofOfPosition.js', () => {
       expect(oraclePublicKey).toEqual(PublicKey.fromBase58(ORACLE_PUBLIC_KEY));
       const emptyMerkleMap = new MerkleMap();
       const emptyMerkleMapRoot = emptyMerkleMap.getRoot();
-      const commitment = zkAppInstance.commitment.get();
-      expect(commitment).toEqual(emptyMerkleMapRoot);
+      const commitments = zkAppInstance.commitments.getRootHash();
+      expect(commitments).toEqual(emptyMerkleMapRoot);
     });
     it('correctly updates merkle root with position data', async () => {
       const zkAppInstance = new ProofOfPosition(zkAppAddress);
@@ -90,7 +90,7 @@ describe('ProofOfPosition.js', () => {
         ...grtToken.toFields(),
         ...senderAccount.toFields(),
       ]);
-      const positionData = new PublicPosition({
+      const positionData = new PublicPositionData({
         tokenAddress: grtToken,
         atLeast: Field(100),
         targetUsdPrice: Field(1),
@@ -127,7 +127,7 @@ describe('ProofOfPosition.js', () => {
       const events = await zkAppInstance.fetchEvents();
       console.log(events);
 
-      const newMerkleRoot = zkAppInstance.commitment.get();
+      const newMerkleRoot = zkAppInstance.commitments.getRootHash();
       //TODO: this test can not work because we need to reconstruct same timestamp as in execution test 
       //expect(newMerkleRoot).toEqual(targetMerkleRoot);
 
