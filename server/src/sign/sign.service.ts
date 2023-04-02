@@ -1,6 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { PrivateKey, Signature, Field, isReady, Encoding , MerkleMap } from 'snarkyjs';
+import {
+  PrivateKey,
+  Signature,
+  Field,
+  isReady,
+  Encoding,
+  MerkleMap,
+} from 'snarkyjs';
 import { TradingData } from '../exchange/dto/trading-data.response';
+import { TrainingDataInput } from '../user/dto/training-data.input';
 
 @Injectable()
 export class SignService {
@@ -28,7 +36,6 @@ export class SignService {
       signature: signature.toJSON(),
       publicKey: publicKey.toBase58(),
     };
-
 
     return result;
   }
@@ -70,6 +77,29 @@ export class SignService {
 
     const result = {
       data: { balance, address, chainId, createdAt },
+      signature: signature.toJSON(),
+      publicKey: privateKey.toPublicKey(),
+    };
+
+    return result;
+  }
+
+  async signTrainingData(args: TrainingDataInput) {
+    await isReady;
+    const privateKey = PrivateKey.fromBase58(process.env.MINA_PRIVATE_KEY);
+    const publicKey = privateKey.toPublicKey();
+
+    const encodedInputDataHash = Encoding.stringToFields(args.hashedInputData);
+    const encodedOutputDataHash = Encoding.stringToFields(
+      args.hashedOutputData,
+    );
+    const signature = Signature.create(privateKey, [
+      ...encodedInputDataHash,
+      ...encodedInputDataHash,
+    ]);
+
+    const result = {
+      data: args,
       signature: signature.toJSON(),
       publicKey: privateKey.toPublicKey(),
     };

@@ -1,10 +1,8 @@
 import { Signature, PublicKey } from 'snarkyjs';
-import {Field, ObjectType ,  } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { Type } from '@nestjs/common';
-import {User} from "../user/entities/user.entity";
-import GraphQLJSON from "graphql-type-json";
-
-
+import { User } from '../user/entities/user.entity';
+import GraphQLJSON from 'graphql-type-json';
 
 export interface ISignedType<T> {
   data: T;
@@ -22,8 +20,7 @@ export function Signed<T>(classRef: Type<T>): Type<ISignedType<T>> {
     signature: Signature;
 
     @Field((type) => String)
-    publicKey: PublicKey ;
+    publicKey: PublicKey;
   }
   return SignedType as Type<ISignedType<T>>;
 }
-

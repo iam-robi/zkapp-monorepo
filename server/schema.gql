@@ -30,6 +30,20 @@ The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://
 """
 scalar JSON
 
+type TrainingDataObject {
+  """SHA3-256 hash of JSON string of input data used"""
+  hashedInputData: String!
+
+  """SHA3-256 hash of JSON string of output data used"""
+  hashedOutputData: String!
+}
+
+type SignedTrainingData {
+  data: TrainingDataObject!
+  signature: JSON!
+  publicKey: String!
+}
+
 type Contract {
   id: ID!
   name: String
@@ -91,12 +105,21 @@ type SignedTradingData {
 
 type Query {
   userProfile: SignedUser!
+  signTrainingData(args: TrainingDataInput!): SignedTrainingData!
   contracts(search: String, withDeleted: Boolean): GetContractListResponse!
   contract(id: ID!, withDeleted: Boolean): Contract
   getOwnershipSignedData(address: String!, ercType: String!): SignedOwnershipData!
   exchanges(search: String, withDeleted: Boolean): GetExchangeListResponse!
   exchange(id: ID!, withDeleted: Boolean): Exchange
   getTradingSignedData(exchange: String!): SignedTradingData!
+}
+
+input TrainingDataInput {
+  """SHA3-256 hash of JSON string of input data used"""
+  hashedInputData: String!
+
+  """SHA3-256 hash of JSON string of output data used"""
+  hashedOutputData: String!
 }
 
 type Mutation {
