@@ -3,6 +3,7 @@ export default {
   verbose: true,
   preset: 'ts-jest/presets/default-esm',
   testEnvironment: 'node',
+  modulePathIgnorePatterns: ['.*Zkfs.*'],
   globals: {
     'ts-jest': {
       useESM: true,
@@ -13,8 +14,6 @@ export default {
     '^.+\\.(j)s$': 'babel-jest',
   },
   resolver: '<rootDir>/jest-resolver.cjs',
-  transformIgnorePatterns: [
-    'node_modules/(?!tslib)'
-  ],
-  modulePathIgnorePatterns: ['<rootDir>/build/']
+  transformIgnorePatterns: ['node_modules/(?!tslib)'],
+  modulePathIgnorePatterns: ['<rootDir>/build/'],
 };

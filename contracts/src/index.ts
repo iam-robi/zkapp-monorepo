@@ -8,3 +8,4 @@ import {
 import { ProofOfTrade } from './ProofOfTrade';
 import { ProofOfPosition } from './ProofOfPosition';
 export { TokenOwnershipOracle, EvmAddress, VerifiedOwnership, ProofOfTrade };
+import { ProofOfPositionZkfs } from './ProofOfPositionZkfs';

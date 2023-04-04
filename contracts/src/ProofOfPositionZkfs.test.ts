@@ -1,4 +1,4 @@
-import { ProofOfPosition } from './ProofOfPosition';
+import { ProofOfPositionZkfs } from './ProofOfPositionZkfs';
 import {
   isReady,
   shutdown,
@@ -15,7 +15,7 @@ import {
   Poseidon,
   UInt64,
 } from 'snarkyjs';
-import { PublicPosition } from './ProofOfPosition';
+import { PublicPositionData, PublicPositionKey } from './ProofOfPositionZkfs';
 let proofsEnabled = false;
 
 const ORACLE_PUBLIC_KEY =
@@ -26,18 +26,18 @@ const grtToken = CircuitString.fromString(
   '0xc944e90c64b2c07662a292be6244bdf05cda44a7'
 );
 
-describe('ProofOfPosition.js', () => {
+describe('ProofOfPositionZkfs.js', () => {
   let deployerAccount: PublicKey,
     deployerKey: PrivateKey,
     senderAccount: PublicKey,
     senderKey: PrivateKey,
     zkAppAddress: PublicKey,
     zkAppPrivateKey: PrivateKey,
-    zkApp: ProofOfPosition;
+    zkApp: ProofOfPositionZkfs;
 
   beforeAll(async () => {
     await isReady;
-    if (proofsEnabled) ProofOfPosition.compile();
+    if (proofsEnabled) ProofOfPositionZkfs.compile();
   });
 
   beforeEach(() => {
@@ -51,7 +51,7 @@ describe('ProofOfPosition.js', () => {
       Local.testAccounts[2]);
     zkAppPrivateKey = PrivateKey.random();
     zkAppAddress = zkAppPrivateKey.toPublicKey();
-    zkApp = new ProofOfPosition(zkAppAddress);
+    zkApp = new ProofOfPositionZkfs(zkAppAddress);
   });
   afterAll(async () => {
     // `shutdown()` internally calls `process.exit()` which will exit the running Jest process early.
@@ -71,17 +71,17 @@ describe('ProofOfPosition.js', () => {
   }
   describe('Deployment', () => {
     it('generates and deploys the `ProofOfPosition` smart contract with correct predefined state', async () => {
-      const zkAppInstance = new ProofOfPosition(zkAppAddress);
+      const zkAppInstance = new ProofOfPositionZkfs(zkAppAddress);
       await localDeploy();
       const oraclePublicKey = zkAppInstance.oraclePublicKey.get();
       expect(oraclePublicKey).toEqual(PublicKey.fromBase58(ORACLE_PUBLIC_KEY));
       const emptyMerkleMap = new MerkleMap();
       const emptyMerkleMapRoot = emptyMerkleMap.getRoot();
-      const commitment = zkAppInstance.commitment.get();
-      expect(commitment).toEqual(emptyMerkleMapRoot);
+      const commitments = zkAppInstance.commitments.getRootHash();
+      expect(commitments).toEqual(emptyMerkleMapRoot);
     });
     it('correctly updates merkle root with position data', async () => {
-      const zkAppInstance = new ProofOfPosition(zkAppAddress);
+      const zkAppInstance = new ProofOfPositionZkfs(zkAppAddress);
       await localDeploy();
 
       //TODO: flawed as timestamp will be different from the one registered, find a way to mock it
@@ -90,7 +90,7 @@ describe('ProofOfPosition.js', () => {
         ...grtToken.toFields(),
         ...senderAccount.toFields(),
       ]);
-      const positionData = new PublicPosition({
+      const positionData = new PublicPositionData({
         tokenAddress: grtToken,
         atLeast: Field(100),
         targetUsdPrice: Field(1),
@@ -126,7 +126,7 @@ describe('ProofOfPosition.js', () => {
       const events = await zkAppInstance.fetchEvents();
       console.log(events);
 
-      const newMerkleRoot = zkAppInstance.commitment.get();
+      const newMerkleRoot = zkAppInstance.commitments.getRootHash();
       //TODO: this test can not work because we need to reconstruct same timestamp as in execution test
       //expect(newMerkleRoot).toEqual(targetMerkleRoot);
 
