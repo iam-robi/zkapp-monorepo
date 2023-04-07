@@ -17,7 +17,6 @@ const ORACLE_PUBLIC_KEY =
 
 let proofsEnabled = false;
 
-
 describe('ProofOfTrade', () => {
   let deployerAccount: PublicKey,
     deployerKey: PrivateKey,
@@ -26,7 +25,6 @@ describe('ProofOfTrade', () => {
     zkAppAddress: PublicKey,
     zkAppPrivateKey: PrivateKey,
     zkApp: ProofOfTrade;
-
 
   beforeAll(async () => {
     await isReady;
@@ -40,8 +38,8 @@ describe('ProofOfTrade', () => {
       Local.testAccounts[0]);
     ({ privateKey: senderKey, publicKey: senderAccount } =
       Local.testAccounts[1]);
-      ({ privateKey: senderKey, publicKey: senderAccount } =
-        Local.testAccounts[2]);
+    ({ privateKey: senderKey, publicKey: senderAccount } =
+      Local.testAccounts[2]);
     zkAppPrivateKey = PrivateKey.random();
     zkAppAddress = zkAppPrivateKey.toPublicKey();
     zkApp = new ProofOfTrade(zkAppAddress);
@@ -117,7 +115,7 @@ describe('ProofOfTrade', () => {
       let verifiedEvent = events[0];
 
       // // @ts-ignore
-      expect(events[0].event).toEqual(senderKey.toPublicKey());
+      expect(events[0].event.data).toEqual(senderKey.toPublicKey());
       // // @ts-ignore
     });
   });
